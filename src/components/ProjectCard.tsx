@@ -103,11 +103,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           size="sm" 
           className="flex-1 hover:bg-primary/5 hover:border-primary/40"
           asChild
+          disabled={project.mission !== "Mission 2"}
         >
-          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-            <Github className="h-3 w-3 mr-1" />
-            Code
-          </a>
+          {project.mission === "Mission 2" ? (
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+              <Github className="h-3 w-3 mr-1" />
+              Code
+            </a>
+          ) : (
+            <span className="flex items-center">
+              <Github className="h-3 w-3 mr-1" />
+              Code
+            </span>
+          )}
         </Button>
         {project.liveUrl && (
           <Button 
