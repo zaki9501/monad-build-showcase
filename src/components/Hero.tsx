@@ -29,7 +29,6 @@ const initialForm = {
 
 const Hero = () => {
   const [form, setForm] = useState(initialForm);
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -95,20 +94,14 @@ const Hero = () => {
                     Share your Monad project with the community! Fill in the details below.
                   </DialogDescription>
                 </DialogHeader>
-                {submitted ? (
-                  <div className="py-8 text-center">
-                    <div className="text-2xl mb-2">🎉</div>
-                    <div className="font-semibold mb-1">Thank you for your submission!</div>
-                    <div className="text-muted-foreground text-sm">We'll review your project soon.</div>
-                  </div>
-                ) : (
-                  <form
-                    action="https://formspree.io/f/xanbwlry"
-                    method="POST"
-                    className="space-y-4"
-                    onSubmit={() => setSubmitted(true)}
-                  >
-                    <input type="hidden" name="_replyto" value="Pikidevs@gmail.com" />
+                <div className="text-sm text-muted-foreground mb-2 text-center">
+                  We will review your submission and list your app within 24 hours.
+                </div>
+                <form
+                  action="https://formspree.io/f/xanbwlry"
+                  method="POST"
+                  className="space-y-4"
+                >
                     <Input
                       name="name"
                       placeholder="Project Name"
@@ -174,7 +167,6 @@ const Hero = () => {
                       </DialogClose>
                     </DialogFooter>
                   </form>
-                )}
               </DialogContent>
             </Dialog>
           </div>
