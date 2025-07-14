@@ -2,6 +2,8 @@ import { Github, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+// Add import for Twitter icon
+import { Twitter } from "lucide-react";
 
 interface ProjectCardProps {
   project: {
@@ -22,6 +24,8 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  // Debug: log the builder twitter value
+  console.log("Builder Twitter:", project.builder.twitter);
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card to-muted/20 border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       {/* Thumbnail */}
@@ -60,6 +64,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <span className="text-sm font-medium text-foreground">
             {project.builder.name}
           </span>
+          {/* X (Twitter) icon with link - robust check */}
+          {project.builder.twitter &&
+            project.builder.twitter.trim().toLowerCase().startsWith("http") && (
+              <a
+                href={project.builder.twitter.trim()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-blue-700"
+                title="View X profile"
+              >
+                <Twitter className="w-4 h-4 inline ml-1 align-middle" />
+              </a>
+            )}
           <span className="text-xs text-muted-foreground">
             @{project.builder.discord}
           </span>

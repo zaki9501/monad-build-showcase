@@ -19,8 +19,12 @@ const Index = () => {
         return false;
       }
 
-      // Discord username search
-      if (searchQuery && !project.builder.discord.toLowerCase().includes(searchQuery.toLowerCase())) {
+      // X (Twitter) username search
+      if (
+        searchQuery &&
+        !(project.builder.twitter &&
+          project.builder.twitter.toLowerCase().includes(searchQuery.toLowerCase()))
+      ) {
         return false;
       }
 
