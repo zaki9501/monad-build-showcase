@@ -116,7 +116,7 @@ const FilterSidebar = ({
       <Card className="bg-gradient-to-br from-primary/5 to-primary-glow/10 border-primary/20">
         <CardContent className="pt-6">
           <div className="text-center space-y-2">
-            <div className="text-2xl font-bold text-primary">42</div>
+            <div className="text-2xl font-bold text-primary">14</div>
             <div className="text-sm text-muted-foreground">Total Projects</div>
           </div>
         </CardContent>
