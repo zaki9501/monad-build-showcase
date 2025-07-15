@@ -1,4 +1,5 @@
-import { Github, ExternalLink } from "lucide-react";
+
+import { Github, ExternalLink, Eye, Heart, Star } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,73 +28,146 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   // Debug: log the builder twitter value
   console.log("Builder Twitter:", project.builder.twitter);
   return (
-    <Card className="group overflow-hidden bg-gradient-to-br from-card to-muted/20 border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      {/* Thumbnail */}
-      <div className="relative overflow-hidden">
+    <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm">
+      {/* Thumbnail with overlay effects */}
+      <div className="relative overflow-hidden h-52">
         <img 
           src={project.thumbnail} 
           alt={project.name}
-          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </div>
-
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
-            {project.name}
-          </h3>
-          <Badge variant="secondary" className="shrink-0 text-xs font-medium">
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+        
+        {/* Mission badge overlay */}
+        <div className="absolute top-3 left-3">
+          <Badge className="bg-primary/90 text-primary-foreground font-semibold px-3 py-1 backdrop-blur-sm">
             {project.mission}
           </Badge>
+        </div>
+        
+        {/* Quick action buttons overlay */}
+        <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          {project.liveUrl && (
+            <Button
+              size="sm"
+              variant="secondary"
+              className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
+              asChild
+            >
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                <Eye className="h-4 w-4 text-primary" />
+              </a>
+            </Button>
+          )}
+          <Button
+            size="sm"
+            variant="secondary"
+            className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
+            disabled={project.mission !== "Mission 2"}
+          >
+            <Heart className="h-4 w-4 text-red-500" />
+          </Button>
+        </div>
+
+        {/* Bottom overlay with project name */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+          <h3 className="font-bold text-xl text-white mb-1 group-hover:text-primary-glow transition-colors">
+            {project.name}
+          </h3>
+        </div>
+      </div>
+
+      <CardHeader className="pb-3 pt-4">
+        <div className="flex items-start justify-between gap-3">
+          {/* Builder info with enhanced styling */}
+          <div className="flex items-center gap-3 flex-1">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary via-primary-glow to-primary-dark rounded-full flex items-center justify-center shadow-lg">
+                <span className="text-primary-foreground text-sm font-bold">
+                  {project.builder.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-foreground truncate">
+                  {project.builder.name}
+                </span>
+                {/* X (Twitter) icon with link - robust check */}
+                {project.builder.twitter &&
+                  project.builder.twitter.trim().toLowerCase().startsWith("http") && (
+                    <a
+                      href={project.builder.twitter.trim()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:text-blue-700 transition-colors"
+                      title="View X profile"
+                    >
+                      <Twitter className="w-3 h-3" />
+                    </a>
+                  )}
+              </div>
+              <span className="text-xs text-muted-foreground">
+                @{project.builder.discord}
+              </span>
+            </div>
+          </div>
+          
+          {/* Star rating placeholder */}
+          <div className="flex items-center gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star 
+                key={star} 
+                className="w-3 h-3 fill-yellow-400 text-yellow-400" 
+              />
+            ))}
+            <span className="text-xs text-muted-foreground ml-1">5.0</span>
+          </div>
         </div>
       </CardHeader>
 
       <CardContent className="pb-4">
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+        <p className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed">
           {project.description}
         </p>
 
-        {/* Builder Info */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-6 h-6 bg-gradient-to-br from-primary to-primary-glow rounded-full flex items-center justify-center">
-            <span className="text-primary-foreground text-xs font-medium">
-              {project.builder.name.charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <span className="text-sm font-medium text-foreground">
-            {project.builder.name}
-          </span>
-          {/* X (Twitter) icon with link - robust check */}
-          {project.builder.twitter &&
-            project.builder.twitter.trim().toLowerCase().startsWith("http") && (
-              <a
-                href={project.builder.twitter.trim()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-700"
-                title="View X profile"
-              >
-                <Twitter className="w-4 h-4 inline ml-1 align-middle" />
-              </a>
-            )}
-          <span className="text-xs text-muted-foreground">
-            @{project.builder.discord}
-          </span>
-        </div>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1 mb-4">
+        {/* Enhanced tags with better styling */}
+        <div className="flex flex-wrap gap-2 mb-4">
           {project.tags.slice(0, 3).map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs py-0 px-2 h-5">
+            <Badge 
+              key={tag} 
+              variant="outline" 
+              className="text-xs py-1 px-3 h-6 border-primary/20 text-primary hover:bg-primary/10 transition-colors"
+            >
               {tag}
             </Badge>
           ))}
           {project.tags.length > 3 && (
-            <Badge variant="outline" className="text-xs py-0 px-2 h-5">
+            <Badge 
+              variant="outline" 
+              className="text-xs py-1 px-3 h-6 border-muted-foreground/20 text-muted-foreground"
+            >
               +{project.tags.length - 3}
             </Badge>
           )}
+        </div>
+
+        {/* Stats section */}
+        <div className="flex items-center gap-4 text-xs text-muted-foreground border-t pt-3">
+          <div className="flex items-center gap-1">
+            <Eye className="w-3 h-3" />
+            <span>1.2k views</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Heart className="w-3 h-3" />
+            <span>89 likes</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Github className="w-3 h-3" />
+            <span>24 stars</span>
+          </div>
         </div>
       </CardContent>
 
@@ -101,7 +175,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex-1 hover:bg-primary/5 hover:border-primary/40"
+          className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
           asChild
           disabled={project.mission !== "Mission 2"}
         >
@@ -120,12 +194,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         {project.liveUrl && (
           <Button 
             size="sm" 
-            className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
+            className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl"
             asChild
           >
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3 w-3 mr-1" />
-              Live
+              Live Demo
             </a>
           </Button>
         )}

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
@@ -48,7 +47,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
       <Hero />
       
@@ -64,34 +63,54 @@ const Index = () => {
           availableTags={availableTags}
         />
 
-        {/* Results Header */}
+        {/* Results Header with enhanced styling */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold text-foreground">
-              Community Projects
+            <h2 className="text-3xl font-bold text-foreground bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+              Community Showcase
             </h2>
-            <p className="text-muted-foreground mt-1">
-              {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} found
+            <p className="text-muted-foreground mt-2 text-lg">
+              {filteredProjects.length} amazing project{filteredProjects.length !== 1 ? 's' : ''} built by our community
             </p>
+          </div>
+          
+          {/* View options */}
+          <div className="hidden md:flex items-center gap-2">
+            <Button variant="outline" size="sm" className="h-8">
+              Grid View
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8">
+              List View
+            </Button>
           </div>
         </div>
 
-        {/* Projects Grid */}
+        {/* Enhanced Projects Grid */}
         {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
+          <div className="text-center py-16">
+            <div className="text-8xl mb-6 opacity-50">🔍</div>
+            <h3 className="text-2xl font-bold text-foreground mb-3">
               No projects found
             </h3>
-            <p className="text-muted-foreground max-w-sm mx-auto">
-              Try adjusting your filters or search query to find more projects.
+            <p className="text-muted-foreground max-w-md mx-auto text-lg leading-relaxed">
+              Try adjusting your filters or search query to discover more amazing community projects.
             </p>
+            <Button 
+              className="mt-6" 
+              onClick={() => {
+                setSelectedMission("All Missions");
+                setSearchQuery("");
+                selectedTags.forEach(tag => handleTagToggle(tag));
+              }}
+            >
+              Clear All Filters
+            </Button>
           </div>
         )}
       </main>
