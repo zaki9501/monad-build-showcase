@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 import FilterSidebar from "@/components/FilterSidebar";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { mockProjects, availableTags } from "@/data/mockProjects";
 
 const Index = () => {
