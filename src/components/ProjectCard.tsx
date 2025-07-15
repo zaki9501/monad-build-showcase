@@ -1,8 +1,8 @@
-
 import { Github, ExternalLink, Eye, Heart, Star } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 // Add import for Twitter icon
 import { Twitter } from "lucide-react";
 
@@ -25,8 +25,21 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  // Extract Twitter username from URL for avatar
+  const getTwitterUsername = (twitterUrl?: string) => {
+    if (!twitterUrl) return null;
+    const match = twitterUrl.match(/(?:twitter\.com|x\.com)\/([^\/\?]+)/);
+    return match ? match[1] : null;
+  };
+
+  const twitterUsername = getTwitterUsername(project.builder.twitter);
+  const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
+
   // Debug: log the builder twitter value
   console.log("Builder Twitter:", project.builder.twitter);
+  console.log("Twitter Username:", twitterUsername);
+  console.log("Avatar URL:", avatarUrl);
+  
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm">
       {/* Thumbnail with overlay effects */}
@@ -80,14 +93,21 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <CardHeader className="pb-3 pt-4">
         <div className="flex items-start justify-between gap-3">
-          {/* Builder info with enhanced styling */}
+          {/* Builder info with profile picture */}
           <div className="flex items-center gap-3 flex-1">
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary via-primary-glow to-primary-dark rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-primary-foreground text-sm font-bold">
+              <Avatar className="w-10 h-10">
+                {avatarUrl && (
+                  <AvatarImage 
+                    src={avatarUrl} 
+                    alt={project.builder.name}
+                    className="object-cover"
+                  />
+                )}
+                <AvatarFallback className="bg-gradient-to-br from-primary via-primary-glow to-primary-dark text-primary-foreground text-sm font-bold">
                   {project.builder.name.charAt(0).toUpperCase()}
-                </span>
-              </div>
+                </AvatarFallback>
+              </Avatar>
               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
             <div className="flex-1 min-w-0">
