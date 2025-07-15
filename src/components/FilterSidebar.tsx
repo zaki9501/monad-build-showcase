@@ -1,3 +1,4 @@
+
 import { Filter, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -34,15 +35,15 @@ const FilterSidebar = ({
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="bg-gradient-to-br from-card to-muted/20 border-border/50">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Filter className="h-5 w-5 text-primary" />
-            Filters
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
+    <Card className="bg-gradient-to-br from-card to-muted/20 border-border/50 mb-8">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Filter className="h-5 w-5 text-primary" />
+          Filters
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Mission Filter */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Mission</label>
@@ -75,7 +76,7 @@ const FilterSidebar = ({
           </div>
 
           {/* Tag Filter */}
-          <div className="space-y-3">
+          <div className="space-y-2 md:col-span-2">
             <label className="text-sm font-medium">Categories</label>
             <div className="flex flex-wrap gap-2">
               {availableTags.map((tag) => (
@@ -94,12 +95,14 @@ const FilterSidebar = ({
               ))}
             </div>
           </div>
+        </div>
 
-          {/* Clear Filters */}
-          {(selectedMission !== "All Missions" || searchQuery || selectedTags.length > 0) && (
+        {/* Clear Filters */}
+        {(selectedMission !== "All Missions" || searchQuery || selectedTags.length > 0) && (
+          <div className="mt-6 pt-4 border-t">
             <Button 
               variant="outline" 
-              className="w-full"
+              className="w-full md:w-auto"
               onClick={() => {
                 onMissionChange("All Missions");
                 onSearchChange("");
@@ -108,20 +111,10 @@ const FilterSidebar = ({
             >
               Clear All Filters
             </Button>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Quick Stats */}
-      <Card className="bg-gradient-to-br from-primary/5 to-primary-glow/10 border-primary/20">
-        <CardContent className="pt-6">
-          <div className="text-center space-y-2">
-            <div className="text-2xl font-bold text-primary">14</div>
-            <div className="text-sm text-muted-foreground">Total Projects</div>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
