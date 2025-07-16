@@ -5,21 +5,18 @@ import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 import FilterSidebar from "@/components/FilterSidebar";
 import Footer from "@/components/Footer";
-import MigrationButton from "@/components/MigrationButton";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
-import { useProjects } from "@/hooks/useProjects";
-import { availableTags } from "@/data/mockProjects";
+import { mockProjects, availableTags } from "@/data/mockProjects";
 
 const Index = () => {
-  const { projects, loading, error } = useProjects();
   const [selectedMission, setSelectedMission] = useState("All Missions");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Filter projects based on current filters
   const filteredProjects = useMemo(() => {
-    return projects.filter(project => {
+    return mockProjects.filter(project => {
       // Mission filter
       if (selectedMission !== "All Missions" && project.mission !== selectedMission) {
         return false;
@@ -42,7 +39,7 @@ const Index = () => {
 
       return true;
     });
-  }, [projects, selectedMission, searchQuery, selectedTags]);
+  }, [selectedMission, searchQuery, selectedTags]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev => 
@@ -51,75 +48,6 @@ const Index = () => {
         : [...prev, tag]
     );
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-        <Navigation />
-        <Hero />
-        <main className="container px-4 lg:px-8 py-12">
-          <div className="text-center py-16">
-            <div className="text-8xl mb-6 opacity-50">⏳</div>
-            <h3 className="text-2xl font-bold text-foreground mb-3">
-              Loading projects...
-            </h3>
-            <p className="text-muted-foreground">
-              Fetching the latest community projects from our database.
-            </p>
-          </div>
-        </main>
-        <Footer />
-        <Toaster />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-        <Navigation />
-        <Hero />
-        <main className="container px-4 lg:px-8 py-12">
-          <div className="text-center py-16">
-            <div className="text-8xl mb-6 opacity-50">❌</div>
-            <h3 className="text-2xl font-bold text-foreground mb-3">
-              Error loading projects
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              {error}
-            </p>
-            <MigrationButton />
-          </div>
-        </main>
-        <Footer />
-        <Toaster />
-      </div>
-    );
-  }
-
-  // Show migration prompt if no projects exist at all
-  if (projects.length === 0) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-        <Navigation />
-        <Hero />
-        <main className="container px-4 lg:px-8 py-12">
-          <div className="text-center py-16">
-            <div className="text-8xl mb-6 opacity-50">🚀</div>
-            <h3 className="text-2xl font-bold text-foreground mb-3">
-              Welcome! Let's get started
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
-              It looks like there are no projects in the database yet. Click the button below to migrate the sample projects to get started.
-            </p>
-            <MigrationButton />
-          </div>
-        </main>
-        <Footer />
-        <Toaster />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -149,9 +77,8 @@ const Index = () => {
             </p>
           </div>
           
-          {/* View options and migration button */}
+          {/* View options */}
           <div className="hidden md:flex items-center gap-2">
-            <MigrationButton />
             <Button variant="outline" size="sm" className="h-8">
               Grid View
             </Button>
@@ -174,21 +101,19 @@ const Index = () => {
             <h3 className="text-2xl font-bold text-foreground mb-3">
               No projects found
             </h3>
-            <p className="text-muted-foreground max-w-md mx-auto text-lg leading-relaxed mb-6">
+            <p className="text-muted-foreground max-w-md mx-auto text-lg leading-relaxed">
               Try adjusting your filters or search query to discover more amazing community projects.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                onClick={() => {
-                  setSelectedMission("All Missions");
-                  setSearchQuery("");
-                  selectedTags.forEach(tag => handleTagToggle(tag));
-                }}
-              >
-                Clear All Filters
-              </Button>
-              <MigrationButton />
-            </div>
+            <Button 
+              className="mt-6" 
+              onClick={() => {
+                setSelectedMission("All Missions");
+                setSearchQuery("");
+                selectedTags.forEach(tag => handleTagToggle(tag));
+              }}
+            >
+              Clear All Filters
+            </Button>
           </div>
         )}
       </main>
