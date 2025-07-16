@@ -79,7 +79,6 @@ export const mockProjects = [
     tags: ["Tipping", "Miniapp", "Finalist"],
     mission: "Break Monad v2: Farcaster Edition"
   },
-  // Mission 4 projects
   {
     id: "5",
     name: "DevHub",
@@ -155,7 +154,6 @@ export const mockProjects = [
     tags: ["Dashboard", "Runner-up", "Mission 4"],
     mission: "Visualizer & Dashboard (Mission 4)"
   },
-  // Mission 2 projects
   {
     id: "10",
     name: "nadcp_dot_fun",
@@ -230,6 +228,98 @@ export const mockProjects = [
     liveUrl: "",
     tags: ["MCP", "Tool", "Mission 2"],
     mission: "Mission 2"
+  },
+  // Mission 5: Make NFTs Great Again - NFT Tooling Track
+  {
+    id: "15",
+    name: "NFThing",
+    description: "NFThing - Comprehensive NFT tooling platform, winner of Mission 5 NFT Tooling track",
+    builder: {
+      name: "gabriell_santi & shaianeviana",
+      discord: "",
+      twitter: normalizeTwitter("gabriell_santi")
+    },
+    thumbnail: projectNft,
+    githubUrl: "",
+    liveUrl: "https://nfthing-beta.vercel.app/",
+    tags: ["NFT", "Tooling", "Winner", "Mission 5"],
+    mission: "Make NFTs Great Again (Mission 5)"
+  },
+  {
+    id: "16",
+    name: "MoNFT",
+    description: "MoNFT - NFT tools and utilities platform, runner-up in Mission 5 NFT Tooling track",
+    builder: {
+      name: "rosinxyz",
+      discord: "",
+      twitter: normalizeTwitter("rosinxyz")
+    },
+    thumbnail: projectNft,
+    githubUrl: "",
+    liveUrl: "https://www.monft.tools/",
+    tags: ["NFT", "Tooling", "Runner-up", "Mission 5"],
+    mission: "Make NFTs Great Again (Mission 5)"
+  },
+  {
+    id: "17",
+    name: "NadTools",
+    description: "NadTools - NFT development and management tools, third place in Mission 5 NFT Tooling track",
+    builder: {
+      name: "tonashiro_",
+      discord: "",
+      twitter: normalizeTwitter("tonashiro_")
+    },
+    thumbnail: projectNft,
+    githubUrl: "",
+    liveUrl: "https://tools-liart-phi.vercel.app/",
+    tags: ["NFT", "Tooling", "Third Place", "Mission 5"],
+    mission: "Make NFTs Great Again (Mission 5)"
+  },
+  // Mission 5: Make NFTs Great Again - NFT Collections Track
+  {
+    id: "18",
+    name: "Nadmon",
+    description: "Nadmon - NFT collection platform, winner of Mission 5 NFT Collections track",
+    builder: {
+      name: "0xkadzu",
+      discord: "",
+      twitter: normalizeTwitter("0xkadzu")
+    },
+    thumbnail: projectNft,
+    githubUrl: "",
+    liveUrl: "https://nadmon.kadzu.dev/",
+    tags: ["NFT", "Collection", "Winner", "Mission 5"],
+    mission: "Make NFTs Great Again (Mission 5)"
+  },
+  {
+    id: "19",
+    name: "Blonks",
+    description: "Blonks - Unique NFT collection, runner-up in Mission 5 NFT Collections track",
+    builder: {
+      name: "velkan_gst",
+      discord: "",
+      twitter: normalizeTwitter("velkan_gst")
+    },
+    thumbnail: projectNft,
+    githubUrl: "",
+    liveUrl: "https://blonks.vercel.app/",
+    tags: ["NFT", "Collection", "Runner-up", "Mission 5"],
+    mission: "Make NFTs Great Again (Mission 5)"
+  },
+  {
+    id: "20",
+    name: "Moodart",
+    description: "Moodart - Artistic NFT collection, third place in Mission 5 NFT Collections track",
+    builder: {
+      name: "Davethompson100",
+      discord: "",
+      twitter: normalizeTwitter("Davethompson100")
+    },
+    thumbnail: projectNft,
+    githubUrl: "",
+    liveUrl: "https://moodart.vercel.app/",
+    tags: ["NFT", "Collection", "Third Place", "Mission 5"],
+    mission: "Make NFTs Great Again (Mission 5)"
   }
 ];
 
@@ -247,5 +337,9 @@ export const availableTags = [
   "Mission 4",
   "MCP",
   "Tool",
-  "Mission 2"
+  "Mission 2",
+  "NFT",
+  "Tooling",
+  "Collection",
+  "Mission 5"
 ];
