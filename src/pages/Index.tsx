@@ -97,6 +97,30 @@ const Index = () => {
     );
   }
 
+  // Show migration prompt if no projects exist at all
+  if (projects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+        <Navigation />
+        <Hero />
+        <main className="container px-4 lg:px-8 py-12">
+          <div className="text-center py-16">
+            <div className="text-8xl mb-6 opacity-50">🚀</div>
+            <h3 className="text-2xl font-bold text-foreground mb-3">
+              Welcome! Let's get started
+            </h3>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
+              It looks like there are no projects in the database yet. Click the button below to migrate the sample projects to get started.
+            </p>
+            <MigrationButton />
+          </div>
+        </main>
+        <Footer />
+        <Toaster />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
@@ -150,19 +174,21 @@ const Index = () => {
             <h3 className="text-2xl font-bold text-foreground mb-3">
               No projects found
             </h3>
-            <p className="text-muted-foreground max-w-md mx-auto text-lg leading-relaxed">
+            <p className="text-muted-foreground max-w-md mx-auto text-lg leading-relaxed mb-6">
               Try adjusting your filters or search query to discover more amazing community projects.
             </p>
-            <Button 
-              className="mt-6" 
-              onClick={() => {
-                setSelectedMission("All Missions");
-                setSearchQuery("");
-                selectedTags.forEach(tag => handleTagToggle(tag));
-              }}
-            >
-              Clear All Filters
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                onClick={() => {
+                  setSelectedMission("All Missions");
+                  setSearchQuery("");
+                  selectedTags.forEach(tag => handleTagToggle(tag));
+                }}
+              >
+                Clear All Filters
+              </Button>
+              <MigrationButton />
+            </div>
           </div>
         )}
       </main>
