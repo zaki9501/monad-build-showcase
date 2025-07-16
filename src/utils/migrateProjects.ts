@@ -6,9 +6,9 @@ export const migrateProjectsToSupabase = async () => {
   console.log('Starting migration of projects to Supabase...');
   
   try {
-    // Transform mock projects to match database schema
+    // Transform mock projects to match database schema with proper UUIDs
     const projectsToInsert = mockProjects.map(project => ({
-      id: project.id,
+      // Generate a proper UUID instead of using string IDs
       name: project.name,
       description: project.description,
       builder_name: project.builder.name,
@@ -31,10 +31,7 @@ export const migrateProjectsToSupabase = async () => {
       
       const { data, error } = await supabase
         .from('projects')
-        .upsert(batch, { 
-          onConflict: 'id',
-          ignoreDuplicates: false 
-        })
+        .insert(batch)
         .select();
 
       if (error) {
