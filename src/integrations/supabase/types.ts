@@ -14,13 +14,158 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      project_likes: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string
+          user_ip: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id: string
+          user_ip: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string
+          user_ip?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_likes_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_ratings: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string
+          rating: number
+          user_ip: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id: string
+          rating: number
+          user_ip: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string
+          rating?: number
+          user_ip?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_ratings_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_views: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string
+          user_ip: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id: string
+          user_ip: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string
+          user_ip?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_views_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          builder_discord: string
+          builder_name: string
+          builder_twitter: string | null
+          created_at: string
+          description: string | null
+          github_url: string | null
+          id: string
+          live_url: string | null
+          mission: string
+          name: string
+          tags: string[] | null
+          thumbnail: string | null
+          updated_at: string
+        }
+        Insert: {
+          builder_discord: string
+          builder_name: string
+          builder_twitter?: string | null
+          created_at?: string
+          description?: string | null
+          github_url?: string | null
+          id?: string
+          live_url?: string | null
+          mission: string
+          name: string
+          tags?: string[] | null
+          thumbnail?: string | null
+          updated_at?: string
+        }
+        Update: {
+          builder_discord?: string
+          builder_name?: string
+          builder_twitter?: string | null
+          created_at?: string
+          description?: string | null
+          github_url?: string | null
+          id?: string
+          live_url?: string | null
+          mission?: string
+          name?: string
+          tags?: string[] | null
+          thumbnail?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_project_stats: {
+        Args: { project_uuid: string }
+        Returns: {
+          likes_count: number
+          views_count: number
+          avg_rating: number
+          rating_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

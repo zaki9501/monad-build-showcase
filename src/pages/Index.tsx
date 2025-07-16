@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
@@ -5,6 +6,7 @@ import ProjectCard from "@/components/ProjectCard";
 import FilterSidebar from "@/components/FilterSidebar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 import { mockProjects, availableTags } from "@/data/mockProjects";
 
 const Index = () => {
@@ -117,6 +119,7 @@ const Index = () => {
       </main>
 
       <Footer />
+      <Toaster />
     </div>
   );
 };

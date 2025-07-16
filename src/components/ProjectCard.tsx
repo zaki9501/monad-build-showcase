@@ -1,10 +1,13 @@
-import { Github, ExternalLink, Eye, Heart, Star } from "lucide-react";
+
+import { Github, ExternalLink, Eye, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-// Add import for Twitter icon
 import { Twitter } from "lucide-react";
+import { useProjectInteractions } from "@/hooks/useProjectInteractions";
+import StarRating from "@/components/StarRating";
+import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: {
@@ -25,6 +28,15 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  const { 
+    stats, 
+    isLiked, 
+    userRating, 
+    loading, 
+    toggleLike, 
+    rateProject 
+  } = useProjectInteractions(project.id);
+
   // Extract Twitter username from URL for avatar
   const getTwitterUsername = (twitterUrl?: string) => {
     if (!twitterUrl) return null;
@@ -35,11 +47,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const twitterUsername = getTwitterUsername(project.builder.twitter);
   const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
-  // Debug: log the builder twitter value
-  console.log("Builder Twitter:", project.builder.twitter);
-  console.log("Twitter Username:", twitterUsername);
-  console.log("Avatar URL:", avatarUrl);
-  
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm">
       {/* Thumbnail with overlay effects */}
@@ -76,10 +83,17 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <Button
             size="sm"
             variant="secondary"
-            className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
-            disabled={project.mission !== "Mission 2"}
+            className={cn(
+              "h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg",
+              isLiked && "bg-red-50"
+            )}
+            onClick={toggleLike}
+            disabled={loading}
           >
-            <Heart className="h-4 w-4 text-red-500" />
+            <Heart className={cn(
+              "h-4 w-4 transition-colors",
+              isLiked ? "fill-red-500 text-red-500" : "text-gray-600"
+            )} />
           </Button>
         </div>
 
@@ -115,7 +129,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 <span className="text-sm font-semibold text-foreground truncate">
                   {project.builder.name}
                 </span>
-                {/* X (Twitter) icon with link - robust check */}
+                {/* X (Twitter) icon with link */}
                 {project.builder.twitter &&
                   project.builder.twitter.trim().toLowerCase().startsWith("http") && (
                     <a
@@ -135,16 +149,13 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </div>
           </div>
           
-          {/* Star rating placeholder */}
-          <div className="flex items-center gap-1">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <Star 
-                key={star} 
-                className="w-3 h-3 fill-yellow-400 text-yellow-400" 
-              />
-            ))}
-            <span className="text-xs text-muted-foreground ml-1">5.0</span>
-          </div>
+          {/* Interactive Star Rating */}
+          <StarRating
+            rating={stats.avg_rating}
+            userRating={userRating}
+            onRate={rateProject}
+            size="sm"
+          />
         </div>
       </CardHeader>
 
@@ -174,19 +185,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           )}
         </div>
 
-        {/* Stats section */}
+        {/* Real Stats section */}
         <div className="flex items-center gap-4 text-xs text-muted-foreground border-t pt-3">
           <div className="flex items-center gap-1">
             <Eye className="w-3 h-3" />
-            <span>1.2k views</span>
+            <span>{stats.views_count} views</span>
           </div>
           <div className="flex items-center gap-1">
             <Heart className="w-3 h-3" />
-            <span>89 likes</span>
+            <span>{stats.likes_count} likes</span>
           </div>
           <div className="flex items-center gap-1">
             <Github className="w-3 h-3" />
-            <span>24 stars</span>
+            <span>{stats.rating_count} ratings</span>
           </div>
         </div>
       </CardContent>
