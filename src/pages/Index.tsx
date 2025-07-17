@@ -7,16 +7,19 @@ import FilterSidebar from "@/components/FilterSidebar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
-import { mockProjects, availableTags } from "@/data/mockProjects";
+import { useProjects } from "@/hooks/useProjects";
+import { availableTags } from "@/data/mockProjects";
 
 const Index = () => {
   const [selectedMission, setSelectedMission] = useState("All Missions");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  
+  const { projects, loading } = useProjects();
 
   // Filter projects based on current filters
   const filteredProjects = useMemo(() => {
-    return mockProjects.filter(project => {
+    return projects.filter(project => {
       // Mission filter
       if (selectedMission !== "All Missions" && project.mission !== selectedMission) {
         return false;
@@ -39,7 +42,7 @@ const Index = () => {
 
       return true;
     });
-  }, [selectedMission, searchQuery, selectedTags]);
+  }, [projects, selectedMission, searchQuery, selectedTags]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev => 
@@ -48,6 +51,28 @@ const Index = () => {
         : [...prev, tag]
     );
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+        <Navigation />
+        <Hero />
+        <main className="container px-4 lg:px-8 py-12">
+          <div className="text-center py-16">
+            <div className="text-8xl mb-6 opacity-50">⏳</div>
+            <h3 className="text-2xl font-bold text-foreground mb-3">
+              Loading projects...
+            </h3>
+            <p className="text-muted-foreground max-w-md mx-auto text-lg leading-relaxed">
+              Fetching amazing community projects from our database.
+            </p>
+          </div>
+        </main>
+        <Footer />
+        <Toaster />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
