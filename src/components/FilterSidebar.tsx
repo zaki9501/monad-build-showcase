@@ -1,4 +1,3 @@
-
 import { Filter, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,15 +26,21 @@ const FilterSidebar = ({
   availableTags,
   availableMissions
 }: FilterSidebarProps) => {
-  // Use either the provided available missions or default ones
-  const missions = availableMissions || [
-    "All Missions",
-    "Mission 1",
-    "Mission 2", 
-    "Mission 3",
-    "Mission 4",
-    "Mission 5"
-  ];
+  // Create a mapping from full mission names to simplified display names
+  const getMissionDisplayName = (fullMissionName: string) => {
+    if (fullMissionName === "All Missions") return "All Missions";
+    if (fullMissionName.includes("Mission 2")) return "Mission 2";
+    if (fullMissionName.includes("Mission 4")) return "Mission 4";
+    if (fullMissionName.includes("Mission 5")) return "Mission 5";
+    if (fullMissionName.includes("Farcaster")) return "Mission 1";
+    return fullMissionName; // fallback to original name
+  };
+
+  // Get the display name for the currently selected mission
+  const selectedMissionDisplay = getMissionDisplayName(selectedMission);
+
+  // Create mission options with display names but keep original values
+  const missionOptions = availableMissions || ["All Missions"];
 
   return (
     <Card className="bg-gradient-to-br from-card to-muted/20 border-border/50 mb-8">
@@ -52,12 +57,14 @@ const FilterSidebar = ({
             <label className="text-sm font-medium">Mission</label>
             <Select value={selectedMission} onValueChange={onMissionChange}>
               <SelectTrigger className="bg-muted/50 border-border/50">
-                <SelectValue placeholder="Select mission" />
+                <SelectValue placeholder="Select mission">
+                  {selectedMissionDisplay}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {missions.map((mission) => (
+                {missionOptions.map((mission) => (
                   <SelectItem key={mission} value={mission}>
-                    {mission}
+                    {getMissionDisplayName(mission)}
                   </SelectItem>
                 ))}
               </SelectContent>
