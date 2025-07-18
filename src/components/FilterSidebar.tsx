@@ -1,3 +1,4 @@
+
 import { Filter, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -29,10 +30,19 @@ const FilterSidebar = ({
   // Create a mapping from full mission names to simplified display names
   const getMissionDisplayName = (fullMissionName: string) => {
     if (fullMissionName === "All Missions") return "All Missions";
-    if (fullMissionName.includes("Mission 2")) return "Mission 2";
-    if (fullMissionName.includes("Mission 4")) return "Mission 4";
-    if (fullMissionName.includes("Mission 5")) return "Mission 5";
-    if (fullMissionName.includes("Farcaster")) return "Mission 1";
+    
+    // Map based on actual mission names from the database
+    if (fullMissionName.includes("Farcaster Edition") || fullMissionName.includes("Break Monad v2: Farcaster")) return "Mission 1";
+    if (fullMissionName === "Mission 2") return "Mission 2";
+    if (fullMissionName.includes("Mission 4") || fullMissionName.includes("Visualizer & Dashboard")) return "Mission 4";
+    if (fullMissionName.includes("Mission 5") || fullMissionName.includes("Make NFTs Great Again")) return "Mission 5";
+    
+    // Handle any mission that contains "Mission" followed by a number
+    const missionMatch = fullMissionName.match(/Mission (\d+)/);
+    if (missionMatch) {
+      return `Mission ${missionMatch[1]}`;
+    }
+    
     return fullMissionName; // fallback to original name
   };
 
