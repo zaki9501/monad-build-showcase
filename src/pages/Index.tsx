@@ -17,11 +17,23 @@ const Index = () => {
   
   const { projects, loading } = useProjects();
 
+  // Debug: Log the actual mission values from the database
+  React.useEffect(() => {
+    if (projects.length > 0) {
+      const uniqueMissions = [...new Set(projects.map(p => p.mission))];
+      console.log('Available missions in database:', uniqueMissions);
+      console.log('All projects with missions:', projects.map(p => ({ name: p.name, mission: p.mission })));
+    }
+  }, [projects]);
+
   // Filter projects based on current filters
   const filteredProjects = useMemo(() => {
     return projects.filter(project => {
-      // Mission filter
+      // Mission filter - debug logging
+      console.log(`Filtering project "${project.name}": mission="${project.mission}", selectedMission="${selectedMission}"`);
+      
       if (selectedMission !== "All Missions" && project.mission !== selectedMission) {
+        console.log(`Project "${project.name}" filtered out by mission`);
         return false;
       }
 
@@ -74,6 +86,10 @@ const Index = () => {
     );
   }
 
+  // Get available missions from the actual data
+  const availableMissions = ["All Missions", ...new Set(projects.map(p => p.mission)).values()];
+  console.log('Available missions for filter:', availableMissions);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
@@ -89,6 +105,7 @@ const Index = () => {
           selectedTags={selectedTags}
           onTagToggle={handleTagToggle}
           availableTags={availableTags}
+          availableMissions={availableMissions}
         />
 
         {/* Results Header with enhanced styling */}

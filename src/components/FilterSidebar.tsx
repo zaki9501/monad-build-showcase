@@ -14,6 +14,7 @@ interface FilterSidebarProps {
   selectedTags: string[];
   onTagToggle: (tag: string) => void;
   availableTags: string[];
+  availableMissions?: string[];
 }
 
 const FilterSidebar = ({
@@ -23,9 +24,11 @@ const FilterSidebar = ({
   onSearchChange,
   selectedTags,
   onTagToggle,
-  availableTags
+  availableTags,
+  availableMissions
 }: FilterSidebarProps) => {
-  const missions = [
+  // Use either the provided available missions or default ones
+  const missions = availableMissions || [
     "All Missions",
     "Mission 1",
     "Mission 2", 
