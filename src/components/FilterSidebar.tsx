@@ -36,11 +36,38 @@ const FilterSidebar = ({
     return fullMissionName; // fallback to original name
   };
 
+  // Sort missions in proper numerical order
+  const sortMissions = (missions: string[]) => {
+    const allMissions = [...missions];
+    
+    // Separate "All Missions" from the rest
+    const allMissionsIndex = allMissions.findIndex(m => m === "All Missions");
+    const allMissionsItem = allMissionsIndex !== -1 ? allMissions.splice(allMissionsIndex, 1)[0] : null;
+    
+    // Sort the remaining missions by extracting mission numbers
+    const sortedMissions = allMissions.sort((a, b) => {
+      const getNumber = (mission: string) => {
+        const displayName = getMissionDisplayName(mission);
+        const match = displayName.match(/Mission (\d+)/);
+        return match ? parseInt(match[1]) : 999; // Put non-numbered missions at the end
+      };
+      
+      return getNumber(a) - getNumber(b);
+    });
+    
+    // Put "All Missions" first if it exists
+    if (allMissionsItem) {
+      return [allMissionsItem, ...sortedMissions];
+    }
+    
+    return sortedMissions;
+  };
+
   // Get the display name for the currently selected mission
   const selectedMissionDisplay = getMissionDisplayName(selectedMission);
 
-  // Create mission options with display names but keep original values
-  const missionOptions = availableMissions || ["All Missions"];
+  // Create mission options with display names but keep original values, sorted properly
+  const missionOptions = sortMissions(availableMissions || ["All Missions"]);
 
   return (
     <Card className="bg-gradient-to-br from-card to-muted/20 border-border/50 mb-8">
