@@ -48,17 +48,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-sm uppercase tracking-wide">Community</h3>
             <div className="flex flex-col space-y-2">
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://discord.gg/monaddev" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Discord Server
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://x.com/monad_dev" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Twitter Community
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                GitHub Repos
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Documentation
               </a>
             </div>
           </div>
