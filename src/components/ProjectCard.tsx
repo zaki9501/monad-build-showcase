@@ -8,6 +8,7 @@ import { Twitter } from "lucide-react";
 import { useProjectInteractions } from "@/hooks/useProjectInteractions";
 import StarRating from "@/components/StarRating";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface ProjectCardProps {
   project: {
@@ -48,62 +49,70 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
   return (
-    <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm">
-      {/* Thumbnail with overlay effects */}
-      <div className="relative overflow-hidden h-52">
-        <img 
-          src={project.thumbnail} 
-          alt={project.name}
-          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
-        />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-        
-        {/* Mission badge overlay */}
-        <div className="absolute top-3 left-3">
-          <Badge className="bg-primary/90 text-primary-foreground font-semibold px-3 py-1 backdrop-blur-sm">
-            {project.mission}
-          </Badge>
-        </div>
-        
-        {/* Quick action buttons overlay */}
-        <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-          {project.liveUrl && (
+    <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer">
+      {/* Make the entire card clickable */}
+      <Link to={`/project/${project.id}`} className="block">
+        {/* Thumbnail with overlay effects */}
+        <div className="relative overflow-hidden h-52">
+          <img 
+            src={project.thumbnail} 
+            alt={project.name}
+            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+          
+          {/* Mission badge overlay */}
+          <div className="absolute top-3 left-3">
+            <Badge className="bg-primary/90 text-primary-foreground font-semibold px-3 py-1 backdrop-blur-sm">
+              {project.mission}
+            </Badge>
+          </div>
+          
+          {/* Quick action buttons overlay */}
+          <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            {project.liveUrl && (
+              <Button
+                size="sm"
+                variant="secondary"
+                className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
+                asChild
+                onClick={(e) => e.stopPropagation()}
+              >
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <Eye className="h-4 w-4 text-primary" />
+                </a>
+              </Button>
+            )}
             <Button
               size="sm"
               variant="secondary"
-              className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
-              asChild
+              className={cn(
+                "h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg",
+                isLiked && "bg-red-50"
+              )}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleLike();
+              }}
+              disabled={loading}
             >
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                <Eye className="h-4 w-4 text-primary" />
-              </a>
+              <Heart className={cn(
+                "h-4 w-4 transition-colors",
+                isLiked ? "fill-red-500 text-red-500" : "text-gray-600"
+              )} />
             </Button>
-          )}
-          <Button
-            size="sm"
-            variant="secondary"
-            className={cn(
-              "h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg",
-              isLiked && "bg-red-50"
-            )}
-            onClick={toggleLike}
-            disabled={loading}
-          >
-            <Heart className={cn(
-              "h-4 w-4 transition-colors",
-              isLiked ? "fill-red-500 text-red-500" : "text-gray-600"
-            )} />
-          </Button>
-        </div>
+          </div>
 
-        {/* Bottom overlay with project name */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-          <h3 className="font-bold text-xl text-white mb-1 group-hover:text-primary-glow transition-colors">
-            {project.name}
-          </h3>
+          {/* Bottom overlay with project name */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <h3 className="font-bold text-xl text-white mb-1 group-hover:text-primary-glow transition-colors">
+              {project.name}
+            </h3>
+          </div>
         </div>
-      </div>
+      </Link>
 
       <CardHeader className="pb-3 pt-4">
         <div className="flex items-start justify-between gap-3">
@@ -138,6 +147,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                       rel="noopener noreferrer"
                       className="text-blue-500 hover:text-blue-700 transition-colors"
                       title="View X profile"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <Twitter className="w-3 h-3" />
                     </a>
@@ -150,12 +160,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
           
           {/* Interactive Star Rating */}
-          <StarRating
-            rating={stats.avg_rating}
-            userRating={userRating}
-            onRate={rateProject}
-            size="sm"
-          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <StarRating
+              rating={stats.avg_rating}
+              userRating={userRating}
+              onRate={rateProject}
+              size="sm"
+            />
+          </div>
         </div>
       </CardHeader>
 
@@ -209,6 +221,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
           asChild
           disabled={project.mission !== "Mission 2"}
+          onClick={(e) => e.stopPropagation()}
         >
           {project.mission === "Mission 2" ? (
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
@@ -227,6 +240,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             size="sm" 
             className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl"
             asChild
+            onClick={(e) => e.stopPropagation()}
           >
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3 w-3 mr-1" />
