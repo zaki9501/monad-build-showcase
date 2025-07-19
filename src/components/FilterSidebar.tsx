@@ -89,6 +89,10 @@ const FilterSidebar = ({
     return sortedMissions;
   };
 
+  // Debug: Log the available missions and their display names
+  console.log('Available missions:', availableMissions);
+  console.log('Mission display names:', availableMissions?.map(m => ({ original: m, display: getMissionDisplayName(m) })));
+
   // Get the display name for the currently selected mission
   const selectedMissionDisplay = getMissionDisplayName(selectedMission) || selectedMission;
 
