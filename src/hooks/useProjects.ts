@@ -13,6 +13,14 @@ import retroBlockExpImg from '@/assets/projects/Retro Block Exp..png';
 import testnetExpImg from '@/assets/projects/Testnet Exp.png';
 import testnetMetricsImg from '@/assets/projects/Testnet Metrics Hub.png';
 
+// Import Mission 5 project images that actually exist
+import nfThingImg from '@/assets/projects/NfThing.png';
+import moNftImg from '@/assets/projects/MoNft.png';
+import nadtoolsImg from '@/assets/projects/Nadtools.png';
+import nadmonImg from '@/assets/projects/NADMON.png';
+import blonksImg from '@/assets/projects/Blonks.png';
+import moodArtImg from '@/assets/projects/MoodArt.png';
+
 export interface Project {
   id: string;
   name: string;
@@ -29,17 +37,27 @@ export interface Project {
   mission: string;
 }
 
-// Map project names to local images (only for existing images)
+// Map project names to local images (using actual existing files)
 const projectImageMap: Record<string, string> = {
   'Chog vs catgirl': chogVsCatgirlImg,
+  'Chog vs CatGirls': chogVsCatgirlImg,
   'Flappy Trump': flappyTrumpImg,
   'Monair': monairImg,
   'Montip': montipImg,
+  'MonTip': montipImg,
   'P1x3lz': p1x3lzImg,
   'Retro Block Explorer': retroBlockExpImg,
+  'Retro Block Exp.': retroBlockExpImg,
   'Testnet Explorer': testnetExpImg,
+  'Testnet Exp': testnetExpImg,
   'Testnet Metrics Hub': testnetMetricsImg,
-  // Mission 5 projects will use database thumbnails since local images don't exist
+  // Mission 5 projects using actual existing images
+  'NFThing': nfThingImg,
+  'MoNFT': moNftImg,
+  'NadTools': nadtoolsImg,
+  'Nadmon': nadmonImg,
+  'Blonks': blonksImg,
+  'Moodart': moodArtImg,
 };
 
 export const useProjects = () => {
