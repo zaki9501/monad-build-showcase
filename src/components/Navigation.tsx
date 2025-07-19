@@ -1,6 +1,6 @@
-import { Search, Menu, Moon, Sun } from "lucide-react";
+
+import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -20,25 +20,8 @@ const Navigation = () => {
           <span className="font-semibold text-lg">Monad Showcase</span>
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Button variant="ghost" className="font-medium">
-            Explore
-          </Button>
-          <Button variant="ghost" className="font-medium">
-            Submit
-          </Button>
-        </div>
-
-        {/* Search Bar & Dark Mode Toggle */}
-        <div className="hidden lg:flex items-center space-x-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search projects..."
-              className="pl-10 w-80 bg-muted/50 border-border/50 focus:bg-background"
-            />
-          </div>
+        {/* Dark Mode Toggle */}
+        <div className="flex items-center space-x-4">
           {/* Dark mode toggle */}
           {mounted && (
             <Button
