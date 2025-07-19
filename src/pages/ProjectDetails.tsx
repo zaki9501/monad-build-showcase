@@ -11,6 +11,7 @@ import { Twitter } from "lucide-react";
 import { useProjects } from "@/hooks/useProjects";
 import { useProjectInteractions } from "@/hooks/useProjectInteractions";
 import StarRating from "@/components/StarRating";
+import UrlVerificationBadge from "@/components/UrlVerificationBadge";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -199,6 +200,32 @@ const ProjectDetails = () => {
                       ))}
                     </div>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* URL Verification Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Security & Verification</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {project.liveUrl && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Live Demo URL</span>
+                      <UrlVerificationBadge url={project.liveUrl} size="md" />
+                    </div>
+                  )}
+                  {project.githubUrl && project.mission === "Mission 2" && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Source Code URL</span>
+                      <UrlVerificationBadge url={project.githubUrl} size="md" />
+                    </div>
+                  )}
+                  {(!project.liveUrl && !project.githubUrl) && (
+                    <p className="text-sm text-muted-foreground">No URLs to verify for this project.</p>
+                  )}
                 </div>
               </CardContent>
             </Card>

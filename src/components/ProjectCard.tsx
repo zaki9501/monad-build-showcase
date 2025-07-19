@@ -7,6 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Twitter } from "lucide-react";
 import { useProjectInteractions } from "@/hooks/useProjectInteractions";
 import StarRating from "@/components/StarRating";
+import UrlVerificationBadge from "@/components/UrlVerificationBadge";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
@@ -69,8 +70,18 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </Badge>
           </div>
           
+          {/* URL Verification badges overlay */}
+          <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            {project.liveUrl && (
+              <UrlVerificationBadge url={project.liveUrl} size="sm" />
+            )}
+            {project.githubUrl && project.mission === "Mission 2" && (
+              <UrlVerificationBadge url={project.githubUrl} size="sm" />
+            )}
+          </div>
+
           {/* Quick action buttons overlay */}
-          <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             {project.liveUrl && (
               <Button
                 size="sm"
@@ -194,6 +205,22 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             >
               +{project.tags.length - 3}
             </Badge>
+          )}
+        </div>
+
+        {/* URL Verification badges in content */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.liveUrl && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Live Demo:</span>
+              <UrlVerificationBadge url={project.liveUrl} size="sm" />
+            </div>
+          )}
+          {project.githubUrl && project.mission === "Mission 2" && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Source Code:</span>
+              <UrlVerificationBadge url={project.githubUrl} size="sm" />
+            </div>
           )}
         </div>
 
