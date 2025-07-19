@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { useProjects } from "@/hooks/useProjects";
 
 const initialForm = {
   name: "",
@@ -29,10 +30,16 @@ const initialForm = {
 
 const Hero = () => {
   const [form, setForm] = useState(initialForm);
+  const { projects, loading } = useProjects();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  // Calculate stats from actual data
+  const totalProjects = projects.length;
+  const uniqueBuilders = new Set(projects.map(project => project.builder.name)).size;
+  const uniqueMissions = new Set(projects.map(project => project.mission)).size;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-background via-accent/30 to-primary-glow/20 py-20 lg:py-32">
@@ -102,86 +109,92 @@ const Hero = () => {
                   method="POST"
                   className="space-y-4"
                 >
-                    <Input
-                      name="name"
-                      placeholder="Project Name"
-                      value={form.name}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Textarea
-                      name="description"
-                      placeholder="Project Description"
-                      value={form.description}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Input
-                      name="xUsername"
-                      placeholder="Builder X (Twitter) Username"
-                      value={form.xUsername}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Input
-                      name="discord"
-                      placeholder="Discord Username (optional)"
-                      value={form.discord}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      name="mission"
-                      placeholder="Mission (e.g. Mission 4)"
-                      value={form.mission}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Input
-                      name="tags"
-                      placeholder="Tags (comma separated)"
-                      value={form.tags}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      name="githubUrl"
-                      placeholder="GitHub URL"
-                      value={form.githubUrl}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      name="liveUrl"
-                      placeholder="Live URL"
-                      value={form.liveUrl}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      name="imageUrl"
-                      placeholder="Image URL (optional)"
-                      value={form.imageUrl}
-                      onChange={handleChange}
-                    />
-                    <DialogFooter>
-                      <Button type="submit" className="w-full">Submit</Button>
-                      <DialogClose asChild>
-                        <Button type="button" variant="ghost" className="w-full" onClick={() => setForm(initialForm)}>Cancel</Button>
-                      </DialogClose>
-                    </DialogFooter>
-                  </form>
+                  <Input
+                    name="name"
+                    placeholder="Project Name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Textarea
+                    name="description"
+                    placeholder="Project Description"
+                    value={form.description}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="xUsername"
+                    placeholder="Builder X (Twitter) Username"
+                    value={form.xUsername}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="discord"
+                    placeholder="Discord Username (optional)"
+                    value={form.discord}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="mission"
+                    placeholder="Mission (e.g. Mission 4)"
+                    value={form.mission}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="tags"
+                    placeholder="Tags (comma separated)"
+                    value={form.tags}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="githubUrl"
+                    placeholder="GitHub URL"
+                    value={form.githubUrl}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="liveUrl"
+                    placeholder="Live URL"
+                    value={form.liveUrl}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="imageUrl"
+                    placeholder="Image URL (optional)"
+                    value={form.imageUrl}
+                    onChange={handleChange}
+                  />
+                  <DialogFooter>
+                    <Button type="submit" className="w-full">Submit</Button>
+                    <DialogClose asChild>
+                      <Button type="button" variant="ghost" className="w-full" onClick={() => setForm(initialForm)}>Cancel</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </form>
               </DialogContent>
             </Dialog>
           </div>
           {/* Stats */}
           <div className="mt-16 grid grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-2xl font-bold text-primary">14</div>
+              <div className="text-2xl font-bold text-primary">
+                {loading ? "..." : totalProjects}
+              </div>
               <div className="text-sm text-muted-foreground">Projects</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-primary">14</div>
+              <div className="text-2xl font-bold text-primary">
+                {loading ? "..." : uniqueBuilders}
+              </div>
               <div className="text-sm text-muted-foreground">Builders</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-primary">5</div>
+              <div className="text-2xl font-bold text-primary">
+                {loading ? "..." : uniqueMissions}
+              </div>
               <div className="text-sm text-muted-foreground">Missions</div>
             </div>
           </div>
