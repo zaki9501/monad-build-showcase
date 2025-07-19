@@ -10,6 +10,12 @@ import MonairImg from "@/assets/projects/Monair.png";
 import TestnetExpImg from "@/assets/projects/Testnet Exp.png";
 import TestnetMetricsHubImg from "@/assets/projects/Testnet Metrics Hub.png";
 import GithubLogo from "@/assets/projects/github.png";
+import NfThingImg from "@/assets/projects/NfThing.png";
+import MoNftImg from "@/assets/projects/MoNft.png";
+import NadtoolsImg from "@/assets/projects/Nadtools.png";
+import NADMONImg from "@/assets/projects/NADMON.png";
+import BlonksImg from "@/assets/projects/Blonks.png";
+import MoodArtImg from "@/assets/projects/MoodArt.png";
 
 function normalizeTwitter(twitter) {
   if (!twitter) return "";
@@ -239,7 +245,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("gabriell_santi")
     },
-    thumbnail: projectNft,
+    thumbnail: P1x3lzImg,
     githubUrl: "",
     liveUrl: "https://nfthing-beta.vercel.app/",
     tags: ["NFT", "Tooling", "Winner", "Mission 5"],
@@ -254,7 +260,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("rosinxyz")
     },
-    thumbnail: projectNft,
+    thumbnail: P1x3lzImg,
     githubUrl: "",
     liveUrl: "https://www.monft.tools/",
     tags: ["NFT", "Tooling", "Runner-up", "Mission 5"],
@@ -269,7 +275,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("tonashiro_")
     },
-    thumbnail: projectNft,
+    thumbnail: P1x3lzImg,
     githubUrl: "",
     liveUrl: "https://tools-liart-phi.vercel.app/",
     tags: ["NFT", "Tooling", "Third Place", "Mission 5"],
@@ -285,7 +291,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("0xkadzu")
     },
-    thumbnail: projectNft,
+    thumbnail: P1x3lzImg,
     githubUrl: "",
     liveUrl: "https://nadmon.kadzu.dev/",
     tags: ["NFT", "Collection", "Winner", "Mission 5"],
@@ -300,7 +306,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("velkan_gst")
     },
-    thumbnail: projectNft,
+    thumbnail: P1x3lzImg,
     githubUrl: "",
     liveUrl: "https://blonks.vercel.app/",
     tags: ["NFT", "Collection", "Runner-up", "Mission 5"],
@@ -315,7 +321,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("Davethompson100")
     },
-    thumbnail: projectNft,
+    thumbnail: P1x3lzImg,
     githubUrl: "",
     liveUrl: "https://moodart.vercel.app/",
     tags: ["NFT", "Collection", "Third Place", "Mission 5"],
