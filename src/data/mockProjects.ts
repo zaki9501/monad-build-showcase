@@ -239,7 +239,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("gabriell_santi")
     },
-    thumbnail: projectNft,
+    thumbnail: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&q=80&w=800&h=600",
     githubUrl: "",
     liveUrl: "https://nfthing-beta.vercel.app/",
     tags: ["NFT", "Tooling", "Winner", "Mission 5"],
@@ -254,7 +254,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("rosinxyz")
     },
-    thumbnail: projectNft,
+    thumbnail: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&q=80&w=800&h=600",
     githubUrl: "",
     liveUrl: "https://www.monft.tools/",
     tags: ["NFT", "Tooling", "Runner-up", "Mission 5"],
@@ -269,7 +269,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("tonashiro_")
     },
-    thumbnail: projectNft,
+    thumbnail: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=800&h=600",
     githubUrl: "",
     liveUrl: "https://tools-liart-phi.vercel.app/",
     tags: ["NFT", "Tooling", "Third Place", "Mission 5"],
@@ -285,7 +285,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("0xkadzu")
     },
-    thumbnail: projectNft,
+    thumbnail: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&q=80&w=800&h=600",
     githubUrl: "",
     liveUrl: "https://nadmon.kadzu.dev/",
     tags: ["NFT", "Collection", "Winner", "Mission 5"],
@@ -300,7 +300,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("velkan_gst")
     },
-    thumbnail: projectNft,
+    thumbnail: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&q=80&w=800&h=600",
     githubUrl: "",
     liveUrl: "https://blonks.vercel.app/",
     tags: ["NFT", "Collection", "Runner-up", "Mission 5"],
@@ -315,7 +315,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("Davethompson100")
     },
-    thumbnail: projectNft,
+    thumbnail: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=800&h=600",
     githubUrl: "",
     liveUrl: "https://moodart.vercel.app/",
     tags: ["NFT", "Collection", "Third Place", "Mission 5"],
