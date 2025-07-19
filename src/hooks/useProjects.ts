@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -11,14 +12,6 @@ import p1x3lzImg from '@/assets/projects/P1x3lz.png';
 import retroBlockExpImg from '@/assets/projects/Retro Block Exp..png';
 import testnetExpImg from '@/assets/projects/Testnet Exp.png';
 import testnetMetricsImg from '@/assets/projects/Testnet Metrics Hub.png';
-
-// Import Mission 5 project images (only the ones that exist)
-import nfthingImg from '@/assets/projects/NFThing.png';
-import moNFTImg from '@/assets/projects/MoNFT.png';
-import nadToolsImg from '@/assets/projects/NadTools.png';
-import blonksImg from '@/assets/projects/Blonks.png';
-import moodArtImg from '@/assets/projects/MoodArt.png';
-import nadmonImg from '@/assets/projects/NADMON.png';
 
 export interface Project {
   id: string;
@@ -36,7 +29,7 @@ export interface Project {
   mission: string;
 }
 
-// Map project names to local images
+// Map project names to local images (only for existing images)
 const projectImageMap: Record<string, string> = {
   'Chog vs catgirl': chogVsCatgirlImg,
   'Flappy Trump': flappyTrumpImg,
@@ -46,15 +39,7 @@ const projectImageMap: Record<string, string> = {
   'Retro Block Explorer': retroBlockExpImg,
   'Testnet Explorer': testnetExpImg,
   'Testnet Metrics Hub': testnetMetricsImg,
-  // Mission 5 projects
-  'NFThing': nfthingImg,
-  'MoNFT': moNFTImg,
-  'NadTools': nadToolsImg,
-  'Blonks': blonksImg,
-  'MoodArt': moodArtImg,
-  'Moodart': moodArtImg, // Alternative spelling
-  'Nadmon': nadmonImg,
-  'NADMON': nadmonImg, // Alternative casing
+  // Mission 5 projects will use database thumbnails since local images don't exist
 };
 
 export const useProjects = () => {
