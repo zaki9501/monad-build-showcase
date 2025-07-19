@@ -1,4 +1,3 @@
-
 import { Filter, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -32,23 +31,37 @@ const FilterSidebar = ({
     if (fullMissionName === "All Missions") return "All Missions";
     
     // Map based on actual mission names from the database
-    if (fullMissionName.includes("Farcaster Edition") || fullMissionName.includes("Break Monad v2: Farcaster")) return "Mission 1";
+    // Remove Mission 1 mapping entirely - we'll filter it out
     if (fullMissionName === "Mission 2") return "Mission 2";
     if (fullMissionName.includes("Mission 4") || fullMissionName.includes("Visualizer & Dashboard")) return "Mission 4";
     if (fullMissionName.includes("Mission 5") || fullMissionName.includes("Make NFTs Great Again")) return "Mission 5";
     
-    // Handle any mission that contains "Mission" followed by a number
+    // Handle any mission that contains "Mission" followed by a number (except Mission 1)
     const missionMatch = fullMissionName.match(/Mission (\d+)/);
-    if (missionMatch) {
+    if (missionMatch && missionMatch[1] !== "1") {
       return `Mission ${missionMatch[1]}`;
+    }
+    
+    // Filter out Mission 1 related missions entirely
+    if (fullMissionName.includes("Break Monad v2: Farcaster Edition") || fullMissionName.includes("Farcaster Edition")) {
+      return null; // This will be filtered out
     }
     
     return fullMissionName; // fallback to original name
   };
 
+  // Filter out missions that should not be displayed (like Mission 1)
+  const getValidMissions = (missions: string[]) => {
+    return missions.filter(mission => {
+      const displayName = getMissionDisplayName(mission);
+      return displayName !== null;
+    });
+  };
+
   // Sort missions in proper numerical order
   const sortMissions = (missions: string[]) => {
-    const allMissions = [...missions];
+    const validMissions = getValidMissions(missions);
+    const allMissions = [...validMissions];
     
     // Separate "All Missions" from the rest
     const allMissionsIndex = allMissions.findIndex(m => m === "All Missions");
@@ -58,6 +71,7 @@ const FilterSidebar = ({
     const sortedMissions = allMissions.sort((a, b) => {
       const getNumber = (mission: string) => {
         const displayName = getMissionDisplayName(mission);
+        if (!displayName) return 999;
         const match = displayName.match(/Mission (\d+)/);
         return match ? parseInt(match[1]) : 999; // Put non-numbered missions at the end
       };
@@ -74,7 +88,7 @@ const FilterSidebar = ({
   };
 
   // Get the display name for the currently selected mission
-  const selectedMissionDisplay = getMissionDisplayName(selectedMission);
+  const selectedMissionDisplay = getMissionDisplayName(selectedMission) || selectedMission;
 
   // Create mission options with display names but keep original values, sorted properly
   const missionOptions = sortMissions(availableMissions || ["All Missions"]);
@@ -99,11 +113,15 @@ const FilterSidebar = ({
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {missionOptions.map((mission) => (
-                  <SelectItem key={mission} value={mission}>
-                    {getMissionDisplayName(mission)}
-                  </SelectItem>
-                ))}
+                {missionOptions.map((mission) => {
+                  const displayName = getMissionDisplayName(mission);
+                  if (!displayName) return null;
+                  return (
+                    <SelectItem key={mission} value={mission}>
+                      {displayName}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
