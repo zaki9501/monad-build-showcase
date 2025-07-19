@@ -18,7 +18,6 @@ import moNFTImg from '@/assets/projects/MoNFT.png';
 import nadToolsImg from '@/assets/projects/NadTools.png';
 import blonksImg from '@/assets/projects/Blonks.png';
 import moodArtImg from '@/assets/projects/MoodArt.png';
-import nadmonImg from '@/assets/projects/NADMON.PNG';
 
 export interface Project {
   id: string;
@@ -53,8 +52,7 @@ const projectImageMap: Record<string, string> = {
   'Blonks': blonksImg,
   'MoodArt': moodArtImg,
   'Moodart': moodArtImg, // Alternative spelling
-  'Nadmon': nadmonImg,
-  'NADMON': nadmonImg, // Alternative casing
+  // Note: NADMON image removed due to import error - will fall back to database thumbnail
 };
 
 export const useProjects = () => {
