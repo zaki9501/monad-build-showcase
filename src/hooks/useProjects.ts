@@ -21,6 +21,9 @@ import nadmonImg from '@/assets/projects/NADMON.png';
 import blonksImg from '@/assets/projects/Blonks.png';
 import moodArtImg from '@/assets/projects/MoodArt.png';
 
+// Import github logo for Mission 2 projects
+import githubImg from '@/assets/projects/github.png';
+
 export interface Project {
   id: string;
   name: string;
@@ -39,18 +42,29 @@ export interface Project {
 
 // Map project names to local images (using actual existing files)
 const projectImageMap: Record<string, string> = {
+  // Farcaster Edition projects
   'Chog vs catgirl': chogVsCatgirlImg,
   'Chog vs CatGirls': chogVsCatgirlImg,
   'Flappy Trump': flappyTrumpImg,
-  'Monair': monairImg,
   'Montip': montipImg,
   'MonTip': montipImg,
   'P1x3lz': p1x3lzImg,
+  
+  // Mission 4 projects
   'Retro Block Explorer': retroBlockExpImg,
   'Retro Block Exp.': retroBlockExpImg,
+  'Monair': monairImg,
   'Testnet Explorer': testnetExpImg,
   'Testnet Exp': testnetExpImg,
   'Testnet Metrics Hub': testnetMetricsImg,
+  
+  // Mission 2 projects (using github logo)
+  'nadcp_dot_fun': githubImg,
+  'MonadHub-MCP': githubImg,
+  'monad-mcp-server (vib3ai)': githubImg,
+  'monad-mcp-server (AnasXDev)': githubImg,
+  'mcp-santi': githubImg,
+  
   // Mission 5 projects using actual existing images
   'NFThing': nfThingImg,
   'MoNFT': moNftImg,
