@@ -283,25 +283,27 @@ const MonadMissions = () => {
                     </div>
                   )}
 
-                  {/* Resources & Submission */}
-                  <div className="flex flex-wrap gap-4 pt-4 border-t">
-                    {mission.submissionForm && (
-                      <Button variant="outline" size="sm" asChild>
-                        <a href={mission.submissionForm} target="_blank" rel="noopener noreferrer">
-                          Submission Form
-                          <ExternalLink className="h-3 w-3 ml-2" />
-                        </a>
-                      </Button>
-                    )}
-                    {mission.resources && mission.resources.map((resource, index) => (
-                      <Button key={index} variant="ghost" size="sm" asChild>
-                        <a href={resource} target="_blank" rel="noopener noreferrer">
-                          Resources
-                          <ExternalLink className="h-3 w-3 ml-2" />
-                        </a>
-                      </Button>
-                    ))}
-                  </div>
+                  {/* Resources & Submission - Only show for ongoing missions */}
+                  {mission.status === 'ongoing' && (
+                    <div className="flex flex-wrap gap-4 pt-4 border-t">
+                      {mission.submissionForm && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={mission.submissionForm} target="_blank" rel="noopener noreferrer">
+                            Submission Form
+                            <ExternalLink className="h-3 w-3 ml-2" />
+                          </a>
+                        </Button>
+                      )}
+                      {mission.resources && mission.resources.map((resource, index) => (
+                        <Button key={index} variant="ghost" size="sm" asChild>
+                          <a href={resource} target="_blank" rel="noopener noreferrer">
+                            Resources
+                            <ExternalLink className="h-3 w-3 ml-2" />
+                          </a>
+                        </Button>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
