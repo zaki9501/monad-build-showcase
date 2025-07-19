@@ -24,8 +24,8 @@ export const useUrlVerification = (url: string | null | undefined) => {
       setLoading(true);
       
       try {
-        // First check if we have a cached result
-        const { data: cached } = await supabase
+        // First check if we have a cached result - using any to bypass TypeScript issues temporarily
+        const { data: cached } = await (supabase as any)
           .from('url_verifications')
           .select('*')
           .eq('url', url)

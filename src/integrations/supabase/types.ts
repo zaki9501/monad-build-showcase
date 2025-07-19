@@ -152,6 +152,36 @@ export type Database = {
         }
         Relationships: []
       }
+      url_verifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_safe: boolean
+          is_verified: boolean
+          last_checked: string
+          reason: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_safe?: boolean
+          is_verified?: boolean
+          last_checked?: string
+          reason?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_safe?: boolean
+          is_verified?: boolean
+          last_checked?: string
+          reason?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
