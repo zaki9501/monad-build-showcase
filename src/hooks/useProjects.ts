@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -40,9 +39,9 @@ export interface Project {
   mission: string;
 }
 
-// Map project names to local images (using actual existing files)
+// Map project names to local images (using actual existing files and matching database names)
 const projectImageMap: Record<string, string> = {
-  // Farcaster Edition projects
+  // Farcaster Edition projects - matching exact database names
   'Chog vs catgirl': chogVsCatgirlImg,
   'Chog vs CatGirls': chogVsCatgirlImg,
   'Flappy Trump': flappyTrumpImg,
@@ -50,13 +49,14 @@ const projectImageMap: Record<string, string> = {
   'MonTip': montipImg,
   'P1x3lz': p1x3lzImg,
   
-  // Mission 4 projects
+  // Mission 4 projects - matching exact database names
   'Retro Block Explorer': retroBlockExpImg,
   'Retro Block Exp.': retroBlockExpImg,
   'Monair': monairImg,
   'Testnet Explorer': testnetExpImg,
   'Testnet Exp': testnetExpImg,
   'Testnet Metrics Hub': testnetMetricsImg,
+  'DevHub': testnetMetricsImg, // Using metrics hub image as fallback for DevHub
   
   // Mission 2 projects (using github logo)
   'nadcp_dot_fun': githubImg,
@@ -65,7 +65,7 @@ const projectImageMap: Record<string, string> = {
   'monad-mcp-server (AnasXDev)': githubImg,
   'mcp-santi': githubImg,
   
-  // Mission 5 projects using actual existing images
+  // Mission 5 projects using actual existing images - matching exact database names
   'NFThing': nfThingImg,
   'MoNFT': moNftImg,
   'NadTools': nadtoolsImg,
