@@ -1,5 +1,7 @@
+
 import { Github, Twitter, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import BuilderResourcesDialog from "./BuilderResourcesDialog";
 
 const Footer = () => {
   return (
@@ -33,9 +35,11 @@ const Footer = () => {
               <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Mission Guidelines
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Builder Resources
-              </a>
+              <BuilderResourcesDialog>
+                <button className="text-sm text-muted-foreground hover:text-primary transition-colors text-left">
+                  Builder Resources
+                </button>
+              </BuilderResourcesDialog>
             </div>
           </div>
 
