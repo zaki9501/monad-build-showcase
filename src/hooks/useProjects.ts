@@ -3,6 +3,16 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 
+// Import actual project images
+import chogVsCatgirlImg from '@/assets/projects/Chog-vs-catgirl.png';
+import flappyTrumpImg from '@/assets/projects/Flapy -trump.png';
+import monairImg from '@/assets/projects/Monair.png';
+import montipImg from '@/assets/projects/Montip.png';
+import p1x3lzImg from '@/assets/projects/P1x3lz.png';
+import retroBlockExpImg from '@/assets/projects/Retro Block Exp..png';
+import testnetExpImg from '@/assets/projects/Testnet Exp.png';
+import testnetMetricsImg from '@/assets/projects/Testnet Metrics Hub.png';
+
 export interface Project {
   id: string;
   name: string;
@@ -18,6 +28,18 @@ export interface Project {
   tags: string[];
   mission: string;
 }
+
+// Map project names to local images
+const projectImageMap: Record<string, string> = {
+  'Chog vs catgirl': chogVsCatgirlImg,
+  'Flappy Trump': flappyTrumpImg,
+  'Monair': monairImg,
+  'Montip': montipImg,
+  'P1x3lz': p1x3lzImg,
+  'Retro Block Explorer': retroBlockExpImg,
+  'Testnet Explorer': testnetExpImg,
+  'Testnet Metrics Hub': testnetMetricsImg,
+};
 
 export const useProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -43,7 +65,8 @@ export const useProjects = () => {
           discord: project.builder_discord,
           twitter: project.builder_twitter || undefined,
         },
-        thumbnail: project.thumbnail,
+        // Use local image if available, otherwise use database thumbnail
+        thumbnail: projectImageMap[project.name] || project.thumbnail,
         githubUrl: project.github_url,
         liveUrl: project.live_url,
         tags: project.tags || [],
