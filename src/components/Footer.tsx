@@ -2,6 +2,7 @@
 import { Github, Twitter, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BuilderResourcesDialog from "./BuilderResourcesDialog";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -32,9 +33,9 @@ const Footer = () => {
               <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Submit Project
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Mission Guidelines
-              </a>
+              <Link to="/missions" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                Monad Missions
+              </Link>
               <BuilderResourcesDialog>
                 <button className="text-sm text-muted-foreground hover:text-primary transition-colors text-left">
                   Builder Resources
