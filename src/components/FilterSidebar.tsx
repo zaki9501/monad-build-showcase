@@ -1,3 +1,4 @@
+
 import { Filter, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,7 @@ const FilterSidebar = ({
     // Map based on actual mission names from the database
     // Remove Mission 1 mapping entirely - we'll filter it out
     if (fullMissionName === "Mission 2") return "Mission 2";
+    if (fullMissionName === "Mission 3") return "Mission 3";
     if (fullMissionName.includes("Mission 4") || fullMissionName.includes("Visualizer & Dashboard")) return "Mission 4";
     if (fullMissionName.includes("Mission 5") || fullMissionName.includes("Make NFTs Great Again")) return "Mission 5";
     
