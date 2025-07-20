@@ -75,7 +75,7 @@ const projectImageMap: Record<string, string> = {
   'Moodart': moodArtImg,
   
   // Community projects
-  'Monsweeper': '/lovable-uploads/b72fb5f1-c7e9-4c7c-b29a-6ca5099741d4.png',
+  'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
 };
 
 export const useProjects = () => {
