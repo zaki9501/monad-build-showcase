@@ -275,7 +275,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           >
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3 w-3 mr-1" />
-              Live Demo
+              Live
             </a>
           </Button>
         )}
