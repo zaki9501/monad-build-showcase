@@ -80,26 +80,13 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             )}
           </div>
 
-          {/* Quick action buttons overlay */}
-          <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-            {project.liveUrl && (
-              <Button
-                size="sm"
-                variant="secondary"
-                className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
-                asChild
-                onClick={(e) => e.stopPropagation()}
-              >
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                  <Eye className="h-4 w-4 text-primary" />
-                </a>
-              </Button>
-            )}
+          {/* Like button moved to top left below mission badge */}
+          <div className="absolute top-16 left-3">
             <Button
               size="sm"
               variant="secondary"
               className={cn(
-                "h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg",
+                "h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0",
                 isLiked && "bg-red-50"
               )}
               onClick={(e) => {
@@ -114,6 +101,23 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 isLiked ? "fill-red-500 text-red-500" : "text-gray-600"
               )} />
             </Button>
+          </div>
+
+          {/* Quick action buttons overlay - moved like button out of here */}
+          <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            {project.liveUrl && (
+              <Button
+                size="sm"
+                variant="secondary"
+                className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
+                asChild
+                onClick={(e) => e.stopPropagation()}
+              >
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <Eye className="h-4 w-4 text-primary" />
+                </a>
+              </Button>
+            )}
           </div>
 
           {/* Bottom overlay with project name */}
