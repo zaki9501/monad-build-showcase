@@ -73,6 +73,9 @@ const projectImageMap: Record<string, string> = {
   'Nadmon': nadmonImg,
   'Blonks': blonksImg,
   'Moodart': moodArtImg,
+  
+  // Community projects
+  'Monsweeper': '/lovable-uploads/b72fb5f1-c7e9-4c7c-b29a-6ca5099741d4.png',
 };
 
 export const useProjects = () => {

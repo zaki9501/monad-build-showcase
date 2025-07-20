@@ -30,6 +30,7 @@ const FilterSidebar = ({
   // Create a mapping from full mission names to simplified display names
   const getMissionDisplayName = (fullMissionName: string) => {
     if (fullMissionName === "All Missions") return "All Missions";
+    if (fullMissionName === "Community") return "Community";
     
     // Map based on actual mission names from the database
     if (fullMissionName.includes("Farcaster Edition") || fullMissionName.includes("Break Monad v2: Farcaster")) return "Mission 1";
@@ -50,9 +51,12 @@ const FilterSidebar = ({
   const sortMissions = (missions: string[]) => {
     const allMissions = [...missions];
     
-    // Separate "All Missions" from the rest
+    // Separate "All Missions" and "Community" from the rest
     const allMissionsIndex = allMissions.findIndex(m => m === "All Missions");
+    const communityIndex = allMissions.findIndex(m => m === "Community");
+    
     const allMissionsItem = allMissionsIndex !== -1 ? allMissions.splice(allMissionsIndex, 1)[0] : null;
+    const communityItem = communityIndex !== -1 ? allMissions.splice(communityIndex >= allMissionsIndex ? communityIndex - 1 : communityIndex, 1)[0] : null;
     
     // Sort the remaining missions by extracting mission numbers
     const sortedMissions = allMissions.sort((a, b) => {
@@ -65,12 +69,13 @@ const FilterSidebar = ({
       return getNumber(a) - getNumber(b);
     });
     
-    // Put "All Missions" first if it exists
-    if (allMissionsItem) {
-      return [allMissionsItem, ...sortedMissions];
-    }
+    // Put "All Missions" first, then missions, then "Community" at the end
+    const result = [];
+    if (allMissionsItem) result.push(allMissionsItem);
+    result.push(...sortedMissions);
+    if (communityItem) result.push(communityItem);
     
-    return sortedMissions;
+    return result;
   };
 
   // Get the display name for the currently selected mission
