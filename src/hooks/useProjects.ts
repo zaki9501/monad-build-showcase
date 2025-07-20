@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -58,7 +57,7 @@ const projectImageMap: Record<string, string> = {
   'Testnet Exp': testnetExpImg,
   'Testnet Metrics Hub': testnetMetricsImg,
   'DevHub': testnetMetricsImg, // Using metrics hub image as fallback for DevHub
-  'Monad Nebula': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop', // Placeholder for 3D visualizer
+  'Monad Nebula': '/lovable-uploads/4b2be09e-ce9a-4305-97cb-e645ff465c6c.png', // Using uploaded Monad Nebula image
   
   // Mission 2 projects (using github logo)
   'nadcp_dot_fun': githubImg,
