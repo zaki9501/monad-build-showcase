@@ -65,6 +65,7 @@ const projectImageMap: Record<string, string> = {
   'monad-mcp-server (vib3ai)': githubImg,
   'monad-mcp-server (AnasXDev)': githubImg,
   'mcp-santi': githubImg,
+  'Monad NFT MCPs': githubImg, // New Mission 2 project
   
   // Mission 5 projects using actual existing images - matching exact database names
   'NFThing': nfThingImg,
@@ -73,6 +74,7 @@ const projectImageMap: Record<string, string> = {
   'Nadmon': nadmonImg,
   'Blonks': blonksImg,
   'Moodart': moodArtImg,
+  'Bombandak': nfThingImg, // Using NFThing image as fallback for new Mission 5 project
   
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
