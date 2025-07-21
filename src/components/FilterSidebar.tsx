@@ -33,7 +33,7 @@ const FilterSidebar = ({
     if (fullMissionName === "Community") return "Community";
     
     // Map based on actual mission names from the database
-    if (fullMissionName.includes("Farcaster Edition") || fullMissionName.includes("Break Monad v2: Farcaster")) return "Mission 1";
+    if (fullMissionName.includes("Farcaster Edition") || fullMissionName.includes("Break Monad v2: Farcaster")) return "Mission 3";
     if (fullMissionName === "Mission 2") return "Mission 2";
     if (fullMissionName.includes("Mission 4") || fullMissionName.includes("Visualizer & Dashboard")) return "Mission 4";
     if (fullMissionName.includes("Mission 5") || fullMissionName.includes("Make NFTs Great Again")) return "Mission 5";
