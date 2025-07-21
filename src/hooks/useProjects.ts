@@ -78,6 +78,7 @@ const projectImageMap: Record<string, string> = {
   
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
+  'Retrieve NFT holders': '/lovable-uploads/a1d8ce74-c8b8-4b7e-b9ae-8c7f2d5e9f10.png', // Using uploaded Retrieve NFT holders image
 };
 
 export const useProjects = () => {
