@@ -58,9 +58,9 @@ export const useUrlVerification = (url: string | null | undefined) => {
               isSafe: cached.is_safe,
               lastChecked: cached.last_checked,
               status: cached.is_safe ? 'safe' : 'unsafe',
-              riskLevel: cached.risk_level || 'unknown',
-              reason: cached.reason,
-              securityChecks: cached.security_checks
+              riskLevel: (cached.risk_level as 'low' | 'medium' | 'high') || 'unknown',
+              reason: cached.reason || undefined,
+              securityChecks: cached.security_checks || undefined
             });
             setLoading(false);
             return;
