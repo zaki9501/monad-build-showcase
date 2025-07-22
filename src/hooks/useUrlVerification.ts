@@ -15,6 +15,7 @@ export interface UrlVerificationStatus {
     domainReputation: boolean;
     contentAnalysis: boolean;
     certificateValid: boolean;
+    googleSafeBrowsing?: boolean;
   };
 }
 
@@ -66,7 +67,8 @@ export const useUrlVerification = (url: string | null | undefined) => {
             console.log(`Using cached verification for ${url}:`, {
               isSafe: cached.is_safe,
               riskLevel: cached.risk_level || 'unknown',
-              reason: cached.reason
+              reason: cached.reason,
+              googleSafeBrowsing: cached.security_checks?.googleSafeBrowsing !== false
             });
 
             setVerificationStatus({
@@ -84,7 +86,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
           }
         }
 
-        // If no cache or cache expired, check with enhanced verification service
+        // If no cache or cache expired, check with enhanced verification service including Google Safe Browsing
         setVerificationStatus(prev => prev ? { ...prev, status: 'checking' } : {
           url,
           isVerified: false,
@@ -93,7 +95,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
           status: 'checking'
         });
         
-        console.log(`Starting enhanced verification for: ${url}`);
+        console.log(`Starting enhanced verification with Google Safe Browsing for: ${url}`);
 
         const { data, error } = await supabase.functions.invoke('verify-url', {
           body: { url }
@@ -104,7 +106,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
           throw error;
         }
 
-        console.log(`Enhanced verification completed for ${url}:`, data);
+        console.log(`Enhanced verification with Google Safe Browsing completed for ${url}:`, data);
 
         const status: UrlVerificationStatus = {
           url,

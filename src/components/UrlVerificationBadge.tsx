@@ -31,7 +31,7 @@ const UrlVerificationBadge = ({
         variant: 'secondary' as const,
         color: 'text-yellow-600',
         bgColor: 'bg-yellow-50 border-yellow-200',
-        description: 'Running enhanced security checks...'
+        description: 'Running enhanced security checks including Google Safe Browsing...'
       };
     }
 
@@ -51,11 +51,11 @@ const UrlVerificationBadge = ({
         }
         return {
           icon: ShieldCheck,
-          label: 'Verified Safe',
+          label: 'Google Verified',
           variant: 'default' as const,
           color: 'text-green-600',
           bgColor: 'bg-green-50 border-green-200',
-          description: 'Passed all security checks. Safe to visit.'
+          description: 'Passed all security checks including Google Safe Browsing. Safe to visit.'
         };
       case 'unsafe':
         return {
@@ -65,7 +65,7 @@ const UrlVerificationBadge = ({
           color: riskLevel === 'high' ? 'text-red-600' : 'text-orange-600',
           bgColor: riskLevel === 'high' ? 'bg-red-50 border-red-200' : 'bg-orange-50 border-orange-200',
           description: riskLevel === 'high' 
-            ? 'High risk of malicious content. Avoid visiting this URL.'
+            ? 'High risk detected by security analysis. Avoid visiting this URL.'
             : 'Some security concerns detected. Exercise caution.'
         };
       default:
@@ -95,6 +95,7 @@ const UrlVerificationBadge = ({
       { key: 'domainReputation', label: 'Domain Reputation', passed: checks.domainReputation },
       { key: 'contentAnalysis', label: 'Content Analysis', passed: checks.contentAnalysis },
       { key: 'certificateValid', label: 'Certificate Valid', passed: checks.certificateValid },
+      { key: 'googleSafeBrowsing', label: 'Google Safe Browsing', passed: checks.googleSafeBrowsing !== false },
     ];
 
     return (

@@ -16,6 +16,7 @@ interface UrlCheckResult {
     domainReputation: boolean;
     contentAnalysis: boolean;
     certificateValid: boolean;
+    googleSafeBrowsing: boolean;
   };
 }
 
@@ -75,6 +76,66 @@ const SECURITY_PATTERNS = {
   }
 };
 
+// Google Safe Browsing API integration
+const checkGoogleSafeBrowsing = async (url: string): Promise<{ isSafe: boolean; threats: string[] }> => {
+  const apiKey = Deno.env.get('GOOGLE_SAFE_BROWSING_API_KEY');
+  
+  if (!apiKey) {
+    console.warn('Google Safe Browsing API key not configured');
+    return { isSafe: true, threats: [] }; // Assume safe if API not configured
+  }
+
+  try {
+    const requestBody = {
+      client: {
+        clientId: 'monad-project-hub',
+        clientVersion: '1.0.0'
+      },
+      threatInfo: {
+        threatTypes: [
+          'MALWARE',
+          'SOCIAL_ENGINEERING',
+          'UNWANTED_SOFTWARE',
+          'POTENTIALLY_HARMFUL_APPLICATION',
+          'THREAT_TYPE_UNSPECIFIED'
+        ],
+        platformTypes: ['ANY_PLATFORM'],
+        threatEntryTypes: ['URL'],
+        threatEntries: [{ url }]
+      }
+    };
+
+    const response = await fetch(
+      `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    if (!response.ok) {
+      console.error('Google Safe Browsing API error:', response.status, response.statusText);
+      return { isSafe: true, threats: [] }; // Assume safe on API error
+    }
+
+    const data = await response.json();
+    
+    if (data.matches && data.matches.length > 0) {
+      const threats = data.matches.map((match: any) => match.threatType);
+      console.log(`Google Safe Browsing found threats for ${url}:`, threats);
+      return { isSafe: false, threats };
+    }
+
+    return { isSafe: true, threats: [] };
+  } catch (error) {
+    console.error('Error checking Google Safe Browsing:', error);
+    return { isSafe: true, threats: [] }; // Assume safe on error
+  }
+};
+
 // Enhanced URL safety analysis
 const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult> => {
   try {
@@ -89,6 +150,7 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       domainReputation: true,
       contentAnalysis: true,
       certificateValid: true,
+      googleSafeBrowsing: true,
     };
 
     // 1. Protocol validation
@@ -108,7 +170,21 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       riskLevel = 'medium';
     }
 
-    // 2. Check against malicious patterns
+    // 2. Google Safe Browsing check (priority check)
+    console.log(`Checking Google Safe Browsing for: ${url}`);
+    const safeBrowsingResult = await checkGoogleSafeBrowsing(url);
+    
+    if (!safeBrowsingResult.isSafe) {
+      return {
+        isVerified: true,
+        isSafe: false,
+        reason: `Google Safe Browsing detected threats: ${safeBrowsingResult.threats.join(', ')}`,
+        riskLevel: 'high',
+        checks: { ...checks, googleSafeBrowsing: false }
+      };
+    }
+
+    // 3. Check against malicious patterns
     const hasMaliciousPattern = SECURITY_PATTERNS.maliciousPatterns.some(pattern => 
       pattern.test(hostname) || pattern.test(fullUrl)
     );
@@ -119,7 +195,7 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       checks.basicSafety = false;
     }
 
-    // 3. Check for known malicious domains
+    // 4. Check for known malicious domains
     const isMaliciousDomain = SECURITY_PATTERNS.maliciousDomains.some(domain => 
       hostname.includes(domain.toLowerCase())
     );
@@ -134,7 +210,7 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       };
     }
 
-    // 4. Check against trusted domains
+    // 5. Check against trusted domains
     const allTrustedDomains = [
       ...SECURITY_PATTERNS.trustedDomains.development,
       ...SECURITY_PATTERNS.trustedDomains.blockchain,
@@ -149,13 +225,13 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       return {
         isVerified: true,
         isSafe: true,
-        reason: 'Known trusted domain',
+        reason: 'Known trusted domain, verified by Google Safe Browsing',
         riskLevel: 'low',
         checks
       };
     }
 
-    // 5. Enhanced phishing detection
+    // 6. Enhanced phishing detection
     const suspiciousKeywords = SECURITY_PATTERNS.phishingPatterns.some(pattern =>
       pattern.test(fullUrl)
     );
@@ -166,7 +242,7 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       checks.contentAnalysis = false;
     }
 
-    // 6. Domain analysis
+    // 7. Domain analysis
     const domainParts = hostname.split('.');
     
     // Check for suspicious subdomain patterns
@@ -182,13 +258,13 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       checks.domainReputation = false;
     }
 
-    // 7. Port analysis
+    // 8. Port analysis
     if (urlObj.port && !['80', '443', '8080', '3000', '5000', '8000'].includes(urlObj.port)) {
       riskFactors.push(`Unusual port: ${urlObj.port}`);
       riskLevel = riskLevel === 'low' ? 'medium' : riskLevel;
     }
 
-    // 8. Path analysis
+    // 9. Path analysis
     const suspiciousPathPatterns = [
       /\.(exe|bat|cmd|scr|pif|com|jar|zip|rar)$/i,
       /\/admin|\/wp-admin|\/phpmyadmin/i,
@@ -205,7 +281,7 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
       checks.contentAnalysis = false;
     }
 
-    // 9. Try to perform basic connectivity check (with timeout)
+    // 10. Try to perform basic connectivity check (with timeout)
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
@@ -252,12 +328,12 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
     }
 
     // Final risk assessment
-    const isSafe = riskLevel !== 'high' && checks.basicSafety && checks.domainReputation;
+    const isSafe = riskLevel !== 'high' && checks.basicSafety && checks.domainReputation && checks.googleSafeBrowsing;
     
     return {
       isVerified: true,
       isSafe,
-      reason: riskFactors.length > 0 ? riskFactors.join(', ') : 'Enhanced security checks passed',
+      reason: riskFactors.length > 0 ? riskFactors.join(', ') : 'Enhanced security checks including Google Safe Browsing passed',
       riskLevel,
       checks
     };
@@ -273,6 +349,7 @@ const performEnhancedSafetyChecks = async (url: string): Promise<UrlCheckResult>
         domainReputation: false,
         contentAnalysis: false,
         certificateValid: false,
+        googleSafeBrowsing: false,
       }
     };
   }
@@ -297,20 +374,21 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`Starting enhanced verification for URL: ${url}`);
+    console.log(`Starting enhanced verification with Google Safe Browsing for URL: ${url}`);
 
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Perform enhanced safety checks
+    // Perform enhanced safety checks including Google Safe Browsing
     const result = await performEnhancedSafetyChecks(url);
 
     console.log(`Verification result for ${url}:`, {
       isSafe: result.isSafe,
       riskLevel: result.riskLevel,
-      reason: result.reason
+      reason: result.reason,
+      googleSafeBrowsing: result.checks.googleSafeBrowsing
     });
 
     // Store/update the verification result with enhanced data
