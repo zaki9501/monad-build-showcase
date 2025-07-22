@@ -32,12 +32,29 @@ export const useUrlVerification = (url: string | null | undefined) => {
       setLoading(true);
       
       try {
-        // First check if we have a cached result - explicitly select all columns including new ones
-        const { data: cached } = await supabase
-          .from('url_verifications')
-          .select('url, is_verified, is_safe, last_checked, reason, risk_level, security_checks')
-          .eq('url', url)
-          .single();
+        // First try to check if we have a cached result - try with new columns first, fallback to basic columns
+        let cached = null;
+        
+        try {
+          // Try to get data with enhanced columns
+          const { data: enhancedData } = await supabase
+            .from('url_verifications')
+            .select('url, is_verified, is_safe, last_checked, reason, risk_level, security_checks')
+            .eq('url', url)
+            .maybeSingle();
+          
+          cached = enhancedData;
+        } catch (enhancedError) {
+          console.log('Enhanced columns not available, falling back to basic columns');
+          // Fallback to basic columns if enhanced ones don't exist
+          const { data: basicData } = await supabase
+            .from('url_verifications')
+            .select('url, is_verified, is_safe, last_checked, reason')
+            .eq('url', url)
+            .maybeSingle();
+          
+          cached = basicData;
+        }
 
         if (cached) {
           // Check if cache is still valid (12 hours for more frequent updates)
@@ -48,7 +65,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
           if (hoursDiff < 12) {
             console.log(`Using cached verification for ${url}:`, {
               isSafe: cached.is_safe,
-              riskLevel: cached.risk_level,
+              riskLevel: cached.risk_level || 'unknown',
               reason: cached.reason
             });
 
