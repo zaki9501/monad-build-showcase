@@ -8,7 +8,7 @@ export interface UrlVerificationStatus {
   isSafe: boolean;
   lastChecked: string;
   status: 'checking' | 'safe' | 'unsafe' | 'unknown';
-  riskLevel?: 'low' | 'medium' | 'high';
+  riskLevel?: 'low' | 'medium' | 'high' | 'unknown';
   reason?: string;
   securityChecks?: {
     basicSafety: boolean;
@@ -32,10 +32,10 @@ export const useUrlVerification = (url: string | null | undefined) => {
       setLoading(true);
       
       try {
-        // First check if we have a cached result
+        // First check if we have a cached result - explicitly select all columns including new ones
         const { data: cached } = await supabase
           .from('url_verifications')
-          .select('*')
+          .select('url, is_verified, is_safe, last_checked, reason, risk_level, security_checks')
           .eq('url', url)
           .single();
 
@@ -58,7 +58,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
               isSafe: cached.is_safe,
               lastChecked: cached.last_checked,
               status: cached.is_safe ? 'safe' : 'unsafe',
-              riskLevel: (cached.risk_level as 'low' | 'medium' | 'high') || 'unknown',
+              riskLevel: (cached.risk_level as 'low' | 'medium' | 'high' | 'unknown') || 'unknown',
               reason: cached.reason || undefined,
               securityChecks: cached.security_checks || undefined
             });
@@ -109,7 +109,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
           isSafe: false,
           lastChecked: new Date().toISOString(),
           status: 'unknown',
-          riskLevel: 'high',
+          riskLevel: 'unknown',
           reason: 'Verification service unavailable'
         });
       } finally {
