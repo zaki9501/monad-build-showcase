@@ -8,6 +8,14 @@ export interface UrlVerificationStatus {
   isSafe: boolean;
   lastChecked: string;
   status: 'checking' | 'safe' | 'unsafe' | 'unknown';
+  riskLevel?: 'low' | 'medium' | 'high';
+  reason?: string;
+  securityChecks?: {
+    basicSafety: boolean;
+    domainReputation: boolean;
+    contentAnalysis: boolean;
+    certificateValid: boolean;
+  };
 }
 
 export const useUrlVerification = (url: string | null | undefined) => {
@@ -24,47 +32,72 @@ export const useUrlVerification = (url: string | null | undefined) => {
       setLoading(true);
       
       try {
-        // First check if we have a cached result - using any to bypass TypeScript issues temporarily
-        const { data: cached } = await (supabase as any)
+        // First check if we have a cached result
+        const { data: cached } = await supabase
           .from('url_verifications')
           .select('*')
           .eq('url', url)
           .single();
 
         if (cached) {
-          // Check if cache is still valid (24 hours)
+          // Check if cache is still valid (12 hours for more frequent updates)
           const lastChecked = new Date(cached.last_checked);
           const now = new Date();
           const hoursDiff = (now.getTime() - lastChecked.getTime()) / (1000 * 60 * 60);
           
-          if (hoursDiff < 24) {
+          if (hoursDiff < 12) {
+            console.log(`Using cached verification for ${url}:`, {
+              isSafe: cached.is_safe,
+              riskLevel: cached.risk_level,
+              reason: cached.reason
+            });
+
             setVerificationStatus({
               url: cached.url,
               isVerified: cached.is_verified,
               isSafe: cached.is_safe,
               lastChecked: cached.last_checked,
-              status: cached.is_safe ? 'safe' : 'unsafe'
+              status: cached.is_safe ? 'safe' : 'unsafe',
+              riskLevel: cached.risk_level || 'unknown',
+              reason: cached.reason,
+              securityChecks: cached.security_checks
             });
             setLoading(false);
             return;
           }
         }
 
-        // If no cache or cache expired, check with verification service
-        setVerificationStatus(prev => prev ? { ...prev, status: 'checking' } : null);
+        // If no cache or cache expired, check with enhanced verification service
+        setVerificationStatus(prev => prev ? { ...prev, status: 'checking' } : {
+          url,
+          isVerified: false,
+          isSafe: false,
+          lastChecked: new Date().toISOString(),
+          status: 'checking'
+        });
         
+        console.log(`Starting enhanced verification for: ${url}`);
+
         const { data, error } = await supabase.functions.invoke('verify-url', {
           body: { url }
         });
 
-        if (error) throw error;
+        if (error) {
+          console.error('Verification service error:', error);
+          throw error;
+        }
+
+        console.log(`Enhanced verification completed for ${url}:`, data);
 
         const status: UrlVerificationStatus = {
           url,
           isVerified: data.isVerified,
           isSafe: data.isSafe,
           lastChecked: new Date().toISOString(),
-          status: data.isSafe ? 'safe' : 'unsafe'
+          status: data.isSafe ? 'safe' : 'unsafe',
+          riskLevel: data.riskLevel,
+          reason: data.reason,
+          securityChecks: data.checks
         };
 
         setVerificationStatus(status);
@@ -75,7 +108,9 @@ export const useUrlVerification = (url: string | null | undefined) => {
           isVerified: false,
           isSafe: false,
           lastChecked: new Date().toISOString(),
-          status: 'unknown'
+          status: 'unknown',
+          riskLevel: 'high',
+          reason: 'Verification service unavailable'
         });
       } finally {
         setLoading(false);
