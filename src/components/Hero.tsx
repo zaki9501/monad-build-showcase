@@ -1,3 +1,4 @@
+
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBackground from "@/assets/hero-background.jpg";
@@ -34,6 +35,16 @@ const Hero = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const scrollToProjects = () => {
+    const projectsSection = document.querySelector('main');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   };
 
   // Calculate stats from actual data
@@ -80,6 +91,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={scrollToProjects}
             >
               Explore Projects
               <ArrowRight className="ml-2 h-4 w-4" />
