@@ -347,5 +347,9 @@ export const availableTags = [
   "NFT",
   "Tooling",
   "Collection",
-  "Mission 5"
+  "Mission 5",
+  "AI",
+  "GPT",
+  "AGENT",
+  "CHATBOT"
 ];
