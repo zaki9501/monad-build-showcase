@@ -87,7 +87,8 @@ const projectImageMap: Record<string, string> = {
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
   'Retrieve NFT holders': '/lovable-uploads/e218523f-dcbb-42dd-99d7-b16afb055793.png', // Using uploaded Retrieve NFT holders image
-  'MonGPT': '/lovable-uploads/mongpt-placeholder.png', // New MonGPT project
+  'MonGPT': '/lovable-uploads/mongpt-placeholder.png', // MonGPT project
+  'Monad AI Assistant': projectGaming, // Using gaming image as fallback for AI assistant
 };
 
 export const useProjects = () => {

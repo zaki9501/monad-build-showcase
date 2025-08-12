@@ -353,6 +353,8 @@ export const availableTags = [
   "GPT",
   "AGENT",
   "CHATBOT",
+  "Assistant",
+  "Community",
   "Launchpad",
   "Mission 3",
   "Shooter"
