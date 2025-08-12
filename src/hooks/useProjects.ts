@@ -79,7 +79,7 @@ const projectImageMap: Record<string, string> = {
   'Blonks': blonksImg,
   'Moodart': moodArtImg,
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png', // Using uploaded Bombandak image
-  'Solodan NFT Launchpad': moNftImg, // Using NFT image for the new launchpad project
+  'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png', // Using uploaded Solodan NFT Launchpad image
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
