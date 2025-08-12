@@ -1,3 +1,4 @@
+
 import projectDefi from "@/assets/project-defi.jpg";
 import projectNft from "@/assets/project-nft.jpg";
 import projectGaming from "@/assets/project-gaming.jpg";
@@ -351,5 +352,8 @@ export const availableTags = [
   "AI",
   "GPT",
   "AGENT",
-  "CHATBOT"
+  "CHATBOT",
+  "Launchpad",
+  "Mission 3",
+  "Shooter"
 ];

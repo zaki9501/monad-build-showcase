@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -22,6 +23,9 @@ import moodArtImg from '@/assets/projects/MoodArt.png';
 
 // Import github logo for Mission 2 projects
 import githubImg from '@/assets/projects/github.png';
+
+// Import gaming image for game projects
+import projectGaming from '@/assets/project-gaming.jpg';
 
 export interface Project {
   id: string;
@@ -75,6 +79,10 @@ const projectImageMap: Record<string, string> = {
   'Blonks': blonksImg,
   'Moodart': moodArtImg,
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png', // Using uploaded Bombandak image
+  'Solodan NFT Launchpad': moNftImg, // Using NFT image for the new launchpad project
+  
+  // Mission 3 projects
+  'Monagayanimals': projectGaming, // Using gaming image for the shooter game
   
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
