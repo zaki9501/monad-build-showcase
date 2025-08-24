@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -187,14 +187,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_user_liked_project: {
+        Args: { project_uuid: string; user_ip_hash: string }
+        Returns: boolean
+      }
+      check_user_rated_project: {
+        Args: { project_uuid: string; user_ip_hash: string }
+        Returns: number
+      }
       get_project_stats: {
         Args: { project_uuid: string }
         Returns: {
-          likes_count: number
-          views_count: number
           avg_rating: number
+          likes_count: number
           rating_count: number
+          views_count: number
         }[]
+      }
+      submit_project_rating: {
+        Args: {
+          project_uuid: string
+          rating_value: number
+          user_ip_address: string
+        }
+        Returns: undefined
+      }
+      toggle_project_like: {
+        Args: { project_uuid: string; user_ip_address: string }
+        Returns: boolean
       }
     }
     Enums: {
