@@ -56,30 +56,27 @@ export const useProjectInteractions = (projectId: string) => {
     }
   };
 
-  // Check if user has liked or rated the project
+  // Check if user has liked or rated the project using secure functions
   const checkUserInteractions = async () => {
     try {
       const userIP = await getUserIP();
+      const ipHash = btoa(userIP); // Create hash for secure checking
 
-      // Check if user has liked
-      const { data: likeData } = await supabase
-        .from('project_likes')
-        .select('id')
-        .eq('project_id', projectId)
-        .eq('user_ip', userIP)
-        .single();
+      // Check if user has liked using secure function
+      const { data: likeExists } = await supabase.rpc('check_user_liked_project', {
+        project_uuid: projectId,
+        user_ip_hash: ipHash
+      });
 
-      setIsLiked(!!likeData);
+      setIsLiked(likeExists || false);
 
-      // Check user's rating
-      const { data: ratingData } = await supabase
-        .from('project_ratings')
-        .select('rating')
-        .eq('project_id', projectId)
-        .eq('user_ip', userIP)
-        .single();
+      // Check user's rating using secure function
+      const { data: userRatingValue } = await supabase.rpc('check_user_rated_project', {
+        project_uuid: projectId,
+        user_ip_hash: ipHash
+      });
 
-      setUserRating(ratingData?.rating || null);
+      setUserRating(userRatingValue && userRatingValue > 0 ? userRatingValue : null);
     } catch (error) {
       console.error('Error checking user interactions:', error);
     }
@@ -103,7 +100,7 @@ export const useProjectInteractions = (projectId: string) => {
     }
   };
 
-  // Toggle like
+  // Toggle like using secure function
   const toggleLike = async () => {
     if (loading) return;
     
@@ -111,32 +108,23 @@ export const useProjectInteractions = (projectId: string) => {
     try {
       const userIP = await getUserIP();
 
-      if (isLiked) {
-        // Remove like
-        await supabase
-          .from('project_likes')
-          .delete()
-          .eq('project_id', projectId)
-          .eq('user_ip', userIP);
-        
-        setIsLiked(false);
-        toast({
-          title: "Like removed",
-          description: "You've unliked this project",
-        });
-      } else {
-        // Add like
-        await supabase
-          .from('project_likes')
-          .insert({
-            project_id: projectId,
-            user_ip: userIP
-          });
-        
-        setIsLiked(true);
+      // Use secure function to toggle like
+      const { data: newLikeStatus } = await supabase.rpc('toggle_project_like', {
+        project_uuid: projectId,
+        user_ip_address: userIP
+      });
+
+      setIsLiked(newLikeStatus || false);
+      
+      if (newLikeStatus) {
         toast({
           title: "Project liked!",
           description: "Thanks for showing your support!",
+        });
+      } else {
+        toast({
+          title: "Like removed",
+          description: "You've unliked this project",
         });
       }
 
@@ -153,7 +141,7 @@ export const useProjectInteractions = (projectId: string) => {
     }
   };
 
-  // Rate project
+  // Rate project using secure function
   const rateProject = async (rating: number) => {
     if (loading) return;
     
@@ -161,23 +149,12 @@ export const useProjectInteractions = (projectId: string) => {
     try {
       const userIP = await getUserIP();
 
-      if (userRating) {
-        // Update existing rating
-        await supabase
-          .from('project_ratings')
-          .update({ rating })
-          .eq('project_id', projectId)
-          .eq('user_ip', userIP);
-      } else {
-        // Insert new rating
-        await supabase
-          .from('project_ratings')
-          .insert({
-            project_id: projectId,
-            user_ip: userIP,
-            rating
-          });
-      }
+      // Use secure function to submit rating
+      await supabase.rpc('submit_project_rating', {
+        project_uuid: projectId,
+        user_ip_address: userIP,
+        rating_value: rating
+      });
 
       setUserRating(rating);
       fetchStats();
