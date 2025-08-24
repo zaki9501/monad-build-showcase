@@ -10,7 +10,6 @@ import RetroBlockExpImg from "@/assets/projects/Retro Block Exp..png";
 import MonairImg from "@/assets/projects/Monair.png";
 import TestnetExpImg from "@/assets/projects/Testnet Exp.png";
 import TestnetMetricsHubImg from "@/assets/projects/Testnet Metrics Hub.png";
-import GithubLogo from "@/assets/projects/github.png";
 import NfThingImg from "@/assets/projects/NfThing.png";
 import MoNftImg from "@/assets/projects/MoNft.png";
 import NadtoolsImg from "@/assets/projects/Nadtools.png";
@@ -161,81 +160,6 @@ export const mockProjects = [
     tags: ["Dashboard", "Runner-up", "Mission 4"],
     mission: "Visualizer & Dashboard (Mission 4)"
   },
-  {
-    id: "10",
-    name: "nadcp_dot_fun",
-    description: "nadcp_dot_fun - MCP Madness tool",
-    builder: {
-      name: "velkan_gst",
-      discord: "",
-      twitter: normalizeTwitter("velkan_gst")
-    },
-    thumbnail: GithubLogo,
-    githubUrl: "https://github.com/velikanghost/nadcp_dot_fun",
-    liveUrl: "",
-    tags: ["MCP", "Tool", "Mission 2"],
-    mission: "Mission 2"
-  },
-  {
-    id: "11",
-    name: "MonadHub-MCP",
-    description: "MonadHub-MCP - MCP Madness tool",
-    builder: {
-      name: "Piki_eth",
-      discord: "",
-      twitter: normalizeTwitter("Piki_eth")
-    },
-    thumbnail: GithubLogo,
-    githubUrl: "https://github.com/zaki9501/MonadHub-MCP",
-    liveUrl: "",
-    tags: ["MCP", "Tool", "Mission 2"],
-    mission: "Mission 2"
-  },
-  {
-    id: "12",
-    name: "monad-mcp-server (vib3ai)",
-    description: "monad-mcp-server by vib3ai - MCP Madness tool",
-    builder: {
-      name: "nadaidotfun",
-      discord: "",
-      twitter: normalizeTwitter("nadaidotfun")
-    },
-    thumbnail: GithubLogo,
-    githubUrl: "https://github.com/vib3ai/monad-mcp-server",
-    liveUrl: "",
-    tags: ["MCP", "Tool", "Mission 2"],
-    mission: "Mission 2"
-  },
-  {
-    id: "13",
-    name: "monad-mcp-server (AnasXDev)",
-    description: "monad-mcp-server by AnasXDev - MCP Madness tool",
-    builder: {
-      name: "AnasXDev",
-      discord: "",
-      twitter: normalizeTwitter("AnasXDev")
-    },
-    thumbnail: GithubLogo,
-    githubUrl: "",
-    liveUrl: "",
-    tags: ["MCP", "Tool", "Mission 2"],
-    mission: "Mission 2"
-  },
-  {
-    id: "14",
-    name: "mcp-santi",
-    description: "mcp-santi - MCP Madness tool",
-    builder: {
-      name: "gabriell_santi",
-      discord: "",
-      twitter: normalizeTwitter("gabriell_santi")
-    },
-    thumbnail: GithubLogo,
-    githubUrl: "https://github.com/SantiSjp/mcp-santi",
-    liveUrl: "",
-    tags: ["MCP", "Tool", "Mission 2"],
-    mission: "Mission 2"
-  },
   // Mission 5: Make NFTs Great Again - NFT Tooling Track
   {
     id: "15",
@@ -342,9 +266,6 @@ export const availableTags = [
   "Visualizer",
   "Dashboard",
   "Mission 4",
-  "MCP",
-  "Tool",
-  "Mission 2",
   "NFT",
   "Tooling",
   "Collection",

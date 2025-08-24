@@ -21,9 +21,6 @@ import nadmonImg from '@/assets/projects/NADMON.png';
 import blonksImg from '@/assets/projects/Blonks.png';
 import moodArtImg from '@/assets/projects/MoodArt.png';
 
-// Import github logo for Mission 2 projects
-import githubImg from '@/assets/projects/github.png';
-
 // Import gaming image for game projects
 import projectGaming from '@/assets/project-gaming.jpg';
 
@@ -62,14 +59,6 @@ const projectImageMap: Record<string, string> = {
   'Testnet Metrics Hub': testnetMetricsImg,
   'DevHub': testnetMetricsImg, // Using metrics hub image as fallback for DevHub
   'Monad Nebula': '/lovable-uploads/4b2be09e-ce9a-4305-97cb-e645ff465c6c.png', // Using uploaded Monad Nebula image
-  
-  // Mission 2 projects (using github logo)
-  'nadcp_dot_fun': githubImg,
-  'MonadHub-MCP': githubImg,
-  'monad-mcp-server (vib3ai)': githubImg,
-  'monad-mcp-server (AnasXDev)': githubImg,
-  'mcp-santi': githubImg,
-  'Monad NFT MCPs': githubImg, // New Mission 2 project
   
   // Mission 5 projects using actual existing images - matching exact database names
   'NFThing': nfThingImg,
