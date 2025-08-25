@@ -73,9 +73,9 @@ const projectImageMap: Record<string, string> = {
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
   
   // Mission 6 projects - Multisynq Applications & Games with specific preview images
-  'TowerBlocs': projectGaming, // No specific image provided, keeping gaming fallback
+  'TowerBlocs': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
   'Nadoodle': '/lovable-uploads/513849b9-4c34-4e39-b01c-39a74d40fc66.png', // Nadoodle preview image
-  'Monedio Game': projectGaming, // No specific image provided, keeping gaming fallback
+  'Monedio Game': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
   'SynqChaos': '/lovable-uploads/28710d0f-5dbc-4046-9bb2-41ba0130953c.png', // SynqChaos preview image
   'Pixel Nad': '/lovable-uploads/d755b75f-3bc1-46fc-b6ab-857bf4393ea9.png', // Pixel Nad preview image
   'Monad Battleship': '/lovable-uploads/97380248-0def-483a-a63d-8b57589d8498.png', // Monad Battleship preview image
@@ -88,9 +88,9 @@ const projectImageMap: Record<string, string> = {
   'Monad Collab Code': '/lovable-uploads/c086c8f1-7895-4d9e-8acd-760ab4087d4f.png', // Monad Collab Code preview image
   'Tamagotchi Monad': '/lovable-uploads/a4bd0df8-0486-4602-903d-5be2988888b7.png', // Tamagotchi Monad preview image
   'Monad Together': '/lovable-uploads/a33e623e-e777-473f-81b5-9813e7c3b648.png', // Monad Together preview image
-  'RockSynq App': projectGaming, // No specific image provided, keeping gaming fallback
+  'RockSynq App': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
   'Novee Chess': '/lovable-uploads/a667635c-049d-4876-9c3b-0aaa6ee5ee06.png', // Novee Chess preview image
-  'BattleSynq': projectGaming, // No specific image provided, keeping gaming fallback
+  'BattleSynq': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
   
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
