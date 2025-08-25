@@ -73,25 +73,25 @@ const projectImageMap: Record<string, string> = {
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
   
-  // Mission 6 projects - Multisynq Applications & Games (using gaming image as fallback)
-  'TowerBlocs': projectGaming,
-  'Nadoodle': projectGaming,
-  'Monedio Game': projectGaming,
-  'SynqChaos': projectGaming,
-  'Pixel Nad': projectGaming,
-  'Monad Battleship': projectGaming,
-  'Catch the Mouch': projectGaming,
-  'Monad Slither': projectGaming,
-  'RPS Game Sync': projectGaming,
-  'ThreeSynq': projectGaming,
-  'Bombermon': projectGaming,
-  'SynqType': projectGaming,
-  'Monad Collab Code': projectGaming,
-  'Tamagotchi Monad': projectGaming,
-  'Monad Together': projectGaming,
-  'RockSynq App': projectGaming,
-  'Novee Chess': projectGaming,
-  'BattleSynq': projectGaming,
+  // Mission 6 projects - Multisynq Applications & Games with specific preview images
+  'TowerBlocs': projectGaming, // No specific image provided, keeping gaming fallback
+  'Nadoodle': '/lovable-uploads/513849b9-4c34-4e39-b01c-39a74d40fc66.png', // Nadoodle preview image
+  'Monedio Game': projectGaming, // No specific image provided, keeping gaming fallback
+  'SynqChaos': projectGaming, // No specific image provided, keeping gaming fallback
+  'Pixel Nad': projectGaming, // No specific image provided, keeping gaming fallback
+  'Monad Battleship': projectGaming, // No specific image provided, keeping gaming fallback
+  'Catch the Mouch': '/lovable-uploads/ded4e45f-c3a7-4764-a207-83781926509b.png', // Catch the Mouch preview image
+  'Monad Slither': '/lovable-uploads/d55d94c1-b2a5-49d8-9998-f50b27271a1f.png', // Monad Slither preview image
+  'RPS Game Sync': '/lovable-uploads/ed1401bd-4af7-43c9-91ba-3359bb269ca4.png', // RPS Game Sync preview image
+  'ThreeSynq': projectGaming, // No specific image provided, keeping gaming fallback
+  'Bombermon': '/lovable-uploads/1c47ae42-74b4-4cda-ad1e-4d0e2695ed4f.png', // Bombermon preview image
+  'SynqType': '/lovable-uploads/97c3584d-6373-4f1c-b0cd-cc57f27b09f6.png', // SynqType preview image
+  'Monad Collab Code': '/lovable-uploads/c086c8f1-7895-4d9e-8acd-760ab4087d4f.png', // Monad Collab Code preview image
+  'Tamagotchi Monad': '/lovable-uploads/a4bd0df8-0486-4602-903d-5be2988888b7.png', // Tamagotchi Monad preview image
+  'Monad Together': '/lovable-uploads/a33e623e-e777-473f-81b5-9813e7c3b648.png', // Monad Together preview image
+  'RockSynq App': projectGaming, // No specific image provided, keeping gaming fallback
+  'Novee Chess': '/lovable-uploads/a667635c-049d-4876-9c3b-0aaa6ee5ee06.png', // Novee Chess preview image
+  'BattleSynq': projectGaming, // No specific image provided, keeping gaming fallback
   
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
