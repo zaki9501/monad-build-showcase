@@ -17,21 +17,35 @@ export const useBuilderStats = (builderDiscord: string) => {
     try {
       setLoading(true);
       
-      // Get total projects count for this builder
+      // Get total projects count for this builder - match by discord or name if discord is empty
       const { data: projects, error: projectsError } = await supabase
         .from('projects')
-        .select('id, description')
-        .eq('builder_discord', builderDiscord);
+        .select('id, description, builder_name, builder_discord')
+        .or(`builder_discord.eq.${builderDiscord},builder_name.eq.${builderDiscord}`);
 
       if (projectsError) throw projectsError;
 
-      // For now, we'll use the first project's description as bio if available
-      // In a real app, you might have a separate builders table with bio info
-      const bio = projects?.find(p => p.description)?.description || undefined;
+      // Filter projects that actually match this builder
+      const matchedProjects = projects?.filter(p => 
+        p.builder_discord === builderDiscord || 
+        (builderDiscord && p.builder_name === builderDiscord)
+      ) || [];
+
+      // Use the longest description as a bio if available
+      const bio = matchedProjects
+        .map(p => p.description)
+        .filter(Boolean)
+        .sort((a, b) => (b?.length || 0) - (a?.length || 0))[0] || undefined;
 
       setStats({
-        totalProjects: projects?.length || 0,
+        totalProjects: matchedProjects.length,
         bio: bio
+      });
+
+      console.log(`Builder stats for ${builderDiscord}:`, {
+        totalProjects: matchedProjects.length,
+        matchedProjects: matchedProjects.map(p => p.builder_name),
+        bio: bio?.substring(0, 50) + '...'
       });
     } catch (error) {
       console.error('Error fetching builder stats:', error);

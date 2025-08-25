@@ -40,11 +40,12 @@ const ProjectDetails = () => {
     rateProject 
   } = useProjectInteractions(project?.id || '');
 
-  // Fetch builder stats
+  // Fetch builder stats - use discord handle or fallback to name
+  const builderIdentifier = project?.builder.discord || project?.builder.name || '';
   const { 
     stats: builderStats, 
     loading: builderLoading 
-  } = useBuilderStats(project?.builder.discord || '');
+  } = useBuilderStats(builderIdentifier);
 
   // Track view when component mounts
   useEffect(() => {
@@ -306,7 +307,7 @@ const ProjectDetails = () => {
                   <div className="flex-1">
                     <h4 className="font-semibold text-lg">{project.builder.name}</h4>
                     <p className="text-sm text-muted-foreground mb-1">
-                      @{project.builder.discord}
+                      {project.builder.discord ? `@${project.builder.discord}` : 'Builder'}
                     </p>
                     
                     {/* Builder Stats */}
@@ -315,6 +316,9 @@ const ProjectDetails = () => {
                         <Target className="w-3 h-3" />
                         <span>{builderStats.totalProjects} projects</span>
                       </div>
+                      {builderLoading && (
+                        <span className="text-xs">Loading...</span>
+                      )}
                     </div>
                     
                     {project.builder.twitter && (
@@ -341,10 +345,19 @@ const ProjectDetails = () => {
                     </p>
                   </div>
                 )}
+
+                {/* Show placeholder if no bio available */}
+                {!builderStats.bio && !builderLoading && (
+                  <div className="pt-4 border-t">
+                    <p className="text-xs text-muted-foreground italic">
+                      Builder bio will appear here when available
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
-            {/* Project Stats */}
+            {/* Project Statistics */}
             <Card>
               <CardHeader>
                 <CardTitle>Project Statistics</CardTitle>
