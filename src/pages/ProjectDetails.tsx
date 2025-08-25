@@ -217,7 +217,7 @@ const ProjectDetails = () => {
                       <UrlVerificationBadge url={project.liveUrl} size="md" />
                     </div>
                   )}
-                  {project.githubUrl && project.mission === "Mission 2" && (
+                  {project.githubUrl && (project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && (
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">Source Code URL</span>
                       <UrlVerificationBadge url={project.githubUrl} size="md" />
@@ -237,9 +237,9 @@ const ProjectDetails = () => {
                   <Button 
                     className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
                     asChild
-                    disabled={project.mission !== "Mission 2"}
+                    disabled={!project.githubUrl || (project.mission !== "Mission 2" && project.mission !== "Break Monad v2: Farcaster Edition")}
                   >
-                    {project.mission === "Mission 2" && project.githubUrl ? (
+                    {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && project.githubUrl ? (
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="w-4 h-4 mr-2" />
                         View Source Code
