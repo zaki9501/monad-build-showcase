@@ -1,4 +1,3 @@
-
 import { Github, ExternalLink, Eye, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -246,26 +245,33 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       </CardContent>
 
       <CardFooter className="pt-0 flex gap-2">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
-          asChild
-          disabled={!project.githubUrl || (project.mission !== "Mission 2" && project.mission !== "Break Monad v2: Farcaster Edition" && project.mission !== "Mission 6: Multisynq Applications & Games")}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition" || project.mission === "Mission 6: Multisynq Applications & Games") && project.githubUrl ? (
+        {/* Fixed Code Button Implementation */}
+        {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition" || project.mission === "Mission 6: Multisynq Applications & Games") && project.githubUrl ? (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
+            asChild
+            onClick={(e) => e.stopPropagation()}
+          >
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github className="h-3 w-3 mr-1" />
               Code
             </a>
-          ) : (
-            <span className="flex items-center">
-              <Github className="h-3 w-3 mr-1" />
-              Code
-            </span>
-          )}
-        </Button>
+          </Button>
+        ) : (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
+            disabled={true}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Github className="h-3 w-3 mr-1" />
+            Code
+          </Button>
+        )}
+        
         {project.liveUrl && (
           <Button 
             size="sm" 
