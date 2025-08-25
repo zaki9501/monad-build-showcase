@@ -48,15 +48,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const twitterUsername = getTwitterUsername(project.builder.twitter);
   const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
-  // Debug logging for Mission 6 projects
-  console.log(`Project: ${project.name}, Mission: ${project.mission}, GitHub URL: ${project.githubUrl}`);
-
-  // Check if project should have GitHub access
-  const hasGithubAccess = (project.mission === "Mission 2" || 
-                          project.mission === "Break Monad v2: Farcaster Edition" || 
-                          project.mission === "Mission 6: Multisynq Applications & Games") && 
-                          project.githubUrl;
-
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer">
       {/* Make the entire card clickable */}
@@ -83,7 +74,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             {project.liveUrl && (
               <UrlVerificationBadge url={project.liveUrl} size="sm" />
             )}
-            {project.githubUrl && (project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition" || project.mission === "Mission 6: Multisynq Applications & Games") && (
+            {project.githubUrl && (project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && (
               <UrlVerificationBadge url={project.githubUrl} size="sm" />
             )}
           </div>
@@ -228,7 +219,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               <UrlVerificationBadge url={project.liveUrl} size="sm" />
             </div>
           )}
-          {project.githubUrl && (project.mission === "Mission 2" || project.mission === "Mission 6: Multisynq Applications & Games") && (
+          {project.githubUrl && project.mission === "Mission 2" && (
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">Source Code:</span>
               <UrlVerificationBadge url={project.githubUrl} size="sm" />
@@ -254,47 +245,37 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       </CardContent>
 
       <CardFooter className="pt-0 flex gap-2">
-        {/* Code Button - Fixed for Mission 6 */}
-        {hasGithubAccess ? (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log(`Opening GitHub URL: ${project.githubUrl}`);
-              window.open(project.githubUrl, '_blank', 'noopener,noreferrer');
-            }}
-          >
-            <Github className="h-3 w-3 mr-1" />
-            Code
-          </Button>
-        ) : (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300 opacity-50 cursor-not-allowed"
-            disabled={true}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Github className="h-3 w-3 mr-1" />
-            Code
-          </Button>
-        )}
-        
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
+          asChild
+          disabled={!project.githubUrl || (project.mission !== "Mission 2" && project.mission !== "Break Monad v2: Farcaster Edition")}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && project.githubUrl ? (
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+              <Github className="h-3 w-3 mr-1" />
+              Code
+            </a>
+          ) : (
+            <span className="flex items-center">
+              <Github className="h-3 w-3 mr-1" />
+              Code
+            </span>
+          )}
+        </Button>
         {project.liveUrl && (
           <Button 
             size="sm" 
             className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
-            }}
+            asChild
+            onClick={(e) => e.stopPropagation()}
           >
-            <ExternalLink className="h-3 w-3 mr-1" />
-            Live
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3 w-3 mr-1" />
+              Live
+            </a>
           </Button>
         )}
       </CardFooter>
