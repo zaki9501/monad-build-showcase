@@ -73,6 +73,26 @@ const projectImageMap: Record<string, string> = {
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
   
+  // Mission 6 projects - Multisynq Applications & Games (using gaming image as fallback)
+  'TowerBlocs': projectGaming,
+  'Nadoodle': projectGaming,
+  'Monedio Game': projectGaming,
+  'SynqChaos': projectGaming,
+  'Pixel Nad': projectGaming,
+  'Monad Battleship': projectGaming,
+  'Catch the Mouch': projectGaming,
+  'Monad Slither': projectGaming,
+  'RPS Game Sync': projectGaming,
+  'ThreeSynq': projectGaming,
+  'Bombermon': projectGaming,
+  'SynqType': projectGaming,
+  'Monad Collab Code': projectGaming,
+  'Tamagotchi Monad': projectGaming,
+  'Monad Together': projectGaming,
+  'RockSynq App': projectGaming,
+  'Novee Chess': projectGaming,
+  'BattleSynq': projectGaming,
+  
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
   'Retrieve NFT holders': '/lovable-uploads/e218523f-dcbb-42dd-99d7-b16afb055793.png', // Using uploaded Retrieve NFT holders image
