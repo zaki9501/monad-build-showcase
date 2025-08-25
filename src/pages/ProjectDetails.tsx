@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Github, ExternalLink, Eye, Heart, Star, Calendar, User, Target } from "lucide-react";
@@ -15,6 +14,7 @@ import UrlVerificationBadge from "@/components/UrlVerificationBadge";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useBuilderStats } from "@/hooks/useBuilderStats";
 
 const getMissionDescription = (mission: string) => {
   const descriptions = {
@@ -39,6 +39,12 @@ const ProjectDetails = () => {
     toggleLike, 
     rateProject 
   } = useProjectInteractions(project?.id || '');
+
+  // Fetch builder stats
+  const { 
+    stats: builderStats, 
+    loading: builderLoading 
+  } = useBuilderStats(project?.builder.discord || '');
 
   // Track view when component mounts
   useEffect(() => {
@@ -271,7 +277,7 @@ const ProjectDetails = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Builder Info */}
+            {/* Enhanced Builder Info */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -280,7 +286,7 @@ const ProjectDetails = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 mb-4">
                   <div className="relative">
                     <Avatar className="w-16 h-16">
                       {avatarUrl && (
@@ -299,9 +305,17 @@ const ProjectDetails = () => {
                   
                   <div className="flex-1">
                     <h4 className="font-semibold text-lg">{project.builder.name}</h4>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <p className="text-sm text-muted-foreground mb-1">
                       @{project.builder.discord}
                     </p>
+                    
+                    {/* Builder Stats */}
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                      <div className="flex items-center gap-1">
+                        <Target className="w-3 h-3" />
+                        <span>{builderStats.totalProjects} projects</span>
+                      </div>
+                    </div>
                     
                     {project.builder.twitter && (
                       <Button variant="outline" size="sm" asChild>
@@ -317,6 +331,16 @@ const ProjectDetails = () => {
                     )}
                   </div>
                 </div>
+
+                {/* Builder Bio */}
+                {builderStats.bio && (
+                  <div className="pt-4 border-t">
+                    <h5 className="font-medium mb-2 text-sm">About the Builder</h5>
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      {builderStats.bio}
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
