@@ -1,3 +1,4 @@
+
 import { Github, ExternalLink, Eye, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +10,7 @@ import UrlVerificationBadge from "@/components/UrlVerificationBadge";
 import AvatarWithFallback from "@/components/AvatarWithFallback";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { useTwitterProfile } from "@/hooks/useTwitterProfile";
 
 interface ProjectCardProps {
   project: {
@@ -37,6 +39,41 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     toggleLike, 
     rateProject 
   } = useProjectInteractions(project.id);
+
+  // Get the actual Twitter profile data to ensure we use the correct username
+  const { profile } = useTwitterProfile(project.builder.twitter, project.id);
+
+  // Extract the actual username that was successfully fetched
+  const extractUsernameFromTwitterUrl = (url?: string) => {
+    if (!url) return null;
+    
+    try {
+      const patterns = [
+        /(?:https?:\/\/)?(?:www\.)?(?:twitter\.com|x\.com)\/([^\/\?\s#&]+)/i,
+        /^@([a-zA-Z0-9_]+)$/,
+        /^([a-zA-Z0-9_]+)$/
+      ];
+      
+      for (const pattern of patterns) {
+        const match = url.trim().match(pattern);
+        if (match && match[1] && /^[a-zA-Z0-9_]{1,15}$/.test(match[1])) {
+          return match[1];
+        }
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
+  const originalUsername = extractUsernameFromTwitterUrl(project.builder.twitter);
+  
+  // Only show Twitter link if we have a valid original URL and the profile loaded successfully
+  const shouldShowTwitterLink = project.builder.twitter && 
+                               project.builder.twitter.trim().toLowerCase().startsWith("http") &&
+                               originalUsername &&
+                               profile.profilePicture && // Only show if we successfully fetched profile data
+                               !profile.error;
 
   // Check if GitHub should be shown for this mission
   const shouldShowGitHub = project.mission === "Mission 2" || 
@@ -142,20 +179,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 <span className="text-sm font-semibold text-foreground truncate">
                   {project.builder.name}
                 </span>
-                {/* X (Twitter) icon with link */}
-                {project.builder.twitter &&
-                  project.builder.twitter.trim().toLowerCase().startsWith("http") && (
-                    <a
-                      href={project.builder.twitter.trim()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-700 transition-colors"
-                      title="View X profile"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Twitter className="w-3 h-3" />
-                    </a>
-                  )}
+                {/* X (Twitter) icon with link - using the original username to ensure consistency */}
+                {shouldShowTwitterLink && (
+                  <a
+                    href={`https://x.com/${originalUsername}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-700 transition-colors"
+                    title={`View @${originalUsername} on X`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Twitter className="w-3 h-3" />
+                  </a>
+                )}
               </div>
               <span className="text-xs text-muted-foreground">
                 @{project.builder.discord}
