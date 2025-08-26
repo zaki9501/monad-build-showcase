@@ -1,4 +1,3 @@
-
 import { Github, ExternalLink, Eye, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -68,12 +67,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
   const originalUsername = extractUsernameFromTwitterUrl(project.builder.twitter);
   
-  // Only show Twitter link if we have a valid original URL and the profile loaded successfully
+  // Show Twitter link if we have a valid original URL and username, regardless of profile fetch success
   const shouldShowTwitterLink = project.builder.twitter && 
                                project.builder.twitter.trim().toLowerCase().startsWith("http") &&
-                               originalUsername &&
-                               profile.profilePicture && // Only show if we successfully fetched profile data
-                               !profile.error;
+                               originalUsername;
 
   // Check if GitHub should be shown for this mission
   const shouldShowGitHub = project.mission === "Mission 2" || 
@@ -179,7 +176,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 <span className="text-sm font-semibold text-foreground truncate">
                   {project.builder.name}
                 </span>
-                {/* X (Twitter) icon with link - using the original username to ensure consistency */}
+                {/* X (Twitter) icon with link - show if we have valid URL and username */}
                 {shouldShowTwitterLink && (
                   <a
                     href={`https://x.com/${originalUsername}`}
