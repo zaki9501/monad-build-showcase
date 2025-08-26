@@ -118,6 +118,10 @@ export type Database = {
           name: string
           tags: string[] | null
           thumbnail: string | null
+          twitter_bio: string | null
+          twitter_data_fetched_at: string | null
+          twitter_profile_picture: string | null
+          twitter_verified: boolean | null
           updated_at: string
         }
         Insert: {
@@ -133,6 +137,10 @@ export type Database = {
           name: string
           tags?: string[] | null
           thumbnail?: string | null
+          twitter_bio?: string | null
+          twitter_data_fetched_at?: string | null
+          twitter_profile_picture?: string | null
+          twitter_verified?: boolean | null
           updated_at?: string
         }
         Update: {
@@ -148,6 +156,10 @@ export type Database = {
           name?: string
           tags?: string[] | null
           thumbnail?: string | null
+          twitter_bio?: string | null
+          twitter_data_fetched_at?: string | null
+          twitter_profile_picture?: string | null
+          twitter_verified?: boolean | null
           updated_at?: string
         }
         Relationships: []
