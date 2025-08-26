@@ -45,20 +45,9 @@ export const AvatarWithFallback = ({
   ].filter(Boolean) as string[];
 
   const handleImageError = () => {
-    console.log(`Avatar source ${currentSourceIndex + 1} failed for ${builderName}:`, avatarSources[currentSourceIndex]);
-    
     if (currentSourceIndex < avatarSources.length - 1) {
       setCurrentSourceIndex(prev => prev + 1);
-      console.log(`Trying fallback ${currentSourceIndex + 2} for ${builderName}:`, avatarSources[currentSourceIndex + 1]);
-    } else {
-      console.log(`All avatar sources exhausted for ${builderName}, using final fallback`);
     }
-  };
-
-  const handleImageLoad = () => {
-    const sourceType = currentSourceIndex === 0 && twitterProfile.profilePicture ? 'Real Twitter API' : 
-                      currentSourceIndex === 1 ? 'unavatar.io' : 'Generated';
-    console.log(`✅ Avatar loaded successfully for ${builderName} using ${sourceType} (source ${currentSourceIndex + 1}):`, avatarSources[currentSourceIndex]);
   };
 
   return (
@@ -68,7 +57,6 @@ export const AvatarWithFallback = ({
         alt={builderName}
         className="object-cover"
         onError={handleImageError}
-        onLoad={handleImageLoad}
       />
       <AvatarFallback className="bg-gradient-to-br from-primary via-primary-glow to-primary-dark text-primary-foreground text-sm font-bold">
         {builderName.charAt(0).toUpperCase()}
