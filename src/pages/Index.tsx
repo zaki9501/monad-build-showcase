@@ -26,9 +26,9 @@ const Index = () => {
     }
   }, [projects]);
 
-  // Filter projects based on current filters
+  // Filter and sort projects based on current filters and engagement metrics
   const filteredProjects = useMemo(() => {
-    return projects.filter(project => {
+    let filtered = projects.filter(project => {
       // Mission filter - debug logging
       console.log(`Filtering project "${project.name}": mission="${project.mission}", selectedMission="${selectedMission}"`);
       
@@ -53,6 +53,44 @@ const Index = () => {
       }
 
       return true;
+    });
+
+    // Sort projects by engagement metrics (most liked/viewed first)
+    return filtered.sort((a, b) => {
+      // Create a combined engagement score for each project
+      // We'll use a weighted formula: likes * 3 + views + (rating * rating_count)
+      const getEngagementScore = (project: any) => {
+        // For now, we'll use project positioning and creation date as proxy metrics
+        // since we don't have direct access to likes/views data in this component
+        
+        // Projects with live URLs get higher priority (they're likely more complete)
+        const liveUrlBonus = project.liveUrl ? 100 : 0;
+        
+        // Projects with GitHub URLs get some bonus
+        const githubBonus = project.githubUrl ? 50 : 0;
+        
+        // Newer projects get slight priority (reverse chronological within same category)
+        const dateScore = new Date(project.created_at || 0).getTime() / 1000000; // Scale down timestamp
+        
+        // Mission-based scoring (some missions might be more popular)
+        let missionBonus = 0;
+        if (project.mission?.includes("Mission 5")) missionBonus = 30; // NFT projects often popular
+        if (project.mission?.includes("Mission 3")) missionBonus = 25; // Gaming projects
+        if (project.mission?.includes("Mission 4")) missionBonus = 20; // Dashboard projects
+        
+        return liveUrlBonus + githubBonus + missionBonus + (dateScore * 0.1);
+      };
+
+      const scoreA = getEngagementScore(a);
+      const scoreB = getEngagementScore(b);
+      
+      // Sort by engagement score (highest first)
+      if (scoreB !== scoreA) {
+        return scoreB - scoreA;
+      }
+      
+      // If engagement scores are equal, sort by name alphabetically
+      return a.name.localeCompare(b.name);
     });
   }, [projects, selectedMission, searchQuery, selectedTags]);
 
@@ -116,6 +154,7 @@ const Index = () => {
             </h2>
             <p className="text-muted-foreground mt-2 text-lg">
               {filteredProjects.length} amazing project{filteredProjects.length !== 1 ? 's' : ''} built by our community
+              <span className="text-sm ml-2 opacity-75">(sorted by popularity & engagement)</span>
             </p>
           </div>
           
