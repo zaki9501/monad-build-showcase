@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -83,9 +82,12 @@ const projectImageMap: Record<string, string> = {
   'Create Your Image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
   'NFT': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
   
-  // NEW Mission 5 projects - adding the two remaining images
+  // Mission 5 projects - fixed naming and added missing projects
   'ChronoGlyphs': '/lovable-uploads/f87556b9-8a52-4875-aae7-d80db7bc540f.png',
-  'DontFeedTheBeast': '/lovable-uploads/476ab57f-ce59-4f8c-8060-d561112da04f.png',
+  "Don't Feed the Beast": '/lovable-uploads/476ab57f-ce59-4f8c-8060-d561112da04f.png', // Fixed: added apostrophe and spaces
+  'MONFTAI': '/lovable-uploads/0b268c72-d50c-4465-8ad3-0c2fbc7ebf9c.png', // Using available uploaded image
+  'Mondala': '/lovable-uploads/63a55c3b-8363-47b3-ad74-9c7d1cc9e670.png', // Using available uploaded image
+  'Monad Mission 5 Platform': '/lovable-uploads/7178febd-7e56-45f5-a8ed-032f21718a9b.png', // Using available uploaded image
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
