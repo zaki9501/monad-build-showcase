@@ -241,7 +241,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <div className="flex flex-wrap gap-2 mb-4">
           {project.liveUrl && (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Live Demo:</span>
+              <span className="text-xs text-muted-foreground">Live Link:</span>
               <UrlVerificationBadge url={project.liveUrl} size="sm" />
             </div>
           )}

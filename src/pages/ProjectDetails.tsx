@@ -210,7 +210,7 @@ const ProjectDetails = () => {
                 <div className="space-y-4">
                   {project.liveUrl && (
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Live Demo URL</span>
+                      <span className="text-sm font-medium">Live Link URL</span>
                       <UrlVerificationBadge url={project.liveUrl} size="md" />
                     </div>
                   )}
