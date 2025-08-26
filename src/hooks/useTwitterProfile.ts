@@ -23,8 +23,33 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
 
   const extractUsername = (url?: string) => {
     if (!url) return null;
-    const match = url.match(/(?:twitter\.com|x\.com)\/([^\/\?]+)/);
-    return match ? match[1] : null;
+    
+    try {
+      // Handle various Twitter URL formats
+      const patterns = [
+        /(?:twitter\.com|x\.com)\/([^\/\?\s#]+)/i,
+        /(?:@)([a-zA-Z0-9_]+)/,
+        /^([a-zA-Z0-9_]+)$/ // Just username without @ or URL
+      ];
+      
+      for (const pattern of patterns) {
+        const match = url.trim().match(pattern);
+        if (match && match[1]) {
+          const username = match[1];
+          // Validate username format
+          if (/^[a-zA-Z0-9_]{1,15}$/.test(username)) {
+            console.log(`Extracted username: "${username}" from URL: "${url}"`);
+            return username;
+          }
+        }
+      }
+      
+      console.warn(`Could not extract valid username from: "${url}"`);
+      return null;
+    } catch (error) {
+      console.error('Error extracting username:', error);
+      return null;
+    }
   };
 
   const fetchTwitterProfile = async (username: string) => {
@@ -37,25 +62,52 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
       });
 
       if (error) {
+        console.error('Supabase function error:', error);
         throw error;
       }
 
       console.log('Twitter profile data received:', data);
 
+      // Handle the case where data might have an error property
+      if (data?.error) {
+        console.warn('Twitter API returned error:', data.error);
+        // Don't throw here, just set empty state
+        setProfile({
+          profilePicture: null,
+          bio: null,
+          verified: false,
+          loading: false,
+          cached: false,
+        });
+        return;
+      }
+
       setProfile({
-        profilePicture: data.profilePicture,
-        bio: data.bio,
-        verified: data.verified,
+        profilePicture: data?.profilePicture || null,
+        bio: data?.bio || null,
+        verified: data?.verified || false,
         loading: false,
-        cached: data.cached || false,
+        cached: data?.cached || false,
       });
 
     } catch (error) {
       console.error('Error fetching Twitter profile:', error);
-      setProfile(prev => ({ ...prev, loading: false }));
+      setProfile({
+        profilePicture: null,
+        bio: null,
+        verified: false,
+        loading: false,
+        cached: false,
+      });
       
-      // Don't show toast for API errors - just fail silently and use fallbacks
-      console.warn('Twitter profile fetch failed, using fallbacks');
+      // Only show toast for unexpected errors, not API failures
+      if (!error.message?.includes('rate limit') && !error.message?.includes('Twitter API')) {
+        toast({
+          title: "Error",
+          description: "Failed to load Twitter profile data.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
