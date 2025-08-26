@@ -21,6 +21,10 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
     cached: false,
   });
   const { toast } = useToast();
+  const isDev = (import.meta as any)?.env?.DEV === true;
+  const debugLog = (...args: unknown[]) => { if (isDev) console.log(...args); };
+  const debugWarn = (...args: unknown[]) => { if (isDev) console.warn(...args); };
+  const debugError = (...args: unknown[]) => { if (isDev) console.error(...args); };
 
   const extractUsername = (url?: string) => {
     if (!url) return null;
@@ -42,16 +46,16 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
           const username = match[1];
           // Validate username format (Twitter usernames: 1-15 chars, alphanumeric + underscore)
           if (/^[a-zA-Z0-9_]{1,15}$/.test(username)) {
-            console.log(`✅ Extracted username: "${username}" from URL: "${url}"`);
+            debugLog(`✅ Extracted username: "${username}" from URL: "${url}"`);
             return username;
           }
         }
       }
       
-      console.warn(`❌ Could not extract valid username from: "${url}"`);
+      debugWarn(`❌ Could not extract valid username from: "${url}"`);
       return null;
     } catch (error) {
-      console.error('Error extracting username:', error);
+      debugError('Error extracting username:', error);
       return null;
     }
   };
@@ -59,22 +63,22 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
   const fetchTwitterProfile = async (username: string) => {
     try {
       setProfile(prev => ({ ...prev, loading: true, error: undefined }));
-      console.log(`🐦 Fetching Twitter profile for: ${username}`);
+      debugLog(`🐦 Fetching Twitter profile for: ${username}`);
 
       const { data, error } = await supabase.functions.invoke('fetch-twitter-profile', {
         body: { username, projectId },
       });
 
       if (error) {
-        console.error('❌ Supabase function error:', error);
+        debugError('❌ Supabase function error:', error);
         throw error;
       }
 
-      console.log('📦 Twitter profile data received:', data);
+      debugLog('📦 Twitter profile data received:', data);
 
       // Handle the case where data has an error property (but still returns 200)
       if (data?.error) {
-        console.warn('⚠️ Twitter API returned error:', data.error);
+        debugWarn('⚠️ Twitter API returned error:', data.error);
         setProfile({
           profilePicture: null,
           bio: null,
@@ -108,13 +112,13 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
       });
 
       if (data?.profilePicture) {
-        console.log(`✅ Successfully loaded Twitter profile for ${username}`);
+        debugLog(`✅ Successfully loaded Twitter profile for ${username}`);
       } else {
-        console.log(`⚠️ No profile picture found for ${username}`);
+        debugLog(`⚠️ No profile picture found for ${username}`);
       }
 
     } catch (error) {
-      console.error('❌ Error fetching Twitter profile:', error);
+      debugError('❌ Error fetching Twitter profile:', error);
       setProfile({
         profilePicture: null,
         bio: null,
@@ -140,10 +144,10 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
   useEffect(() => {
     const username = extractUsername(twitterUrl);
     if (username && username.trim()) {
-      console.log(`🔄 Twitter username extracted: ${username}`);
+      debugLog(`🔄 Twitter username extracted: ${username}`);
       fetchTwitterProfile(username);
     } else {
-      console.log(`ℹ️ No valid Twitter username found in URL: ${twitterUrl}`);
+      debugLog(`ℹ️ No valid Twitter username found in URL: ${twitterUrl}`);
       setProfile({
         profilePicture: null,
         bio: null,

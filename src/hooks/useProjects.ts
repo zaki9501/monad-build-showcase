@@ -123,6 +123,9 @@ export const useProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const isDev = (import.meta as any)?.env?.DEV === true;
+  const debugLog = (...args: unknown[]) => { if (isDev) console.log(...args); };
+  const debugWarn = (...args: unknown[]) => { if (isDev) console.warn(...args); };
 
   const fetchProjects = async () => {
     try {
@@ -139,7 +142,7 @@ export const useProjects = () => {
         
         // Enhanced debug logging for Mission 5 projects specifically
         if (project.mission === "Make NFTs Great Again (Mission 5)" && project.live_url) {
-          console.log('🔍 MISSION 5 Project with Live URL:', {
+          debugLog('🔍 MISSION 5 Project with Live URL:', {
             name: project.name,
             exactName: `"${project.name}"`,
             hasLiveUrl: !!project.live_url,
@@ -153,9 +156,9 @@ export const useProjects = () => {
         
         if (mappedImage) {
           thumbnail = mappedImage;
-          console.log('✅ Found exact mapped image for project:', project.name, '→', thumbnail);
+          debugLog('✅ Found exact mapped image for project:', project.name, '→', thumbnail);
         } else if (project.mission === "Make NFTs Great Again (Mission 5)" && project.live_url) {
-          console.log('❌ NO MAPPED IMAGE for Mission 5 project with live URL:', {
+          debugWarn('❌ NO MAPPED IMAGE for Mission 5 project with live URL:', {
             projectName: project.name,
             exactProjectName: `"${project.name}"`,
             availableKeys: Object.keys(projectImageMap).filter(key => 
@@ -176,7 +179,7 @@ export const useProjects = () => {
           const githubPreview = getGithubPreviewImage(project.github_url);
           if (githubPreview) {
             thumbnail = githubPreview;
-            console.log('📸 Using GitHub preview for Mission 5 project:', project.name, '→', thumbnail);
+            debugLog('📸 Using GitHub preview for Mission 5 project:', project.name, '→', thumbnail);
           }
         }
 
