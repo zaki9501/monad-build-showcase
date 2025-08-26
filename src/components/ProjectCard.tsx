@@ -1,13 +1,12 @@
-
 import { Github, ExternalLink, Eye, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Twitter } from "lucide-react";
 import { useProjectInteractions } from "@/hooks/useProjectInteractions";
 import StarRating from "@/components/StarRating";
 import UrlVerificationBadge from "@/components/UrlVerificationBadge";
+import AvatarWithFallback from "@/components/AvatarWithFallback";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
@@ -38,16 +37,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     toggleLike, 
     rateProject 
   } = useProjectInteractions(project.id);
-
-  // Extract Twitter username from URL for avatar
-  const getTwitterUsername = (twitterUrl?: string) => {
-    if (!twitterUrl) return null;
-    const match = twitterUrl.match(/(?:twitter\.com|x\.com)\/([^\/\?]+)/);
-    return match ? match[1] : null;
-  };
-
-  const twitterUsername = getTwitterUsername(project.builder.twitter);
-  const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
   // Check if GitHub should be shown for this mission
   const shouldShowGitHub = project.mission === "Mission 2" || 
@@ -136,21 +125,15 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <CardHeader className="pb-3 pt-4">
         <div className="flex items-start justify-between gap-3">
-          {/* Builder info with profile picture */}
+          {/* Builder info with improved profile picture */}
           <div className="flex items-center gap-3 flex-1">
             <div className="relative">
-              <Avatar className="w-10 h-10">
-                {avatarUrl && (
-                  <AvatarImage 
-                    src={avatarUrl} 
-                    alt={project.builder.name}
-                    className="object-cover"
-                  />
-                )}
-                <AvatarFallback className="bg-gradient-to-br from-primary via-primary-glow to-primary-dark text-primary-foreground text-sm font-bold">
-                  {project.builder.name.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
+              <AvatarWithFallback
+                builderName={project.builder.name}
+                twitterUrl={project.builder.twitter}
+                discordUsername={project.builder.discord}
+                className="w-10 h-10"
+              />
               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
             <div className="flex-1 min-w-0">

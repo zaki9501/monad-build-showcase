@@ -4,13 +4,13 @@ import { ArrowLeft, Github, ExternalLink, Eye, Heart, Star, Calendar, User, Targ
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Twitter } from "lucide-react";
 import { useProjects } from "@/hooks/useProjects";
 import { useProjectInteractions } from "@/hooks/useProjectInteractions";
 import StarRating from "@/components/StarRating";
 import UrlVerificationBadge from "@/components/UrlVerificationBadge";
+import AvatarWithFallback from "@/components/AvatarWithFallback";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -88,16 +88,6 @@ const ProjectDetails = () => {
       </div>
     );
   }
-
-  // Extract Twitter username from URL for avatar
-  const getTwitterUsername = (twitterUrl?: string) => {
-    if (!twitterUrl) return null;
-    const match = twitterUrl.match(/(?:twitter\.com|x\.com)\/([^\/\?]+)/);
-    return match ? match[1] : null;
-  };
-
-  const twitterUsername = getTwitterUsername(project.builder.twitter);
-  const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -278,7 +268,7 @@ const ProjectDetails = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Enhanced Builder Info */}
+            {/* Enhanced Builder Info with improved avatar */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -289,18 +279,12 @@ const ProjectDetails = () => {
               <CardContent>
                 <div className="flex items-start gap-3 mb-4">
                   <div className="relative">
-                    <Avatar className="w-16 h-16">
-                      {avatarUrl && (
-                        <AvatarImage 
-                          src={avatarUrl} 
-                          alt={project.builder.name}
-                          className="object-cover"
-                        />
-                      )}
-                      <AvatarFallback className="bg-gradient-to-br from-primary via-primary-glow to-primary-dark text-primary-foreground text-lg font-bold">
-                        {project.builder.name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
+                    <AvatarWithFallback
+                      builderName={project.builder.name}
+                      twitterUrl={project.builder.twitter}
+                      discordUsername={project.builder.discord}
+                      className="w-16 h-16"
+                    />
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
                   </div>
                   
