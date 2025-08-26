@@ -71,33 +71,71 @@ const projectImageMap: Record<string, string> = {
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png', // Using uploaded Bombandak image
   'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png', // Using uploaded Solodan NFT Launchpad image
   
-  // Mission 5 projects with live links - using the NEW uploaded images
+  // Mission 5 projects with live links - using the NEW uploaded images with ALL possible name variations
   'GeoShapes': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
   'Geo Shapes': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
+  'geo shapes': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
+  'GEOSHAPES': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
+  
   'ME-int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
   'ME int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
+  'me-int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
+  'me int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
+  'ME_int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
+  'MEint': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
+  
   'Mon Warrior Game': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
   'MonWarrior Game': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
   'Mon Warrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
+  'MonWarrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
+  'mon warrior game': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
+  'mon warrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
+  
   'PokéEvolve NFT': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
   'PokeEvolve NFT': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
   'Poke Evolve NFT': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
+  'PokéEvolve': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
+  'PokeEvolve': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
+  'pokeevolve nft': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
+  'pokéevolve nft': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
+  
   'LendHub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
   'Lend Hub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
+  'lendhub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
+  'lend hub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
+  'LENDHUB': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
+  
   'Music NADS': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
   'Music Nads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
   'MusicNADS': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
+  'MusicNads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
+  'music nads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
+  'musicnads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
+  
   'MonadPets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
   'Monad Pets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
   'MonPets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
+  'monadpets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
+  'monad pets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
+  'monpets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
+  
   'Vibe to Music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
   'VibetoMusic': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
   'Vibe Music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
+  'vibe to music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
+  'vibetomusic': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
+  'vibe music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
+  
   'Create Your Image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
   'CreateYourImage': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
   'Create Image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
+  'create your image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
+  'createyourimage': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
+  'create image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
+  
   'NFT': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
   'nft': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
+  'Nft': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
@@ -147,22 +185,39 @@ export const useProjects = () => {
       const formattedProjects: Project[] = (data || []).map(project => {
         let thumbnail = project.thumbnail;
         
-        // Debug: log project names to help with mapping
-        console.log('Project name from database:', project.name);
+        // Enhanced debug logging
+        console.log('🔍 Processing project:', {
+          name: project.name,
+          mission: project.mission,
+          hasLiveUrl: !!project.live_url,
+          hasGithubUrl: !!project.github_url,
+          originalThumbnail: project.thumbnail
+        });
         
-        // Use local image if available
-        if (projectImageMap[project.name]) {
-          thumbnail = projectImageMap[project.name];
-          console.log(`Using mapped image for "${project.name}":`, thumbnail);
-        } 
+        // Check if we have a mapped image (with case-insensitive fallback)
+        const mappedImage = projectImageMap[project.name] || 
+                           projectImageMap[project.name.toLowerCase()] ||
+                           projectImageMap[project.name.toUpperCase()];
+        
+        if (mappedImage) {
+          thumbnail = mappedImage;
+          console.log('✅ Found mapped image for project:', project.name, '→', thumbnail);
+        } else {
+          console.log('❌ No mapped image found for project:', project.name);
+          console.log('Available keys:', Object.keys(projectImageMap).filter(key => 
+            key.toLowerCase().includes(project.name.toLowerCase().substring(0, 3))
+          ));
+        }
+        
         // For Mission 5 projects without live URL and with GitHub URL, use GitHub preview
-        else if (project.mission === "Make NFTs Great Again (Mission 5)" && 
-                 !project.live_url && 
-                 project.github_url) {
+        if (project.mission === "Make NFTs Great Again (Mission 5)" && 
+            !project.live_url && 
+            project.github_url && 
+            !mappedImage) {
           const githubPreview = getGithubPreviewImage(project.github_url);
           if (githubPreview) {
             thumbnail = githubPreview;
-            console.log(`Using GitHub preview for "${project.name}":`, thumbnail);
+            console.log('📸 Using GitHub preview for Mission 5 project:', project.name, '→', thumbnail);
           }
         }
 
