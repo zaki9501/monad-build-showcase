@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { getGithubPreviewImage } from '@/utils/githubPreview';
 
 // Import actual project images that exist
 import chogVsCatgirlImg from '@/assets/projects/Chog-vs-catgirl.png';
@@ -114,22 +115,39 @@ export const useProjects = () => {
 
       if (error) throw error;
 
-      const formattedProjects: Project[] = (data || []).map(project => ({
-        id: project.id,
-        name: project.name,
-        description: project.description,
-        builder: {
-          name: project.builder_name,
-          discord: project.builder_discord,
-          twitter: project.builder_twitter || undefined,
-        },
-        // Use local image if available, otherwise use database thumbnail
-        thumbnail: projectImageMap[project.name] || project.thumbnail,
-        githubUrl: project.github_url,
-        liveUrl: project.live_url,
-        tags: project.tags || [],
-        mission: project.mission,
-      }));
+      const formattedProjects: Project[] = (data || []).map(project => {
+        let thumbnail = project.thumbnail;
+        
+        // Use local image if available
+        if (projectImageMap[project.name]) {
+          thumbnail = projectImageMap[project.name];
+        } 
+        // For Mission 5 projects without live URL and with GitHub URL, use GitHub preview
+        else if (project.mission === "Make NFTs Great Again (Mission 5)" && 
+                 !project.live_url && 
+                 project.github_url) {
+          const githubPreview = getGithubPreviewImage(project.github_url);
+          if (githubPreview) {
+            thumbnail = githubPreview;
+          }
+        }
+
+        return {
+          id: project.id,
+          name: project.name,
+          description: project.description,
+          builder: {
+            name: project.builder_name,
+            discord: project.builder_discord,
+            twitter: project.builder_twitter || undefined,
+          },
+          thumbnail,
+          githubUrl: project.github_url,
+          liveUrl: project.live_url,
+          tags: project.tags || [],
+          mission: project.mission,
+        };
+      });
 
       setProjects(formattedProjects);
     } catch (error) {
