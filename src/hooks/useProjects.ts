@@ -71,7 +71,7 @@ const projectImageMap: Record<string, string> = {
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png',
   'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png',
   
-  // Mission 5 projects with live links - using ACTUAL database names
+  // Mission 5 projects with live links - using ACTUAL database names and correct images
   'GeoShapes2': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
   'ME-INT': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
   'Mon Warrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
@@ -82,6 +82,10 @@ const projectImageMap: Record<string, string> = {
   'Vibe to Music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
   'Create Your Image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
   'NFT': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
+  
+  // NEW Mission 5 projects - adding the two remaining images
+  'ChronoGlyphs': '/lovable-uploads/f87556b9-8a52-4875-aae7-d80db7bc540f.png',
+  'DontFeedTheBeast': '/lovable-uploads/476ab57f-ce59-4f8c-8060-d561112da04f.png',
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
