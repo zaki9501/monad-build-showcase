@@ -12,9 +12,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">M</span>
-              </div>
+              <img src="/logo.png" alt="Monad Showcase Logo" className="h-8 w-8 rounded-lg object-contain" />
               <span className="font-semibold text-lg">Monad Showcase</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-sm">

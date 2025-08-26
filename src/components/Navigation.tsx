@@ -14,9 +14,7 @@ const Navigation = () => {
       <div className="container flex h-16 items-center justify-between px-4 lg:px-8">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">M</span>
-          </div>
+          <img src="/logo.png" alt="Monad Showcase Logo" className="h-16 w-16 rounded-lg object-contain" />
           <span className="font-semibold text-lg">Monad Showcase</span>
         </div>
 
