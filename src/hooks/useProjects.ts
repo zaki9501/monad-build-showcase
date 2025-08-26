@@ -68,103 +68,49 @@ const projectImageMap: Record<string, string> = {
   'Nadmon': nadmonImg,
   'Blonks': blonksImg,
   'Moodart': moodArtImg,
-  'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png', // Using uploaded Bombandak image
-  'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png', // Using uploaded Solodan NFT Launchpad image
+  'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png',
+  'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png',
   
-  // Mission 5 projects with live links - using the NEW uploaded images with ALL possible name variations
-  'GeoShapes': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
-  'Geo Shapes': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
-  'geo shapes': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
-  'GEOSHAPES': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
-  
-  'ME-int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
-  'ME int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
-  'me-int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
-  'me int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
-  'ME_int': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
-  'MEint': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
-  
-  'Mon Warrior Game': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
-  'MonWarrior Game': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
+  // Mission 5 projects with live links - using ACTUAL database names
+  'GeoShapes2': '/lovable-uploads/e491f150-846c-4b61-aaaf-2a67fdaceb96.png',
+  'ME-INT': '/lovable-uploads/66677f3a-044c-4144-a03b-5f3319ef186a.png',
   'Mon Warrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
-  'MonWarrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
-  'mon warrior game': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
-  'mon warrior': '/lovable-uploads/19de8b1a-dc00-4678-8d10-cc770c819b77.png',
-  
-  'PokéEvolve NFT': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  'PokeEvolve NFT': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  'Poke Evolve NFT': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  'PokéEvolve': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  'PokeEvolve': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  'pokeevolve nft': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  'pokéevolve nft': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
-  
+  'MonadEvolve': '/lovable-uploads/2bd485a0-7293-4873-ac83-c2534215140a.png',
   'LendHub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
-  'Lend Hub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
-  'lendhub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
-  'lend hub': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
-  'LENDHUB': '/lovable-uploads/351a2f93-6c33-4163-b8a2-b3e36c859c74.png',
-  
-  'Music NADS': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
-  'Music Nads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
-  'MusicNADS': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
-  'MusicNads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
-  'music nads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
-  'musicnads': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
-  
-  'MonadPets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
-  'Monad Pets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
-  'MonPets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
-  'monadpets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
-  'monad pets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
-  'monpets': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
-  
+  'Monad Music NFT': '/lovable-uploads/53c45c50-f77e-4e94-ac2a-59185502d4cc.png',
+  'MonadPet': '/lovable-uploads/d4067856-810d-44c0-a73a-3af42f3a4708.png',
   'Vibe to Music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
-  'VibetoMusic': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
-  'Vibe Music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
-  'vibe to music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
-  'vibetomusic': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
-  'vibe music': '/lovable-uploads/cbd90ab9-0983-49b1-bc7a-d492db640087.png',
-  
   'Create Your Image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
-  'CreateYourImage': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
-  'Create Image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
-  'create your image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
-  'createyourimage': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
-  'create image': '/lovable-uploads/dc598086-6ed1-49b2-b3f9-df92e749dd1b.png',
-  
   'NFT': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
-  'nft': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
-  'Nft': '/lovable-uploads/6c1253eb-cf8d-40f9-983e-829401571c85.png',
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
   
   // Mission 6 projects - Multisynq Applications & Games with specific preview images
-  'TowerBlocs': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
-  'Nadoodle': '/lovable-uploads/513849b9-4c34-4e39-b01c-39a74d40fc66.png', // Nadoodle preview image
-  'Monedio Game': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
-  'SynqChaos': '/lovable-uploads/28710d0f-5dbc-4046-9bb2-41ba0130953c.png', // SynqChaos preview image
-  'Pixel Nad': '/lovable-uploads/d755b75f-3bc1-46fc-b6ab-857bf4393ea9.png', // Pixel Nad preview image
-  'Monad Battleship': '/lovable-uploads/97380248-0def-483a-a63d-8b57589d8498.png', // Monad Battleship preview image
-  'Catch the Mouch': '/lovable-uploads/ded4e45f-c3a7-4764-a207-83781926509b.png', // Catch the Mouch preview image
-  'Monad Slither': '/lovable-uploads/d55d94c1-b2a5-49d8-9998-f50b27271a1f.png', // Monad Slither preview image
-  'RPS Game Sync': '/lovable-uploads/ed1401bd-4af7-43c9-91ba-3359bb269ca4.png', // RPS Game Sync preview image
-  'ThreeSynq': '/lovable-uploads/5e8204d4-9b0f-48a9-8c48-dd223d517abf.png', // ThreeSynq preview image
-  'Bombermon': '/lovable-uploads/1c47ae42-74b4-4cda-ad1e-4d0e2695ed4f.png', // Bombermon preview image
-  'SynqType': '/lovable-uploads/97c3584d-6373-4f1c-b0cd-cc57f27b09f6.png', // SynqType preview image
-  'Monad Collab Code': '/lovable-uploads/c086c8f1-7895-4d9e-8acd-760ab4087d4f.png', // Monad Collab Code preview image
-  'Tamagotchi Monad': '/lovable-uploads/a4bd0df8-0486-4602-903d-5be2988888b7.png', // Tamagotchi Monad preview image
-  'Monad Together': '/lovable-uploads/a33e623e-e777-473f-81b5-9813e7c3b648.png', // Monad Together preview image
-  'RockSynq App': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
-  'Novee Chess': '/lovable-uploads/a667635c-049d-4876-9c3b-0aaa6ee5ee06.png', // Novee Chess preview image
-  'BattleSynq': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png', // Using new fallback image for Mission 6
+  'TowerBlocs': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png',
+  'Nadoodle': '/lovable-uploads/513849b9-4c34-4e39-b01c-39a74d40fc66.png',
+  'Monedio Game': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png',
+  'SynqChaos': '/lovable-uploads/28710d0f-5dbc-4046-9bb2-41ba0130953c.png',
+  'Pixel Nad': '/lovable-uploads/d755b75f-3bc1-46fc-b6ab-857bf4393ea9.png',
+  'Monad Battleship': '/lovable-uploads/97380248-0def-483a-a63d-8b57589d8498.png',
+  'Catch the Mouch': '/lovable-uploads/ded4e45f-c3a7-4764-a207-83781926509b.png',
+  'Monad Slither': '/lovable-uploads/d55d94c1-b2a5-49d8-9998-f50b27271a1f.png',
+  'RPS Game Sync': '/lovable-uploads/ed1401bd-4af7-43c9-91ba-3359bb269ca4.png',
+  'ThreeSynq': '/lovable-uploads/5e8204d4-9b0f-48a9-8c48-dd223d517abf.png',
+  'Bombermon': '/lovable-uploads/1c47ae42-74b4-4cda-ad1e-4d0e2695ed4f.png',
+  'SynqType': '/lovable-uploads/97c3584d-6373-4f1c-b0cd-cc57f27b09f6.png',
+  'Monad Collab Code': '/lovable-uploads/c086c8f1-7895-4d9e-8acd-760ab4087d4f.png',
+  'Tamagotchi Monad': '/lovable-uploads/a4bd0df8-0486-4602-903d-5be2988888b7.png',
+  'Monad Together': '/lovable-uploads/a33e623e-e777-473f-81b5-9813e7c3b648.png',
+  'RockSynq App': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png',
+  'Novee Chess': '/lovable-uploads/a667635c-049d-4876-9c3b-0aaa6ee5ee06.png',
+  'BattleSynq': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png',
   
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
-  'Retrieve NFT holders': '/lovable-uploads/e218523f-dcbb-42dd-99d7-b16afb055793.png', // Using uploaded Retrieve NFT holders image
-  'MonGPT': '/lovable-uploads/mongpt-placeholder.png', // MonGPT project
-  'Monad AI Assistant': projectGaming, // Using gaming image as fallback for AI assistant
+  'Retrieve NFT holders': '/lovable-uploads/e218523f-dcbb-42dd-99d7-b16afb055793.png',
+  'MonGPT': '/lovable-uploads/mongpt-placeholder.png',
+  'Monad AI Assistant': projectGaming,
 };
 
 export const useProjects = () => {
@@ -185,28 +131,35 @@ export const useProjects = () => {
       const formattedProjects: Project[] = (data || []).map(project => {
         let thumbnail = project.thumbnail;
         
-        // Enhanced debug logging
-        console.log('🔍 Processing project:', {
-          name: project.name,
-          mission: project.mission,
-          hasLiveUrl: !!project.live_url,
-          hasGithubUrl: !!project.github_url,
-          originalThumbnail: project.thumbnail
-        });
+        // Enhanced debug logging for Mission 5 projects specifically
+        if (project.mission === "Make NFTs Great Again (Mission 5)" && project.live_url) {
+          console.log('🔍 MISSION 5 Project with Live URL:', {
+            name: project.name,
+            exactName: `"${project.name}"`,
+            hasLiveUrl: !!project.live_url,
+            liveUrl: project.live_url,
+            originalThumbnail: project.thumbnail
+          });
+        }
         
-        // Check if we have a mapped image (with case-insensitive fallback)
-        const mappedImage = projectImageMap[project.name] || 
-                           projectImageMap[project.name.toLowerCase()] ||
-                           projectImageMap[project.name.toUpperCase()];
+        // Check if we have a mapped image using exact name match
+        const mappedImage = projectImageMap[project.name];
         
         if (mappedImage) {
           thumbnail = mappedImage;
-          console.log('✅ Found mapped image for project:', project.name, '→', thumbnail);
-        } else {
-          console.log('❌ No mapped image found for project:', project.name);
-          console.log('Available keys:', Object.keys(projectImageMap).filter(key => 
-            key.toLowerCase().includes(project.name.toLowerCase().substring(0, 3))
-          ));
+          console.log('✅ Found exact mapped image for project:', project.name, '→', thumbnail);
+        } else if (project.mission === "Make NFTs Great Again (Mission 5)" && project.live_url) {
+          console.log('❌ NO MAPPED IMAGE for Mission 5 project with live URL:', {
+            projectName: project.name,
+            exactProjectName: `"${project.name}"`,
+            availableKeys: Object.keys(projectImageMap).filter(key => 
+              key.toLowerCase().includes('mission') || 
+              key.toLowerCase().includes('nft') ||
+              key.toLowerCase().includes('geo') ||
+              key.toLowerCase().includes('warrior') ||
+              key.toLowerCase().includes('evolve')
+            )
+          });
         }
         
         // For Mission 5 projects without live URL and with GitHub URL, use GitHub preview
