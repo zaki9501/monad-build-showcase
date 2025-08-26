@@ -47,8 +47,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const extractUsernameFromTwitterUrl = (url?: string) => {
     if (!url) return null;
     
-    console.log(`🔍 Extracting username from URL: "${url}" for project: ${project.name}`);
-    
     try {
       const patterns = [
         /(?:https?:\/\/)?(?:www\.)?(?:twitter\.com|x\.com)\/([^\/\?\s#&]+)/i,
@@ -59,15 +57,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       for (const pattern of patterns) {
         const match = url.trim().match(pattern);
         if (match && match[1] && /^[a-zA-Z0-9_]{1,15}$/.test(match[1])) {
-          console.log(`✅ Successfully extracted Twitter username: "${match[1]}" from URL: "${url}"`);
-          console.log(`📝 Project: ${project.name}, Discord: ${project.builder.discord}, Extracted: ${match[1]}`);
           return match[1];
         }
       }
-      console.warn(`❌ Could not extract valid Twitter username from: "${url}"`);
       return null;
     } catch {
-      console.error(`💥 Error extracting username from: "${url}"`);
       return null;
     }
   };
@@ -85,15 +79,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const shouldShowGitHub = project.mission === "Mission 2" || 
                           project.mission === "Break Monad v2: Farcaster Edition" ||
                           project.mission === "Make NFTs Great Again (Mission 5)";
-
-  // Debug logging for problematic cases
-  if (project.builder.twitter && originalUsername === project.builder.discord) {
-    console.warn(`🚨 MISMATCH DETECTED for ${project.name}:`);
-    console.warn(`   Twitter URL: ${project.builder.twitter}`);
-    console.warn(`   Extracted Username: ${originalUsername}`);
-    console.warn(`   Discord Username: ${project.builder.discord}`);
-    console.warn(`   These should NOT be the same if Twitter URL is valid!`);
-  }
 
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer">
