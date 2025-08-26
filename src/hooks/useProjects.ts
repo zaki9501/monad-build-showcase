@@ -115,7 +115,7 @@ const projectImageMap: Record<string, string> = {
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
   'Retrieve NFT holders': '/lovable-uploads/e218523f-dcbb-42dd-99d7-b16afb055793.png',
-  'MonGPT': '/lovable-uploads/mongpt-placeholder.png',
+  'MonGPT': '/placeholder.svg',
   'Monad AI Assistant': projectGaming,
 };
 
