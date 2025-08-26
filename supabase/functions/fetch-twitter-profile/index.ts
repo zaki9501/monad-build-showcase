@@ -12,9 +12,112 @@ const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const twitterApiKey = Deno.env.get('TWITTER_API_KEY');
 
-// Rate limiting queue - simple in-memory queue for this instance
-let lastRequestTime = 0;
-const RATE_LIMIT_DELAY = 5000; // 5 seconds as per TwitterAPI.io free tier
+// Enhanced rate limiting system
+class RateLimiter {
+  private static instance: RateLimiter;
+  private queue: Array<{ resolve: Function; reject: Function; username: string }> = [];
+  private processing = false;
+  private lastRequestTime = 0;
+  private readonly RATE_LIMIT_DELAY = 6000; // Increased to 6 seconds for safety margin
+
+  static getInstance(): RateLimiter {
+    if (!RateLimiter.instance) {
+      RateLimiter.instance = new RateLimiter();
+    }
+    return RateLimiter.instance;
+  }
+
+  async processRequest(username: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.queue.push({ resolve, reject, username });
+      this.processQueue();
+    });
+  }
+
+  private async processQueue() {
+    if (this.processing || this.queue.length === 0) {
+      return;
+    }
+
+    this.processing = true;
+
+    while (this.queue.length > 0) {
+      const { resolve, reject, username } = this.queue.shift()!;
+      
+      try {
+        // Ensure minimum delay between requests
+        const now = Date.now();
+        const timeSinceLastRequest = now - this.lastRequestTime;
+        
+        if (timeSinceLastRequest < this.RATE_LIMIT_DELAY) {
+          const waitTime = this.RATE_LIMIT_DELAY - timeSinceLastRequest;
+          console.log(`Rate limiting: waiting ${waitTime}ms before processing ${username}`);
+          await new Promise(r => setTimeout(r, waitTime));
+        }
+
+        const result = await this.fetchTwitterData(username);
+        this.lastRequestTime = Date.now();
+        resolve(result);
+        
+        // Small additional delay between queue items
+        if (this.queue.length > 0) {
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      } catch (error) {
+        reject(error);
+      }
+    }
+
+    this.processing = false;
+  }
+
+  private async fetchTwitterData(username: string): Promise<any> {
+    if (!validateUsername(username)) {
+      throw new Error(`Invalid Twitter username format: ${username}`);
+    }
+
+    const url = `https://api.twitterapi.io/twitter/user/info?userName=${username}`;
+    console.log(`Making request to: ${url}`);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'X-API-Key': twitterApiKey!,
+        'User-Agent': 'Supabase-Edge-Function/1.0',
+      },
+      signal: AbortSignal.timeout(15000),
+    });
+
+    console.log(`Response status: ${response.status} ${response.statusText}`);
+    
+    const responseText = await response.text();
+    console.log(`Raw response body:`, responseText);
+
+    if (!response.ok) {
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded - please try again later');
+      }
+      
+      if (response.status === 404) {
+        throw new Error(`Twitter user '${username}' not found`);
+      }
+      
+      throw new Error(`Twitter API error: ${response.status} ${response.statusText}`);
+    }
+
+    const twitterData = JSON.parse(responseText);
+    console.log('Parsed Twitter data:', JSON.stringify(twitterData, null, 2));
+
+    if (twitterData.status !== 'success' || !twitterData.data) {
+      if (twitterData.msg && twitterData.msg.includes('not found')) {
+        throw new Error(`Twitter user '${username}' not found`);
+      }
+      throw new Error(`Twitter API error: ${twitterData.msg || 'Unknown error'}`);
+    }
+
+    return twitterData;
+  }
+}
 
 function improveImageQuality(profilePicture: string | null): string | null {
   if (!profilePicture) return null;
@@ -41,96 +144,6 @@ function validateUsername(username: string): boolean {
 function isValidUUID(uuid: string): boolean {
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   return uuidRegex.test(uuid);
-}
-
-async function enforceRateLimit(): Promise<void> {
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastRequestTime;
-  
-  if (timeSinceLastRequest < RATE_LIMIT_DELAY) {
-    const waitTime = RATE_LIMIT_DELAY - timeSinceLastRequest;
-    console.log(`Rate limiting: waiting ${waitTime}ms before next request`);
-    await new Promise(resolve => setTimeout(resolve, waitTime));
-  }
-  
-  lastRequestTime = Date.now();
-}
-
-async function fetchTwitterProfileWithRetry(username: string, maxRetries = 2): Promise<any> {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`Attempt ${attempt} - Fetching Twitter profile for: ${username}`);
-      
-      if (!validateUsername(username)) {
-        throw new Error(`Invalid Twitter username format: ${username}`);
-      }
-      
-      // Enforce rate limiting before each request
-      await enforceRateLimit();
-      
-      const url = `https://api.twitterapi.io/twitter/user/info?userName=${username}`;
-      console.log(`Making request to: ${url}`);
-      
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'X-API-Key': twitterApiKey!,
-          'User-Agent': 'Supabase-Edge-Function/1.0',
-        },
-        signal: AbortSignal.timeout(15000), // 15 second timeout
-      });
-
-      console.log(`Response status: ${response.status} ${response.statusText}`);
-      
-      const responseText = await response.text();
-      console.log(`Raw response body:`, responseText);
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          console.log(`Rate limited on attempt ${attempt}, will retry after delay...`);
-          if (attempt < maxRetries) {
-            // Additional wait time for rate limit recovery
-            await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
-            continue;
-          }
-          throw new Error('Rate limit exceeded - please try again later');
-        }
-        
-        if (response.status === 404) {
-          throw new Error(`Twitter user '${username}' not found`);
-        }
-        
-        throw new Error(`Twitter API error: ${response.status} ${response.statusText}`);
-      }
-
-      const twitterData = JSON.parse(responseText);
-      console.log('Parsed Twitter data:', JSON.stringify(twitterData, null, 2));
-
-      if (twitterData.status !== 'success' || !twitterData.data) {
-        if (twitterData.msg && twitterData.msg.includes('not found')) {
-          throw new Error(`Twitter user '${username}' not found`);
-        }
-        throw new Error(`Twitter API error: ${twitterData.msg || 'Unknown error'}`);
-      }
-
-      return twitterData;
-    } catch (error) {
-      console.error(`Attempt ${attempt} failed:`, error);
-      
-      if (attempt === maxRetries) {
-        throw error;
-      }
-      
-      // Don't retry validation errors or user not found errors
-      if (error.message.includes('Invalid Twitter username format') || 
-          error.message.includes('not found')) {
-        throw error;
-      }
-      
-      // Wait before retry for other errors
-      await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-    }
-  }
 }
 
 serve(async (req) => {
@@ -190,7 +203,7 @@ serve(async (req) => {
     // Create Supabase client with service role key
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if we have recent data (less than 7 days old) - only if projectId is valid UUID
+    // Check if we have recent data (less than 24 hours old) - only if projectId is valid UUID
     if (projectId && isValidUUID(projectId)) {
       console.log(`Checking for cached data for project: ${projectId}`);
       
@@ -204,9 +217,9 @@ serve(async (req) => {
         console.log('Error fetching project data:', fetchError);
       } else if (existingProject?.twitter_data_fetched_at) {
         const fetchedAt = new Date(existingProject.twitter_data_fetched_at);
-        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); // Extended cache to 24 hours
         
-        if (fetchedAt > sevenDaysAgo && existingProject.twitter_profile_picture) {
+        if (fetchedAt > twentyFourHoursAgo && existingProject.twitter_profile_picture) {
           console.log('Returning cached Twitter data');
           return new Response(JSON.stringify({
             profilePicture: existingProject.twitter_profile_picture,
@@ -222,8 +235,10 @@ serve(async (req) => {
       console.log(`Invalid projectId format: ${projectId}`);
     }
 
-    // Fetch from Twitter API with retry logic
-    const twitterData = await fetchTwitterProfileWithRetry(trimmedUsername);
+    // Use rate limiter for Twitter API requests
+    const rateLimiter = RateLimiter.getInstance();
+    const twitterData = await rateLimiter.processRequest(trimmedUsername);
+    
     const userData = twitterData.data;
     
     let profilePicture = userData.profilePicture;
@@ -300,7 +315,7 @@ serve(async (req) => {
       verified: false,
       cached: false
     }), {
-      status: 200, // Changed from 500 to 200
+      status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
