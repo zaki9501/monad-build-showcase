@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  esbuild: mode === 'production' ? { drop: ['console', 'debugger'] } : undefined,
   plugins: [
     react(),
     mode === 'development' &&
