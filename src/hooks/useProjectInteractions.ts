@@ -22,15 +22,19 @@ export const useProjectInteractions = (projectId: string) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  // Get user's IP address for identification
-  const getUserIP = async () => {
+  // Get a stable client identifier for anonymous interactions (avoids CORS/rate limits)
+  const getClientId = async () => {
     try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      return data.ip;
+      const storageKey = 'monad_client_fingerprint_v1';
+      let clientId = localStorage.getItem(storageKey);
+      if (!clientId) {
+        clientId = (crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`);
+        localStorage.setItem(storageKey, clientId);
+      }
+      return clientId;
     } catch (error) {
-      console.error('Error getting IP:', error);
-      return 'unknown';
+      // Fallback to ephemeral ID if storage is unavailable
+      return `${Date.now()}-${Math.random()}`;
     }
   };
 
@@ -59,8 +63,8 @@ export const useProjectInteractions = (projectId: string) => {
   // Check if user has liked or rated the project using secure functions
   const checkUserInteractions = async () => {
     try {
-      const userIP = await getUserIP();
-      const ipHash = btoa(userIP); // Create hash for secure checking
+      const clientId = await getClientId();
+      const ipHash = btoa(clientId); // Create hash for secure checking
 
       // Check if user has liked using secure function
       const { data: likeExists } = await supabase.rpc('check_user_liked_project', {
@@ -85,7 +89,7 @@ export const useProjectInteractions = (projectId: string) => {
   // Track view
   const trackView = async () => {
     try {
-      const userIP = await getUserIP();
+      const userIP = await getClientId();
       
       await supabase
         .from('project_views')
@@ -106,7 +110,7 @@ export const useProjectInteractions = (projectId: string) => {
     
     setLoading(true);
     try {
-      const userIP = await getUserIP();
+      const userIP = await getClientId();
 
       // Use secure function to toggle like
       const { data: newLikeStatus } = await supabase.rpc('toggle_project_like', {

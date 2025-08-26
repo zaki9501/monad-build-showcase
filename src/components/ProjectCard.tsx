@@ -141,12 +141,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 size="sm"
                 variant="secondary"
                 className="h-8 w-8 p-0 bg-white/90 hover:bg-white border-0 shadow-lg"
-                asChild
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.liveUrl!, '_blank', 'noopener,noreferrer');
+                }}
               >
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                  <Eye className="h-4 w-4 text-primary" />
-                </a>
+                <Eye className="h-4 w-4 text-primary" />
               </Button>
             )}
           </div>
@@ -275,33 +275,32 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           variant="outline" 
           size="sm" 
           className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
-          asChild
           disabled={!project.githubUrl || !shouldShowGitHub}
           onClick={(e) => e.stopPropagation()}
         >
-          {shouldShowGitHub && project.githubUrl ? (
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-              <Github className="h-3 w-3 mr-1" />
-              Code
-            </a>
-          ) : (
-            <span className="flex items-center">
-              <Github className="h-3 w-3 mr-1" />
-              Code
-            </span>
-          )}
+          <span
+            className="flex items-center"
+            onClick={() => {
+              if (shouldShowGitHub && project.githubUrl) {
+                window.open(project.githubUrl, '_blank', 'noopener,noreferrer');
+              }
+            }}
+          >
+            <Github className="h-3 w-3 mr-1" />
+            Code
+          </span>
         </Button>
         {project.liveUrl && (
           <Button 
             size="sm" 
             className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl"
-            asChild
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(project.liveUrl!, '_blank', 'noopener,noreferrer');
+            }}
           >
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3 w-3 mr-1" />
-              Live
-            </a>
+            <ExternalLink className="h-3 w-3 mr-1" />
+            Live
           </Button>
         )}
       </CardFooter>

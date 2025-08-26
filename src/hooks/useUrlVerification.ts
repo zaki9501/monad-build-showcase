@@ -22,6 +22,9 @@ export interface UrlVerificationStatus {
 export const useUrlVerification = (url: string | null | undefined) => {
   const [verificationStatus, setVerificationStatus] = useState<UrlVerificationStatus | null>(null);
   const [loading, setLoading] = useState(false);
+  const isDev = (import.meta as any)?.env?.DEV === true;
+  const debugLog = (...args: unknown[]) => { if (isDev) console.log(...args); };
+  const debugError = (...args: unknown[]) => { if (isDev) console.error(...args); };
 
   useEffect(() => {
     if (!url || !url.trim()) {
@@ -33,28 +36,14 @@ export const useUrlVerification = (url: string | null | undefined) => {
       setLoading(true);
       
       try {
-        // First try to check if we have a cached result - try with new columns first, fallback to basic columns
-        let cached = null;
-        
-        try {
-          // Try to get data with enhanced columns
-          const { data: enhancedData } = await supabase
-            .from('url_verifications')
-            .select('url, is_verified, is_safe, last_checked, reason, risk_level, security_checks')
-            .eq('url', url)
-            .maybeSingle();
-          
-          cached = enhancedData;
-        } catch (enhancedError) {
-          console.log('Enhanced columns not available, falling back to basic columns');
-          // Fallback to basic columns if enhanced ones don't exist
-          const { data: basicData } = await supabase
-            .from('url_verifications')
-            .select('url, is_verified, is_safe, last_checked, reason')
-            .eq('url', url)
-            .maybeSingle();
-          
-          cached = basicData;
+        // Single query without projecting missing columns to avoid 400s on prod
+        const { data: cached, error: cachedError } = await supabase
+          .from('url_verifications')
+          .select('*')
+          .eq('url', url)
+          .maybeSingle();
+        if (cachedError) {
+          debugError('Cache lookup error:', cachedError);
         }
 
         if (cached) {
@@ -64,7 +53,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
           const hoursDiff = (now.getTime() - lastChecked.getTime()) / (1000 * 60 * 60);
           
           if (hoursDiff < 12) {
-            console.log(`Using cached verification for ${url}:`, {
+            debugLog(`Using cached verification for ${url}:`, {
               isSafe: cached.is_safe,
               riskLevel: cached.risk_level || 'unknown',
               reason: cached.reason,
@@ -95,18 +84,18 @@ export const useUrlVerification = (url: string | null | undefined) => {
           status: 'checking'
         });
         
-        console.log(`Starting enhanced verification with Google Safe Browsing for: ${url}`);
+        debugLog(`Starting enhanced verification with Google Safe Browsing for: ${url}`);
 
         const { data, error } = await supabase.functions.invoke('verify-url', {
           body: { url }
         });
 
         if (error) {
-          console.error('Verification service error:', error);
+          debugError('Verification service error:', error);
           throw error;
         }
 
-        console.log(`Enhanced verification with Google Safe Browsing completed for ${url}:`, data);
+        debugLog(`Enhanced verification with Google Safe Browsing completed for ${url}:`, data);
 
         const status: UrlVerificationStatus = {
           url,
@@ -121,7 +110,7 @@ export const useUrlVerification = (url: string | null | undefined) => {
 
         setVerificationStatus(status);
       } catch (error) {
-        console.error('URL verification failed:', error);
+        debugError('URL verification failed:', error);
         setVerificationStatus({
           url,
           isVerified: false,
