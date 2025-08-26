@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -70,17 +71,33 @@ const projectImageMap: Record<string, string> = {
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png', // Using uploaded Bombandak image
   'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png', // Using uploaded Solodan NFT Launchpad image
   
-  // Mission 5 projects with live links - using new uploaded images
+  // Mission 5 projects with live links - using new uploaded images with more variations
   'GeoShapes': '/lovable-uploads/7178febd-7e56-45f5-a8ed-032f21718a9b.png',
+  'Geo Shapes': '/lovable-uploads/7178febd-7e56-45f5-a8ed-032f21718a9b.png',
   'ME-int': '/lovable-uploads/da14b4a2-8577-4f28-8f83-1273bbeefcc1.png',
+  'ME int': '/lovable-uploads/da14b4a2-8577-4f28-8f83-1273bbeefcc1.png',
   'Mon Warrior Game': '/lovable-uploads/c4cc4ce5-6675-4480-8fdc-2446db3dc8f4.png',
+  'MonWarrior Game': '/lovable-uploads/c4cc4ce5-6675-4480-8fdc-2446db3dc8f4.png',
+  'Mon Warrior': '/lovable-uploads/c4cc4ce5-6675-4480-8fdc-2446db3dc8f4.png',
   'PokéEvolve NFT': '/lovable-uploads/be973813-14a7-444f-82ec-e5b7e52914f9.png',
+  'PokeEvolve NFT': '/lovable-uploads/be973813-14a7-444f-82ec-e5b7e52914f9.png',
+  'Poke Evolve NFT': '/lovable-uploads/be973813-14a7-444f-82ec-e5b7e52914f9.png',
   'LendHub': '/lovable-uploads/dad46e9e-75d0-43fb-af6a-9f368d720052.png',
+  'Lend Hub': '/lovable-uploads/dad46e9e-75d0-43fb-af6a-9f368d720052.png',
   'Music NADS': '/lovable-uploads/63a55c3b-8363-47b3-ad74-9c7d1cc9e670.png',
+  'Music Nads': '/lovable-uploads/63a55c3b-8363-47b3-ad74-9c7d1cc9e670.png',
+  'MusicNADS': '/lovable-uploads/63a55c3b-8363-47b3-ad74-9c7d1cc9e670.png',
   'MonadPets': '/lovable-uploads/850a415d-7781-4b53-be23-8f46d9418ee4.png',
+  'Monad Pets': '/lovable-uploads/850a415d-7781-4b53-be23-8f46d9418ee4.png',
+  'MonPets': '/lovable-uploads/850a415d-7781-4b53-be23-8f46d9418ee4.png',
   'Vibe to Music': '/lovable-uploads/5505ecbe-443c-42b1-9a77-a392b924b7ec.png',
+  'VibetoMusic': '/lovable-uploads/5505ecbe-443c-42b1-9a77-a392b924b7ec.png',
+  'Vibe Music': '/lovable-uploads/5505ecbe-443c-42b1-9a77-a392b924b7ec.png',
   'Create Your Image': '/lovable-uploads/0b268c72-d50c-4465-8ad3-0c2fbc7ebf9c.png',
+  'CreateYourImage': '/lovable-uploads/0b268c72-d50c-4465-8ad3-0c2fbc7ebf9c.png',
+  'Create Image': '/lovable-uploads/0b268c72-d50c-4465-8ad3-0c2fbc7ebf9c.png',
   'NFT': '/lovable-uploads/d918e58b-6910-44c9-9a98-c2be1f41024f.png',
+  'nft': '/lovable-uploads/d918e58b-6910-44c9-9a98-c2be1f41024f.png',
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
@@ -130,9 +147,13 @@ export const useProjects = () => {
       const formattedProjects: Project[] = (data || []).map(project => {
         let thumbnail = project.thumbnail;
         
+        // Debug: log project names to help with mapping
+        console.log('Project name from database:', project.name);
+        
         // Use local image if available
         if (projectImageMap[project.name]) {
           thumbnail = projectImageMap[project.name];
+          console.log(`Using mapped image for "${project.name}":`, thumbnail);
         } 
         // For Mission 5 projects without live URL and with GitHub URL, use GitHub preview
         else if (project.mission === "Make NFTs Great Again (Mission 5)" && 
@@ -141,6 +162,7 @@ export const useProjects = () => {
           const githubPreview = getGithubPreviewImage(project.github_url);
           if (githubPreview) {
             thumbnail = githubPreview;
+            console.log(`Using GitHub preview for "${project.name}":`, thumbnail);
           }
         }
 
