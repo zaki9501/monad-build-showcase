@@ -9,6 +9,7 @@ export interface TwitterProfile {
   verified: boolean;
   loading: boolean;
   cached: boolean;
+  error?: string;
 }
 
 export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
@@ -27,24 +28,27 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
     try {
       // Handle various Twitter URL formats
       const patterns = [
-        /(?:twitter\.com|x\.com)\/([^\/\?\s#]+)/i,
-        /(?:@)([a-zA-Z0-9_]+)/,
-        /^([a-zA-Z0-9_]+)$/ // Just username without @ or URL
+        // Full URLs
+        /(?:https?:\/\/)?(?:www\.)?(?:twitter\.com|x\.com)\/([^\/\?\s#&]+)/i,
+        // Username with @
+        /^@([a-zA-Z0-9_]+)$/,
+        // Just username
+        /^([a-zA-Z0-9_]+)$/
       ];
       
       for (const pattern of patterns) {
         const match = url.trim().match(pattern);
         if (match && match[1]) {
           const username = match[1];
-          // Validate username format
+          // Validate username format (Twitter usernames: 1-15 chars, alphanumeric + underscore)
           if (/^[a-zA-Z0-9_]{1,15}$/.test(username)) {
-            console.log(`Extracted username: "${username}" from URL: "${url}"`);
+            console.log(`✅ Extracted username: "${username}" from URL: "${url}"`);
             return username;
           }
         }
       }
       
-      console.warn(`Could not extract valid username from: "${url}"`);
+      console.warn(`❌ Could not extract valid username from: "${url}"`);
       return null;
     } catch (error) {
       console.error('Error extracting username:', error);
@@ -54,54 +58,76 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
 
   const fetchTwitterProfile = async (username: string) => {
     try {
-      setProfile(prev => ({ ...prev, loading: true }));
-      console.log('Fetching Twitter profile for:', username);
+      setProfile(prev => ({ ...prev, loading: true, error: undefined }));
+      console.log(`🐦 Fetching Twitter profile for: ${username}`);
 
       const { data, error } = await supabase.functions.invoke('fetch-twitter-profile', {
         body: { username, projectId },
       });
 
       if (error) {
-        console.error('Supabase function error:', error);
+        console.error('❌ Supabase function error:', error);
         throw error;
       }
 
-      console.log('Twitter profile data received:', data);
+      console.log('📦 Twitter profile data received:', data);
 
-      // Handle the case where data might have an error property
+      // Handle the case where data has an error property (but still returns 200)
       if (data?.error) {
-        console.warn('Twitter API returned error:', data.error);
-        // Don't throw here, just set empty state
+        console.warn('⚠️ Twitter API returned error:', data.error);
         setProfile({
           profilePicture: null,
           bio: null,
           verified: false,
           loading: false,
           cached: false,
+          error: data.error
         });
+        
+        // Only show toast for unexpected errors, not common issues like user not found
+        if (!data.error.includes('not found') && 
+            !data.error.includes('Rate limit') && 
+            !data.error.includes('Invalid username')) {
+          toast({
+            title: "Twitter Profile Error",
+            description: data.error,
+            variant: "destructive",
+          });
+        }
         return;
       }
 
+      // Success case
       setProfile({
         profilePicture: data?.profilePicture || null,
         bio: data?.bio || null,
         verified: data?.verified || false,
         loading: false,
         cached: data?.cached || false,
+        error: undefined
       });
 
+      if (data?.profilePicture) {
+        console.log(`✅ Successfully loaded Twitter profile for ${username}`);
+      } else {
+        console.log(`⚠️ No profile picture found for ${username}`);
+      }
+
     } catch (error) {
-      console.error('Error fetching Twitter profile:', error);
+      console.error('❌ Error fetching Twitter profile:', error);
       setProfile({
         profilePicture: null,
         bio: null,
         verified: false,
         loading: false,
         cached: false,
+        error: error.message || 'Failed to load Twitter profile'
       });
       
-      // Only show toast for unexpected errors, not API failures
-      if (!error.message?.includes('rate limit') && !error.message?.includes('Twitter API')) {
+      // Only show toast for unexpected errors
+      if (!error.message?.includes('rate limit') && 
+          !error.message?.includes('not found') &&
+          !error.message?.includes('Invalid username')) {
         toast({
           title: "Error",
           description: "Failed to load Twitter profile data.",
@@ -114,10 +140,10 @@ export const useTwitterProfile = (twitterUrl?: string, projectId?: string) => {
   useEffect(() => {
     const username = extractUsername(twitterUrl);
     if (username && username.trim()) {
-      console.log('Twitter username extracted:', username);
+      console.log(`🔄 Twitter username extracted: ${username}`);
       fetchTwitterProfile(username);
     } else {
-      console.log('No valid Twitter username found in URL:', twitterUrl);
+      console.log(`ℹ️ No valid Twitter username found in URL: ${twitterUrl}`);
       setProfile({
         profilePicture: null,
         bio: null,
