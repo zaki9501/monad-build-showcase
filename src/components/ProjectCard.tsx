@@ -1,3 +1,4 @@
+
 import { Github, ExternalLink, Eye, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -48,6 +49,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const twitterUsername = getTwitterUsername(project.builder.twitter);
   const avatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
+  // Check if GitHub should be shown for this mission
+  const shouldShowGitHub = project.mission === "Mission 2" || 
+                          project.mission === "Break Monad v2: Farcaster Edition" ||
+                          project.mission === "Make NFTs Great Again (Mission 5)";
+
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer">
       {/* Make the entire card clickable */}
@@ -74,7 +80,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             {project.liveUrl && (
               <UrlVerificationBadge url={project.liveUrl} size="sm" />
             )}
-            {project.githubUrl && (project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && (
+            {project.githubUrl && shouldShowGitHub && (
               <UrlVerificationBadge url={project.githubUrl} size="sm" />
             )}
           </div>
@@ -250,10 +256,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           size="sm" 
           className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
           asChild
-          disabled={!project.githubUrl || (project.mission !== "Mission 2" && project.mission !== "Break Monad v2: Farcaster Edition")}
+          disabled={!project.githubUrl || !shouldShowGitHub}
           onClick={(e) => e.stopPropagation()}
         >
-          {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && project.githubUrl ? (
+          {shouldShowGitHub && project.githubUrl ? (
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github className="h-3 w-3 mr-1" />
               Code
