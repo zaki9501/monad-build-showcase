@@ -70,6 +70,18 @@ const projectImageMap: Record<string, string> = {
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png', // Using uploaded Bombandak image
   'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png', // Using uploaded Solodan NFT Launchpad image
   
+  // Mission 5 projects with live links - using new uploaded images
+  'GeoShapes': '/lovable-uploads/7178febd-7e56-45f5-a8ed-032f21718a9b.png',
+  'ME-int': '/lovable-uploads/da14b4a2-8577-4f28-8f83-1273bbeefcc1.png',
+  'Mon Warrior Game': '/lovable-uploads/c4cc4ce5-6675-4480-8fdc-2446db3dc8f4.png',
+  'PokéEvolve NFT': '/lovable-uploads/be973813-14a7-444f-82ec-e5b7e52914f9.png',
+  'LendHub': '/lovable-uploads/dad46e9e-75d0-43fb-af6a-9f368d720052.png',
+  'Music NADS': '/lovable-uploads/63a55c3b-8363-47b3-ad74-9c7d1cc9e670.png',
+  'MonadPets': '/lovable-uploads/850a415d-7781-4b53-be23-8f46d9418ee4.png',
+  'Vibe to Music': '/lovable-uploads/5505ecbe-443c-42b1-9a77-a392b924b7ec.png',
+  'Create Your Image': '/lovable-uploads/0b268c72-d50c-4465-8ad3-0c2fbc7ebf9c.png',
+  'NFT': '/lovable-uploads/d918e58b-6910-44c9-9a98-c2be1f41024f.png',
+  
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
   
