@@ -151,7 +151,7 @@ export const useProjectInteractions = (projectId: string) => {
     
     setLoading(true);
     try {
-      const userIP = await getUserIP();
+      const userIP = await getClientId();
 
       // Use secure function to submit rating
       await supabase.rpc('submit_project_rating', {
