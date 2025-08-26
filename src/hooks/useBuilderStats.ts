@@ -6,6 +6,8 @@ import { useToast } from '@/components/ui/use-toast';
 export interface BuilderStats {
   totalProjects: number;
   bio?: string;
+  twitterBio?: string;
+  verified?: boolean;
 }
 
 export const useBuilderStats = (builderDiscord: string) => {
@@ -21,7 +23,7 @@ export const useBuilderStats = (builderDiscord: string) => {
       // Get total projects count for this builder - match by discord or name if discord is empty
       const { data: projects, error: projectsError } = await supabase
         .from('projects')
-        .select('id, description, builder_name, builder_discord')
+        .select('id, description, builder_name, builder_discord, twitter_bio, twitter_verified')
         .or(`builder_discord.eq.${builderDiscord},builder_name.eq.${builderDiscord}`);
 
       if (projectsError) {
@@ -41,7 +43,12 @@ export const useBuilderStats = (builderDiscord: string) => {
 
       console.log('Matched projects:', matchedProjects);
 
-      // Use the longest description as a bio if available
+      // Get Twitter bio from the most recent project with Twitter data
+      const twitterProject = matchedProjects.find(p => p.twitter_bio);
+      const twitterBio = twitterProject?.twitter_bio;
+      const verified = twitterProject?.twitter_verified || false;
+
+      // Use Twitter bio first, then fall back to longest project description
       const descriptions = matchedProjects
         .map(p => p.description)
         .filter(Boolean)
@@ -49,18 +56,25 @@ export const useBuilderStats = (builderDiscord: string) => {
       
       console.log('Available descriptions:', descriptions);
       
-      const bio = descriptions
+      const projectBio = descriptions
         .sort((a, b) => (b?.length || 0) - (a?.length || 0))[0] || undefined;
+
+      // Prioritize Twitter bio over project description
+      const finalBio = twitterBio || projectBio;
 
       setStats({
         totalProjects: matchedProjects.length,
-        bio: bio
+        bio: finalBio,
+        twitterBio: twitterBio,
+        verified: verified
       });
 
       console.log(`Final builder stats for "${builderDiscord}":`, {
         totalProjects: matchedProjects.length,
         matchedProjects: matchedProjects.map(p => ({ name: p.builder_name, discord: p.builder_discord })),
-        bio: bio?.substring(0, 100) + (bio && bio.length > 100 ? '...' : '')
+        bio: finalBio?.substring(0, 100) + (finalBio && finalBio.length > 100 ? '...' : ''),
+        twitterBio: twitterBio?.substring(0, 100) + (twitterBio && twitterBio.length > 100 ? '...' : ''),
+        verified: verified
       });
     } catch (error) {
       console.error('Error fetching builder stats:', error);

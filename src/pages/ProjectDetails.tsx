@@ -268,7 +268,7 @@ const ProjectDetails = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Enhanced Builder Info with improved avatar */}
+            {/* Enhanced Builder Info with Twitter profile picture */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -284,12 +284,28 @@ const ProjectDetails = () => {
                       twitterUrl={project.builder.twitter}
                       discordUsername={project.builder.discord}
                       className="w-16 h-16"
+                      projectId={project.id}
                     />
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+                    {/* Twitter verification badge */}
+                    {builderStats.verified && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-2 border-white flex items-center justify-center">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
                   </div>
                   
                   <div className="flex-1">
-                    <h4 className="font-semibold text-lg">{project.builder.name}</h4>
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-semibold text-lg">{project.builder.name}</h4>
+                      {builderStats.verified && (
+                        <Badge variant="secondary" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                          Verified
+                        </Badge>
+                      )}
+                    </div>
                     <p className="text-sm text-muted-foreground mb-1">
                       {project.builder.discord ? `@${project.builder.discord}` : 'Builder'}
                     </p>
@@ -320,10 +336,18 @@ const ProjectDetails = () => {
                   </div>
                 </div>
 
-                {/* Builder Bio */}
+                {/* Builder Bio with Twitter priority */}
                 {builderStats.bio && (
                   <div className="pt-4 border-t">
-                    <h5 className="font-medium mb-2 text-sm">About the Builder</h5>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h5 className="font-medium text-sm">About the Builder</h5>
+                      {builderStats.twitterBio && (
+                        <Badge variant="outline" className="text-xs">
+                          <Twitter className="w-3 h-3 mr-1" />
+                          Twitter
+                        </Badge>
+                      )}
+                    </div>
                     <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                       {builderStats.bio}
                     </p>

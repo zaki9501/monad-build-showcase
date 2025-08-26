@@ -1,23 +1,27 @@
 
 import React, { useState } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { useTwitterProfile } from '@/hooks/useTwitterProfile';
 
 interface AvatarWithFallbackProps {
   builderName: string;
   twitterUrl?: string;
   discordUsername?: string;
   className?: string;
+  projectId?: string;
 }
 
 export const AvatarWithFallback = ({ 
   builderName, 
   twitterUrl, 
   discordUsername,
-  className 
+  className,
+  projectId
 }: AvatarWithFallbackProps) => {
   const [currentSourceIndex, setCurrentSourceIndex] = useState(0);
+  const { profile: twitterProfile } = useTwitterProfile(twitterUrl, projectId);
   
-  // Extract Twitter username from URL
+  // Extract Twitter username from URL for unavatar fallback
   const getTwitterUsername = (url?: string) => {
     if (!url) return null;
     const match = url.match(/(?:twitter\.com|x\.com)\/([^\/\?]+)/);
@@ -26,15 +30,17 @@ export const AvatarWithFallback = ({
 
   const twitterUsername = getTwitterUsername(twitterUrl);
   
-  // Create multiple avatar sources with fallbacks
+  // Create multiple avatar sources with fallbacks, prioritizing real Twitter profile picture
   const avatarSources = [
-    // Primary: Twitter via unavatar.io
+    // Primary: Real Twitter profile picture from API
+    twitterProfile.profilePicture,
+    // Secondary: Twitter via unavatar.io (fallback)
     twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null,
-    // Secondary: GitHub style avatar with name
+    // Tertiary: GitHub style avatar with name
     `https://ui-avatars.com/api/?name=${encodeURIComponent(builderName)}&background=6366f1&color=fff&size=128&bold=true`,
-    // Tertiary: Discord style with username if available
+    // Quaternary: Discord style with username if available
     discordUsername ? `https://ui-avatars.com/api/?name=${encodeURIComponent(discordUsername)}&background=5865f2&color=fff&size=128&bold=true` : null,
-    // Quaternary: Simple initials
+    // Final: Simple initials
     `https://ui-avatars.com/api/?name=${encodeURIComponent(builderName.charAt(0))}&background=8b5cf6&color=fff&size=128&bold=true`
   ].filter(Boolean) as string[];
 
@@ -50,7 +56,9 @@ export const AvatarWithFallback = ({
   };
 
   const handleImageLoad = () => {
-    console.log(`✅ Avatar loaded successfully for ${builderName} using source ${currentSourceIndex + 1}:`, avatarSources[currentSourceIndex]);
+    const sourceType = currentSourceIndex === 0 && twitterProfile.profilePicture ? 'Real Twitter API' : 
+                      currentSourceIndex === 1 ? 'unavatar.io' : 'Generated';
+    console.log(`✅ Avatar loaded successfully for ${builderName} using ${sourceType} (source ${currentSourceIndex + 1}):`, avatarSources[currentSourceIndex]);
   };
 
   return (

@@ -125,7 +125,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <CardHeader className="pb-3 pt-4">
         <div className="flex items-start justify-between gap-3">
-          {/* Builder info with improved profile picture */}
+          {/* Builder info with Twitter profile picture */}
           <div className="flex items-center gap-3 flex-1">
             <div className="relative">
               <AvatarWithFallback
@@ -133,6 +133,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 twitterUrl={project.builder.twitter}
                 discordUsername={project.builder.discord}
                 className="w-10 h-10"
+                projectId={project.id}
               />
               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
