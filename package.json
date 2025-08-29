@@ -1,7 +1,8 @@
 {
-  "name": "vite_react_shadcn_ts",
-  "private": true,
-  "version": "0.0.0",
+  "name": "monad-build-showcase",
+  "private": false,
+  "version": "1.0.0",
+  "description": "A modern, open-source platform for discovering and showcasing innovative projects built by the Monad community during missions",
   "type": "module",
   "scripts": {
     "dev": "vite",
