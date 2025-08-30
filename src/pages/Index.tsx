@@ -15,6 +15,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [projectNameQuery, setProjectNameQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   
   const { projects, loading } = useProjects();
 
@@ -158,20 +159,33 @@ const Index = () => {
           
           {/* View options */}
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="outline" size="sm" className="h-8">
+            <Button 
+              variant={viewMode === "grid" ? "outline" : "ghost"} 
+              size="sm" 
+              className="h-8"
+              onClick={() => setViewMode("grid")}
+            >
               Grid View
             </Button>
-            <Button variant="ghost" size="sm" className="h-8">
+            <Button 
+              variant={viewMode === "list" ? "outline" : "ghost"} 
+              size="sm" 
+              className="h-8"
+              onClick={() => setViewMode("list")}
+            >
               List View
             </Button>
           </div>
         </div>
 
-        {/* Enhanced Projects Grid */}
+        {/* Projects Display */}
         {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">
+          <div className={viewMode === "grid" 
+            ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8" 
+            : "flex flex-col gap-4"
+          }>
             {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} viewMode={viewMode} />
             ))}
           </div>
         ) : (

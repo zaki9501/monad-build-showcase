@@ -28,9 +28,10 @@ interface ProjectCardProps {
     tags: string[];
     mission: string;
   };
+  viewMode?: "grid" | "list";
 }
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
   const { 
     stats, 
     isLiked, 
@@ -79,6 +80,140 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const shouldShowGitHub = project.mission === "Mission 2" || 
                           project.mission === "Break Monad v2: Farcaster Edition" ||
                           project.mission === "Make NFTs Great Again (Mission 5)";
+
+  if (viewMode === "list") {
+    return (
+      <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 backdrop-blur-sm cursor-pointer">
+        <Link to={`/project/${project.id}`} className="block">
+          <div className="flex gap-4 p-4">
+            {/* Thumbnail */}
+            <div className="relative overflow-hidden w-32 h-24 rounded-lg flex-shrink-0">
+              <img 
+                src={project.thumbnail} 
+                alt={project.name}
+                className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+            </div>
+            
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-bold text-lg text-foreground truncate group-hover:text-primary transition-colors">
+                      {project.name}
+                    </h3>
+                    <Badge className="bg-primary/10 text-primary text-xs px-2 py-1">
+                      {project.mission}
+                    </Badge>
+                  </div>
+                  
+                  <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <AvatarWithFallback
+                        builderName={project.builder.name}
+                        twitterUrl={project.builder.twitter}
+                        discordUsername={project.builder.discord}
+                        className="w-6 h-6"
+                        projectId={project.id}
+                      />
+                      <span className="text-xs font-medium text-foreground">
+                        {project.builder.name}
+                      </span>
+                      {shouldShowTwitterLink && (
+                        <a
+                          href={`https://x.com/${originalUsername}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:text-blue-700 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Twitter className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <Eye className="w-3 h-3" />
+                        {stats.views_count}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Heart className="w-3 h-3" />
+                        {stats.likes_count}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-1">
+                    {project.tags.slice(0, 4).map((tag) => (
+                      <Badge 
+                        key={tag} 
+                        variant="outline" 
+                        className="text-xs py-0 px-2 h-5 border-primary/20 text-primary"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Actions */}
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className={cn(
+                      "h-8 w-8 p-0",
+                      isLiked && "bg-red-50"
+                    )}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleLike();
+                    }}
+                    disabled={loading}
+                  >
+                    <Heart className={cn(
+                      "h-4 w-4 transition-colors",
+                      isLiked ? "fill-red-500 text-red-500" : "text-gray-600"
+                    )} />
+                  </Button>
+                  
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <StarRating
+                      rating={stats.avg_rating}
+                      userRating={userRating}
+                      onRate={rateProject}
+                      size="sm"
+                    />
+                  </div>
+                  
+                  {project.liveUrl && (
+                    <Button
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.liveUrl!, '_blank', 'noopener,noreferrer');
+                      }}
+                    >
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      Live
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </Card>
+    );
+  }
 
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer">
