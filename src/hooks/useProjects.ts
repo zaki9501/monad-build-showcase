@@ -119,6 +119,18 @@ const projectImageMap: Record<string, string> = {
   'Novee Chess': '/lovable-uploads/a667635c-049d-4876-9c3b-0aaa6ee5ee06.png',
   'BattleSynq': '/lovable-uploads/a1eb4c4e-e5fd-4f5a-96b2-41060596abdb.png',
   
+  // New Mission 6 projects
+  'Color Canvas': projectNft, // Using NFT image as fallback for collaborative art canvas
+  'Monapy': projectGaming, // Using gaming image for blockchain Flappy Bird game
+
+  // Mission 7 projects
+  'Moninja': projectGaming, // Using gaming image for fruit ninja-like game
+  'Kingdom Survival': 'https://kingdom-survival.vercel.app/banner.png', // Using provided thumbnail
+  'Nadle': projectGaming, // Using gaming image for Wordle-like game
+  'Nadmetry Dash': projectGaming, // Using gaming image for jump game
+  'Click Empire': projectGaming, // Using gaming image for clicker game
+  'Chog Zombie': 'https://raw.githubusercontent.com/rawakinode/chog-zombie-monad/refs/heads/main/public/assets/images/logo-192.png', // Using provided thumbnail
+  
   // Community projects
   'Monsweeper': '/lovable-uploads/5343360c-be7b-4027-aef9-bc883105fdae.png',
   'Retrieve NFT holders': '/lovable-uploads/e218523f-dcbb-42dd-99d7-b16afb055793.png',
