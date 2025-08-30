@@ -158,58 +158,23 @@ export const useProjects = () => {
       if (error) throw error;
 
       const formattedProjects: Project[] = (data || []).map(project => {
-        let thumbnail = project.thumbnail;
+        // Use database thumbnail directly if it exists, otherwise fall back to other methods
+        let thumbnail = project.thumbnail || projectImageMap[project.name];
         
-        console.log('🔍 Processing project:', project.name, {
-          originalThumbnail: project.thumbnail,
-          hasOriginalThumbnail: !!project.thumbnail,
-          originalThumbnailLength: project.thumbnail?.length || 0
-        });
-        
-        // Priority 1: Use database thumbnail if it exists and is valid
-        if (project.thumbnail && project.thumbnail.trim() !== '') {
-          // Clean and decode the thumbnail URL
-          thumbnail = decodeURIComponent(project.thumbnail.trim());
-          console.log('🏆 Using database thumbnail for project:', project.name, '→', thumbnail);
-        } else {
-          console.log('❌ No valid database thumbnail for project:', project.name, 'original:', project.thumbnail);
-          
-          // Priority 2: Check if we have a mapped image using exact name match
-          const mappedImage = projectImageMap[project.name];
-          
-          if (mappedImage) {
-            thumbnail = mappedImage;
-            console.log('✅ Found exact mapped image for project:', project.name, '→', thumbnail);
-          } else {
-            console.log('❌ No mapped image for project:', project.name);
-            
-            // Priority 3: For projects with live URL but no mapped image, use website preview
-            if (project.live_url) {
-              const websitePreview = getOpenGraphImage(project.live_url);
-              if (websitePreview) {
-                thumbnail = websitePreview;
-                console.log('🌐 Using website preview for project:', project.name, '→', thumbnail);
-              }
-            }
-            
-            // Priority 4: For projects without live URL and with GitHub URL, use GitHub preview
-            if (!project.live_url && project.github_url && !thumbnail) {
-              const githubPreview = getGithubPreviewImage(project.github_url);
-              if (githubPreview) {
-                thumbnail = githubPreview;
-                console.log('📸 Using GitHub preview for project:', project.name, '→', thumbnail);
-              }
-            }
-            
-            // Priority 5: Fallback to placeholder if nothing else works
-            if (!thumbnail) {
-              thumbnail = '/placeholder.svg';
-              console.log('🔧 Using fallback placeholder for project:', project.name);
-            }
-          }
+        // If no thumbnail from database or mapped images, try preview generation
+        if (!thumbnail && project.live_url) {
+          thumbnail = getOpenGraphImage(project.live_url);
         }
         
-        console.log('✨ Final thumbnail for project:', project.name, '→', thumbnail);
+        // GitHub preview as last resort for code projects
+        if (!thumbnail && project.github_url && !project.live_url) {
+          thumbnail = getGithubPreviewImage(project.github_url);
+        }
+        
+        // Final fallback
+        if (!thumbnail) {
+          thumbnail = '/placeholder.svg';
+        }
 
         return {
           id: project.id,

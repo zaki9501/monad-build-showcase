@@ -93,11 +93,7 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
                 alt={project.name}
                 className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
                 onError={(e) => {
-                  console.error('❌ LIST VIEW: Image failed to load for project:', project.name, 'URL:', project.thumbnail);
                   (e.target as HTMLImageElement).src = '/placeholder.svg';
-                }}
-                onLoad={() => {
-                  console.log('✅ LIST VIEW: Image loaded successfully for project:', project.name, 'URL:', project.thumbnail);
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
@@ -233,13 +229,7 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
             alt={project.name}
             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             onError={(e) => {
-              console.error('❌ Image failed to load for project:', project.name, 'URL:', project.thumbnail);
-              console.log('🔧 Attempting fallback image...');
-              // Set a fallback image
               (e.target as HTMLImageElement).src = '/placeholder.svg';
-            }}
-            onLoad={() => {
-              console.log('✅ Image loaded successfully for project:', project.name, 'URL:', project.thumbnail);
             }}
           />
           {/* Gradient overlay */}
