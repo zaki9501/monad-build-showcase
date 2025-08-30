@@ -131,7 +131,8 @@ npm run lint         # Run ESLint
 ### Vercel (Recommended)
 1. Connect your GitHub repository to Vercel
 2. Add environment variables in Vercel dashboard
-3. Deploy automatically on push to main branch
+3. The `vercel.json` file is already configured for client-side routing
+4. Deploy automatically on push to main branch
 
 ### Other Platforms
 The app can be deployed to any static hosting platform:
