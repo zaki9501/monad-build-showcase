@@ -60,7 +60,8 @@ const projectImageMap: Record<string, string> = {
   'Testnet Metrics Hub': testnetMetricsImg,
   'DevHub': testnetMetricsImg, // Using metrics hub image as fallback for DevHub
   'Monad Nebula': '/lovable-uploads/4b2be09e-ce9a-4305-97cb-e645ff465c6c.png', // Using uploaded Monad Nebula image
-  
+  'Monad Genki Dama': 'https://monad-genki-dama.vercel.app/img/monad-genki-dama.png',
+
   // Mission 5 projects using actual existing images - matching exact database names
   'NFThing': nfThingImg,
   'MoNFT': moNftImg,
