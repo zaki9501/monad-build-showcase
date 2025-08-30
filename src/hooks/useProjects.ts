@@ -160,54 +160,35 @@ export const useProjects = () => {
       const formattedProjects: Project[] = (data || []).map(project => {
         let thumbnail = project.thumbnail;
         
-        // Enhanced debug logging for Mission 5 projects specifically
-        if (project.mission === "Make NFTs Great Again (Mission 5)" && project.live_url) {
-          debugLog('🔍 MISSION 5 Project with Live URL:', {
-            name: project.name,
-            exactName: `"${project.name}"`,
-            hasLiveUrl: !!project.live_url,
-            liveUrl: project.live_url,
-            originalThumbnail: project.thumbnail
-          });
-        }
-        
-        // Check if we have a mapped image using exact name match
-        const mappedImage = projectImageMap[project.name];
-        
-        if (mappedImage) {
-          thumbnail = mappedImage;
-          debugLog('✅ Found exact mapped image for project:', project.name, '→', thumbnail);
-        } else if (project.mission === "Make NFTs Great Again (Mission 5)" && project.live_url) {
-          debugWarn('❌ NO MAPPED IMAGE for Mission 5 project with live URL:', {
-            projectName: project.name,
-            exactProjectName: `"${project.name}"`,
-            availableKeys: Object.keys(projectImageMap).filter(key => 
-              key.toLowerCase().includes('mission') || 
-              key.toLowerCase().includes('nft') ||
-              key.toLowerCase().includes('geo') ||
-              key.toLowerCase().includes('warrior') ||
-              key.toLowerCase().includes('evolve')
-            )
-          });
-        }
-        
-        // For projects with live URL but no mapped image, use website preview
-        if (project.live_url && !mappedImage) {
-          const websitePreview = getOpenGraphImage(project.live_url);
-          if (websitePreview) {
-            thumbnail = websitePreview;
-            debugLog('🌐 Using website preview for project:', project.name, '→', thumbnail);
-          }
-        }
-        
-        // For ALL projects without live URL and with GitHub URL, use GitHub preview
-        if (!project.live_url && 
-            project.github_url && 
-            !mappedImage) {
-          const githubPreview = getGithubPreviewImage(project.github_url);
-          if (githubPreview) {
-            thumbnail = githubPreview;
-            debugLog('📸 Using GitHub preview for project:', project.name, '→', thumbnail);
+        // Priority 1: Use database thumbnail if it exists
+        if (project.thumbnail) {
+          thumbnail = project.thumbnail;
+          debugLog('🏆 Using database thumbnail for project:', project.name, '→', thumbnail);
+        } else {
+          // Priority 2: Check if we have a mapped image using exact name match
+          const mappedImage = projectImageMap[project.name];
+          
+          if (mappedImage) {
+            thumbnail = mappedImage;
+            debugLog('✅ Found exact mapped image for project:', project.name, '→', thumbnail);
+          } else {
+            // Priority 3: For projects with live URL but no mapped image, use website preview
+            if (project.live_url) {
+              const websitePreview = getOpenGraphImage(project.live_url);
+              if (websitePreview) {
+                thumbnail = websitePreview;
+                debugLog('🌐 Using website preview for project:', project.name, '→', thumbnail);
+              }
+            }
+            
+            // Priority 4: For projects without live URL and with GitHub URL, use GitHub preview
+            if (!project.live_url && project.github_url && !thumbnail) {
+              const githubPreview = getGithubPreviewImage(project.github_url);
+              if (githubPreview) {
+                thumbnail = githubPreview;
+                debugLog('📸 Using GitHub preview for project:', project.name, '→', thumbnail);
+              }
+            }
           }
         }
 
