@@ -251,6 +251,51 @@ export const mockProjects = [
     liveUrl: "https://moodart.vercel.app/",
     tags: ["NFT", "Collection", "Third Place", "Mission 5"],
     mission: "Make NFTs Great Again (Mission 5)"
+  },
+  {
+    id: "21",
+    name: "Monadeal",
+    description: "P2P NFT Trading Platform",
+    builder: {
+      name: "youzyx",
+      discord: "youzyx",
+      twitter: normalizeTwitter("YOUZYPOOR")
+    },
+    thumbnail: "https://ivory-generous-turtle-964.mypinata.cloud/ipfs/bafybeihcsq74x6vd3fx37pdn2hgfukqc6owzziixt4nxvmwimion4rvxra?pinataGatewayToken=BL_S57NET7G6yg275PW2Y-xTC-89u-aT0SgedclZS10XjQ8NYVvFCzehZ-8tFJRH",
+    githubUrl: "https://github.com/YOUZYX/Monadeal",
+    liveUrl: "https://monadeal.vercel.app/",
+    tags: ["NFT", "P2P", "Trading", "Mission 5"],
+    mission: "Mission 5"
+  },
+  {
+    id: "22",
+    name: "Picule protocol",
+    description: "Decentralized NFT/memcoin lauchpad with Dex trading and NFT marketplace",
+    builder: {
+      name: "kanigio",
+      discord: "kanigio",
+      twitter: normalizeTwitter("MrPicule")
+    },
+    thumbnail: projectNft,
+    githubUrl: "https://github.com/Vantana1995/picule-protocol",
+    liveUrl: "picule.xyz",
+    tags: ["Dex", "NFT", "Marketplace", "Launchpad", "Mission 5"],
+    mission: "Mission 5"
+  },
+  {
+    id: "23",
+    name: "MONARA",
+    description: "MONARA represents a breakthrough in NFT technology - the first collection of truly evolving digital beings on Monad Network.",
+    builder: {
+      name: "kresna6773",
+      discord: "kresna6773",
+      twitter: normalizeTwitter("LesnaCrex")
+    },
+    thumbnail: projectNft,
+    githubUrl: "https://github.com/Lesnak1/monara-nft",
+    liveUrl: "https://monara-nft.vercel.app/",
+    tags: ["monad", "nft", "monara", "Mission 5"],
+    mission: "Mission 5"
   }
 ];
 
@@ -278,5 +323,11 @@ export const availableTags = [
   "Community",
   "Launchpad",
   "Mission 3",
-  "Shooter"
+  "Shooter",
+  "P2P",
+  "Trading",
+  "Dex",
+  "Marketplace",
+  "monad",
+  "monara"
 ];

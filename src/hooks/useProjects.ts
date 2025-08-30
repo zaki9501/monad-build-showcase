@@ -23,6 +23,7 @@ import moodArtImg from '@/assets/projects/MoodArt.png';
 
 // Import gaming image for game projects
 import projectGaming from '@/assets/project-gaming.jpg';
+import projectNft from '@/assets/project-nft.jpg';
 
 export interface Project {
   id: string;
@@ -88,6 +89,11 @@ const projectImageMap: Record<string, string> = {
   'MONFTAI': '/lovable-uploads/0b268c72-d50c-4465-8ad3-0c2fbc7ebf9c.png', // Using available uploaded image
   'Mondala': '/lovable-uploads/63a55c3b-8363-47b3-ad74-9c7d1cc9e670.png', // Using available uploaded image
   'Monad Mission 5 Platform': '/lovable-uploads/7178febd-7e56-45f5-a8ed-032f21718a9b.png', // Using available uploaded image
+  
+  // New Mission 5 projects
+  'Monadeal': 'https://ivory-generous-turtle-964.mypinata.cloud/ipfs/bafybeihcsq74x6vd3fx37pdn2hgfukqc6owzziixt4nxvmwimion4rvxra?pinataGatewayToken=BL_S57NET7G6yg275PW2Y-xTC-89u-aT0SgedclZS10XjQ8NYVvFCzehZ-8tFJRH',
+  'Picule protocol': projectNft, // Using NFT image as fallback for DEX/NFT marketplace
+  'MONARA': projectNft, // Using NFT image for evolving digital beings
   
   // Mission 3 projects
   'Monagayanimals': projectGaming, // Using gaming image for the shooter game
