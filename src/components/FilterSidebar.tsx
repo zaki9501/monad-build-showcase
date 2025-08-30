@@ -11,6 +11,8 @@ interface FilterSidebarProps {
   onMissionChange: (mission: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  projectNameQuery: string;
+  onProjectNameChange: (query: string) => void;
   selectedTags: string[];
   onTagToggle: (tag: string) => void;
   availableTags: string[];
@@ -22,6 +24,8 @@ const FilterSidebar = ({
   onMissionChange,
   searchQuery,
   onSearchChange,
+  projectNameQuery,
+  onProjectNameChange,
   selectedTags,
   onTagToggle,
   availableTags,
@@ -93,7 +97,7 @@ const FilterSidebar = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {/* Mission Filter */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Mission</label>
@@ -111,6 +115,20 @@ const FilterSidebar = ({
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Project Name Search */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Search Projects</label>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input 
+                placeholder="Project name..."
+                value={projectNameQuery}
+                onChange={(e) => onProjectNameChange(e.target.value)}
+                className="pl-10 bg-muted/50 border-border/50"
+              />
+            </div>
           </div>
 
           {/* X Username Search */}
@@ -150,7 +168,7 @@ const FilterSidebar = ({
         </div>
 
         {/* Clear Filters */}
-        {(selectedMission !== "All Missions" || searchQuery || selectedTags.length > 0) && (
+        {(selectedMission !== "All Missions" || searchQuery || projectNameQuery || selectedTags.length > 0) && (
           <div className="mt-6 pt-4 border-t">
             <Button 
               variant="outline" 
@@ -158,6 +176,7 @@ const FilterSidebar = ({
               onClick={() => {
                 onMissionChange("All Missions");
                 onSearchChange("");
+                onProjectNameChange("");
                 selectedTags.forEach(tag => onTagToggle(tag));
               }}
             >

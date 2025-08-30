@@ -13,6 +13,7 @@ import { availableTags } from "@/data/mockProjects";
 const Index = () => {
   const [selectedMission, setSelectedMission] = useState("All Missions");
   const [searchQuery, setSearchQuery] = useState("");
+  const [projectNameQuery, setProjectNameQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   
   const { projects, loading } = useProjects();
@@ -30,6 +31,14 @@ const Index = () => {
         searchQuery &&
         !(project.builder.twitter &&
           project.builder.twitter.toLowerCase().includes(searchQuery.toLowerCase()))
+      ) {
+        return false;
+      }
+
+      // Project name search
+      if (
+        projectNameQuery &&
+        !project.name.toLowerCase().includes(projectNameQuery.toLowerCase())
       ) {
         return false;
       }
@@ -80,7 +89,7 @@ const Index = () => {
       // If engagement scores are equal, sort by name alphabetically
       return a.name.localeCompare(b.name);
     });
-  }, [projects, selectedMission, searchQuery, selectedTags]);
+  }, [projects, selectedMission, searchQuery, projectNameQuery, selectedTags]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev => 
@@ -127,6 +136,8 @@ const Index = () => {
           onMissionChange={setSelectedMission}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          projectNameQuery={projectNameQuery}
+          onProjectNameChange={setProjectNameQuery}
           selectedTags={selectedTags}
           onTagToggle={handleTagToggle}
           availableTags={availableTags}
@@ -177,6 +188,7 @@ const Index = () => {
               onClick={() => {
                 setSelectedMission("All Missions");
                 setSearchQuery("");
+                setProjectNameQuery("");
                 selectedTags.forEach(tag => handleTagToggle(tag));
               }}
             >
