@@ -160,8 +160,8 @@ export const useProjects = () => {
       const formattedProjects: Project[] = (data || []).map(project => {
         let thumbnail = project.thumbnail;
         
-        // Priority 1: Use database thumbnail if it exists
-        if (project.thumbnail) {
+        // Priority 1: Use database thumbnail if it exists and is valid
+        if (project.thumbnail && project.thumbnail.trim() !== '') {
           thumbnail = project.thumbnail;
           debugLog('🏆 Using database thumbnail for project:', project.name, '→', thumbnail);
         } else {
