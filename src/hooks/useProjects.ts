@@ -190,15 +190,14 @@ export const useProjects = () => {
           });
         }
         
-        // For Mission 5 projects without live URL and with GitHub URL, use GitHub preview
-        if (project.mission === "Make NFTs Great Again (Mission 5)" && 
-            !project.live_url && 
+        // For ALL projects without live URL and with GitHub URL, use GitHub preview
+        if (!project.live_url && 
             project.github_url && 
             !mappedImage) {
           const githubPreview = getGithubPreviewImage(project.github_url);
           if (githubPreview) {
             thumbnail = githubPreview;
-            debugLog('📸 Using GitHub preview for Mission 5 project:', project.name, '→', thumbnail);
+            debugLog('📸 Using GitHub preview for project:', project.name, '→', thumbnail);
           }
         }
 
