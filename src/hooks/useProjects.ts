@@ -191,20 +191,13 @@ export const useProjects = () => {
           });
         }
         
-        // For projects with live URL but no mapped image, try to get Open Graph image
+        // For projects with live URL but no mapped image, use website preview
         if (project.live_url && !mappedImage) {
-          // We'll fetch this asynchronously and update later
-          getOpenGraphImage(project.live_url).then(ogImage => {
-            if (ogImage) {
-              debugLog('🌐 Found Open Graph image for project:', project.name, '→', ogImage);
-              // Update the project thumbnail
-              setProjects(prev => prev.map(p => 
-                p.id === project.id ? { ...p, thumbnail: ogImage } : p
-              ));
-            }
-          }).catch(error => {
-            debugWarn('❌ Failed to fetch Open Graph image for:', project.name, error);
-          });
+          const websitePreview = getOpenGraphImage(project.live_url);
+          if (websitePreview) {
+            thumbnail = websitePreview;
+            debugLog('🌐 Using website preview for project:', project.name, '→', thumbnail);
+          }
         }
         
         // For ALL projects without live URL and with GitHub URL, use GitHub preview
