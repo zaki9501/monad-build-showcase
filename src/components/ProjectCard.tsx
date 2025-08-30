@@ -275,20 +275,16 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           variant="outline" 
           size="sm" 
           className="flex-1 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
-          disabled={!project.githubUrl || !shouldShowGitHub}
-          onClick={(e) => e.stopPropagation()}
+          disabled={!project.githubUrl}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (project.githubUrl) {
+              window.open(project.githubUrl, '_blank', 'noopener,noreferrer');
+            }
+          }}
         >
-          <span
-            className="flex items-center"
-            onClick={() => {
-              if (shouldShowGitHub && project.githubUrl) {
-                window.open(project.githubUrl, '_blank', 'noopener,noreferrer');
-              }
-            }}
-          >
-            <Github className="h-3 w-3 mr-1" />
-            Code
-          </span>
+          <Github className="h-3 w-3 mr-1" />
+          Code
         </Button>
         {project.liveUrl && (
           <Button 
