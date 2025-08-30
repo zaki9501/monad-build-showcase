@@ -168,7 +168,8 @@ export const useProjects = () => {
         
         // Priority 1: Use database thumbnail if it exists and is valid
         if (project.thumbnail && project.thumbnail.trim() !== '') {
-          thumbnail = project.thumbnail;
+          // Clean and decode the thumbnail URL
+          thumbnail = decodeURIComponent(project.thumbnail.trim());
           console.log('🏆 Using database thumbnail for project:', project.name, '→', thumbnail);
         } else {
           console.log('❌ No valid database thumbnail for project:', project.name, 'original:', project.thumbnail);
@@ -198,6 +199,12 @@ export const useProjects = () => {
                 thumbnail = githubPreview;
                 console.log('📸 Using GitHub preview for project:', project.name, '→', thumbnail);
               }
+            }
+            
+            // Priority 5: Fallback to placeholder if nothing else works
+            if (!thumbnail) {
+              thumbnail = '/placeholder.svg';
+              console.log('🔧 Using fallback placeholder for project:', project.name);
             }
           }
         }
