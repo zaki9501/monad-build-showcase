@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { getGithubPreviewImage } from '@/utils/githubPreview';
+import { getOpenGraphImage } from '@/utils/ogPreview';
 
 // Import actual project images that exist
 import chogVsCatgirlImg from '@/assets/projects/Chog-vs-catgirl.png';
@@ -187,6 +188,22 @@ export const useProjects = () => {
               key.toLowerCase().includes('warrior') ||
               key.toLowerCase().includes('evolve')
             )
+          });
+        }
+        
+        // For projects with live URL but no mapped image, try to get Open Graph image
+        if (project.live_url && !mappedImage) {
+          // We'll fetch this asynchronously and update later
+          getOpenGraphImage(project.live_url).then(ogImage => {
+            if (ogImage) {
+              debugLog('🌐 Found Open Graph image for project:', project.name, '→', ogImage);
+              // Update the project thumbnail
+              setProjects(prev => prev.map(p => 
+                p.id === project.id ? { ...p, thumbnail: ogImage } : p
+              ));
+            }
+          }).catch(error => {
+            debugWarn('❌ Failed to fetch Open Graph image for:', project.name, error);
           });
         }
         
