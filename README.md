@@ -80,19 +80,6 @@ A modern, open-source platform for discovering and showcasing innovative project
 5. **Open your browser**
    Navigate to `http://localhost:5173`
 
-## 🔧 Environment Variables
-
-### Required for Frontend
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key-here
-```
-
-### Required for Supabase Edge Functions
-```env
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
-TWITTER_API_KEY=your-twitter-api-key-here
-```
 
 ## 📁 Project Structure
 
@@ -170,19 +157,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Vite](https://vitejs.dev/) - Fast build tool
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
 
-## 📞 Support
-
-- 📧 Email: [your-email@example.com]
-- 🐦 Twitter: [@your-twitter-handle]
-- 💬 Discord: [Your Discord Server]
-- 📖 Documentation: [Your Docs URL]
 
 ## 🔗 Links
 
-- 🌐 Live Demo: [Your Live URL]
-- 📖 Documentation: [Your Docs URL]
-- 🐛 Bug Reports: [GitHub Issues]
-- 💡 Feature Requests: [GitHub Discussions]
+- 🌐 Live Demo: https://monad-build-showcase.vercel.app/
+
 
 ---
 
@@ -190,7 +169,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <p>Built with ❤️ by the Monad Community</p>
   <p>
     <a href="https://monad.xyz">Monad</a> •
-    <a href="https://github.com/yourusername/monad-build-showcase">GitHub</a> •
-    <a href="https://twitter.com/your-twitter-handle">Twitter</a>
+    <a href="https://github.com/zaki9501/monad-build-showcase">GitHub</a> •
+    <a href="https://x.com/Piki_eth">Twitter</a>
   </p>
 </div>
