@@ -175,7 +175,7 @@ const Hero = () => {
                   />
                   <Input
                     name="imageUrl"
-                    placeholder="Image URL (optional)"
+                    placeholder="Image URL (optional) Provide preview image link of you project "
                     value={form.imageUrl}
                     onChange={handleChange}
                   />

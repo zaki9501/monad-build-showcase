@@ -158,9 +158,10 @@ const ProjectDetails = () => {
                   <img 
                     src={project.thumbnail || '/placeholder.svg'} 
                     alt={project.name}
-                    className="w-full h-80 object-cover"
+                    className="w-full max-h-[600px] object-contain bg-muted/20"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  {/* Optional: Add a subtle overlay for better text readability if needed */}
+                  {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" /> */}
                 </div>
               </CardContent>
             </Card>
