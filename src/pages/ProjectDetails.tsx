@@ -15,6 +15,8 @@ import { cn } from "@/lib/utils";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useBuilderStats } from "@/hooks/useBuilderStats";
+import BuilderBadges from "@/components/achievements/BuilderBadges";
+import { useAchievements } from "@/hooks/useAchievements";
 
 const getMissionDescription = (mission: string) => {
   const descriptions = {
@@ -47,11 +49,13 @@ const ProjectDetails = () => {
     loading: builderLoading 
   } = useBuilderStats(builderIdentifier);
 
+  // Get achievements for this builder
+  const { achievements } = useAchievements(builderIdentifier);
+
   // Track view when component mounts
   useEffect(() => {
     if (project) {
       // Logic to track project view would go here
-      console.log(`Viewing project: ${project.name}`);
     }
   }, [project]);
 
@@ -336,6 +340,19 @@ const ProjectDetails = () => {
                     )}
                   </div>
                 </div>
+
+                {/* Builder Achievements */}
+                {achievements && achievements.length > 0 && (
+                  <div className="pt-4 border-t">
+                    <h5 className="font-medium text-sm mb-3">Achievements</h5>
+                    <BuilderBadges 
+                      builderName={builderIdentifier}
+                      achievements={achievements}
+                      size="sm"
+                      showTooltips={true}
+                    />
+                  </div>
+                )}
 
                 {/* Builder Bio with Twitter priority */}
                 {builderStats.bio && (

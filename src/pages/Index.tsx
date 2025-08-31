@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
 import { useProjects } from "@/hooks/useProjects";
 import { availableTags } from "@/data/mockProjects";
+import AchievementService from "@/services/achievementService";
 
 const Index = () => {
   const [selectedMission, setSelectedMission] = useState("All Missions");
@@ -100,6 +101,47 @@ const Index = () => {
     );
   };
 
+  // Auto-populate builder stats when projects load
+  useEffect(() => {
+    const populateBuilderStats = async () => {
+      if (projects.length === 0) return;
+      
+      // Get unique builders
+      const uniqueBuilders = new Map();
+      projects.forEach(project => {
+        const key = project.builder.discord || project.builder.name;
+        if (!uniqueBuilders.has(key)) {
+          uniqueBuilders.set(key, {
+            name: project.builder.name,
+            discord: project.builder.discord,
+            twitter: project.builder.twitter
+          });
+        }
+      });
+      
+      // Update stats for each builder (async, don't wait)
+      Array.from(uniqueBuilders.values()).forEach(async (builder, index) => {
+        try {
+          // Add delay to avoid overwhelming the database
+          setTimeout(async () => {
+            await AchievementService.updateBuilderStats(
+              builder.name, 
+              builder.discord, 
+              builder.twitter
+            );
+          }, index * 500); // 500ms delay between each update
+        } catch (error) {
+          console.error(`Failed to update stats for ${builder.name}:`, error);
+        }
+      });
+    };
+    
+    // Run only once when projects first load
+    if (!loading && projects.length > 0) {
+      populateBuilderStats();
+    }
+  }, [projects, loading]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -181,8 +223,8 @@ const Index = () => {
         {/* Projects Display */}
         {filteredProjects.length > 0 ? (
           <div className={viewMode === "grid" 
-            ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8" 
-            : "flex flex-col gap-4"
+            ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 overflow-visible" 
+            : "flex flex-col gap-4 overflow-visible"
           }>
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} viewMode={viewMode} />
