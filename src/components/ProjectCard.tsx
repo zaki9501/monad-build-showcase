@@ -223,7 +223,7 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
       {/* Make the entire card clickable */}
       <Link to={`/project/${project.id}`} className="block">
         {/* Thumbnail with overlay effects */}
-        <div className="relative overflow-hidden h-52">
+        <div className="relative overflow-hidden h-80">
           <img 
             src={project.thumbnail} 
             alt={project.name}
