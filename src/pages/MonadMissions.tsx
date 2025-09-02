@@ -143,7 +143,7 @@ const missions = [
     title: "Multisynq Applications & Games",
     description: "Build innovative applications and games utilizing Multisynq technology. Create novel integrations that interact with Monad Testnet in creative ways.",
     deadline: "July 14 - July 27",
-    status: "ongoing",
+    status: "completed",
     rules: [
       "Project must be open source",
       "Must use Multisynq in an innovative way",
@@ -161,6 +161,45 @@ const missions = [
       "Valid participation: 300 Testnet MON"
     ],
     resources: ["https://monad-foundation.notion.site/multisynq-resources"]
+  },
+    {
+    id: 7,
+    title: "Monad Game Jam",
+    description: "Build games with a HUGE leaderboard intergrating Monad Games ID",
+    deadline: "Aug 13 - Aug 31",
+    status: "completed",
+    rules: [
+      "All submissions must be open source",
+      "Properly intergrate Monad Games ID",
+      "Teams of 2-3 people or individual participation allowed",
+      "Do not build r/place clones",
+      "Build games that are novel experiences"
+    ],
+    tracks: [
+      {
+        name: "Track 1: New Games",
+        description: "Build New Games with Monad Games ID intergration",
+        prizes: [
+          "1st place: 4000 Testnet MON",
+          "2nd place: 3000 Testnet MON", 
+          "3rd place: 2000 Testnet MON",
+          "Quality participation: 250 Testnet MON"
+        ]
+      },
+      {
+        name: "Track 2: Existing Games",
+        description: "Intergrate Existing Games with Monad Games ID",
+        prizes: [
+          "1st place: 3000 Testnet MON",
+          "2nd place: 2000 Testnet MON",
+          "3rd place: 1000 Testnet MON", 
+          "Quality participation: 250 Testnet MON"
+        ]
+      }
+    ],
+    submission: "Submit via the official form",
+    submissionForm: " https://tally.so/r/wz6PDa",
+    resources: ["https://monad-foundation.notion.site/Mission-7-Monad-Game-Jam-Resources-24d6367594f280268926d344bc82c67a"]
   }
 ];
 
