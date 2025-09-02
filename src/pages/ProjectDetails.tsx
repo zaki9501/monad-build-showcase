@@ -232,7 +232,7 @@ const ProjectDetails = () => {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex gap-4">
-                  {project.githubUrl ? (
+                  {project.githubUrl && (
                     <Button 
                       className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
                       asChild
@@ -241,14 +241,6 @@ const ProjectDetails = () => {
                         <Github className="w-4 h-4 mr-2" />
                         View Source Code
                       </a>
-                    </Button>
-                  ) : (
-                    <Button 
-                      className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
-                      disabled
-                    >
-                      <Github className="w-4 h-4 mr-2" />
-                      View Source Code
                     </Button>
                   )}
                   
