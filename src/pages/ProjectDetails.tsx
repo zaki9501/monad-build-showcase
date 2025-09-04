@@ -232,23 +232,17 @@ const ProjectDetails = () => {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex gap-4">
-                  <Button 
-                    className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
-                    asChild
-                    disabled={!project.githubUrl || (project.mission !== "Mission 2" && project.mission !== "Break Monad v2: Farcaster Edition")}
-                  >
-                    {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && project.githubUrl ? (
+                  {project.githubUrl && (
+                    <Button 
+                      className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
+                      asChild
+                    >
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="w-4 h-4 mr-2" />
                         View Source Code
                       </a>
-                    ) : (
-                      <span className="flex items-center">
-                        <Github className="w-4 h-4 mr-2" />
-                        View Source Code
-                      </span>
-                    )}
-                  </Button>
+                    </Button>
+                  )}
                   
                   {project.liveUrl && (
                     <Button 
