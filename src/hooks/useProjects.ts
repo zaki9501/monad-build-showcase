@@ -5,22 +5,22 @@ import { getGithubPreviewImage } from '@/utils/githubPreview';
 import { getOpenGraphImage } from '@/utils/ogPreview';
 
 // Import actual project images that exist
-import chogVsCatgirlImg from '@/assets/projects/Chog-vs-catgirl.png';
-import flappyTrumpImg from '@/assets/projects/Flapy -trump.png';
-import monairImg from '@/assets/projects/Monair.png';
-import montipImg from '@/assets/projects/Montip.png';
-import p1x3lzImg from '@/assets/projects/P1x3lz.png';
-import retroBlockExpImg from '@/assets/projects/Retro Block Exp..png';
-import testnetExpImg from '@/assets/projects/Testnet Exp.png';
+// import chogVsCatgirlImg from '@/assets/projects/Chog-vs-catgirl.png'; // File doesn't exist
+// import flappyTrumpImg from '@/assets/projects/Flapy -trump.png'; // File doesn't exist
+// import monairImg from '@/assets/projects/Monair.png'; // File doesn't exist
+// import montipImg from '@/assets/projects/Montip.png'; // File doesn't exist
+// import p1x3lzImg from '@/assets/projects/P1x3lz.png'; // File doesn't exist
+// import retroBlockExpImg from '@/assets/projects/Retro Block Exp..png'; // File doesn't exist
+// import testnetExpImg from '@/assets/projects/Testnet Exp.png'; // File doesn't exist
 import testnetMetricsImg from '@/assets/projects/Testnet Metrics Hub.png';
 
 // Import Mission 5 project images that actually exist
-import nfThingImg from '@/assets/projects/NfThing.png';
-import moNftImg from '@/assets/projects/MoNft.png';
-import nadtoolsImg from '@/assets/projects/Nadtools.png';
-import nadmonImg from '@/assets/projects/NADMON.png';
-import blonksImg from '@/assets/projects/Blonks.png';
-import moodArtImg from '@/assets/projects/MoodArt.png';
+// import nfThingImg from '@/assets/projects/NfThing.png'; // File doesn't exist
+// import moNftImg from '@/assets/projects/MoNft.png'; // File doesn't exist
+// import nadtoolsImg from '@/assets/projects/Nadtools.png'; // File doesn't exist
+// import nadmonImg from '@/assets/projects/NADMON.png'; // File doesn't exist
+// import blonksImg from '@/assets/projects/Blonks.png'; // File doesn't exist
+// import moodArtImg from '@/assets/projects/MoodArt.png'; // File doesn't exist
 
 // Import gaming image for game projects
 import projectGaming from '@/assets/project-gaming.jpg';
@@ -45,31 +45,31 @@ export interface Project {
 // Map project names to local images (using actual existing files and matching database names)
 const projectImageMap: Record<string, string> = {
   // Farcaster Edition projects - matching exact database names
-  'Chog vs catgirl': chogVsCatgirlImg,
-  'Chog vs CatGirls': chogVsCatgirlImg,
-  'Flappy Trump': flappyTrumpImg,
-  'Montip': montipImg,
-  'MonTip': montipImg,
-  'P1x3lz': p1x3lzImg,
+  'Chog vs catgirl': projectGaming, // Using gaming image as fallback
+  'Chog vs CatGirls': projectGaming, // Using gaming image as fallback
+  'Flappy Trump': projectGaming, // Using gaming image as fallback
+  'Montip': projectGaming, // Using gaming image as fallback
+  'MonTip': projectGaming, // Using gaming image as fallback
+  'P1x3lz': projectGaming, // Using gaming image as fallback
   
   // Mission 4 projects - matching exact database names
-  'Retro Block Explorer': retroBlockExpImg,
-  'Retro Block Exp.': retroBlockExpImg,
-  'Monair': monairImg,
-  'Testnet Explorer': testnetExpImg,
-  'Testnet Exp': testnetExpImg,
+  'Retro Block Explorer': projectGaming, // Using gaming image as fallback
+  'Retro Block Exp.': projectGaming, // Using gaming image as fallback
+  'Monair': projectGaming, // Using gaming image as fallback
+  'Testnet Explorer': testnetMetricsImg, // Using existing metrics image
+  'Testnet Exp': testnetMetricsImg, // Using existing metrics image
   'Testnet Metrics Hub': testnetMetricsImg,
   'DevHub': testnetMetricsImg, // Using metrics hub image as fallback for DevHub
   'Monad Nebula': '/lovable-uploads/4b2be09e-ce9a-4305-97cb-e645ff465c6c.png', // Using uploaded Monad Nebula image
   'Monad Genki Dama': 'https://monad-genki-dama.vercel.app/img/monad-genki-dama.png',
 
-  // Mission 5 projects using actual existing images - matching exact database names
-  'NFThing': nfThingImg,
-  'MoNFT': moNftImg,
-  'NadTools': nadtoolsImg,
-  'Nadmon': nadmonImg,
-  'Blonks': blonksImg,
-  'Moodart': moodArtImg,
+  // Mission 5 projects using fallback images - matching exact database names
+  'NFThing': projectNft, // Using NFT image as fallback
+  'MoNFT': projectNft, // Using NFT image as fallback
+  'NadTools': projectNft, // Using NFT image as fallback
+  'Nadmon': projectNft, // Using NFT image as fallback
+  'Blonks': projectNft, // Using NFT image as fallback
+  'Moodart': projectNft, // Using NFT image as fallback
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png',
   'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png',
   
