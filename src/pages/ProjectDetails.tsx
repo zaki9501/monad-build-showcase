@@ -158,10 +158,9 @@ const ProjectDetails = () => {
                   <img 
                     src={project.thumbnail || '/placeholder.svg'} 
                     alt={project.name}
-                    className="w-full max-h-[600px] object-contain bg-muted/20"
+                    className="w-full h-80 object-cover"
                   />
-                  {/* Optional: Add a subtle overlay for better text readability if needed */}
-                  {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" /> */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
               </CardContent>
             </Card>
@@ -232,17 +231,23 @@ const ProjectDetails = () => {
             <Card>
               <CardContent className="pt-6">
                 <div className="flex gap-4">
-                  {project.githubUrl && (
-                    <Button 
-                      className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
-                      asChild
-                    >
+                  <Button 
+                    className="flex-1 bg-gradient-to-r from-primary to-primary-glow hover:from-primary-dark hover:to-primary"
+                    asChild
+                    disabled={!project.githubUrl || (project.mission !== "Mission 2" && project.mission !== "Break Monad v2: Farcaster Edition")}
+                  >
+                    {(project.mission === "Mission 2" || project.mission === "Break Monad v2: Farcaster Edition") && project.githubUrl ? (
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="w-4 h-4 mr-2" />
                         View Source Code
                       </a>
-                    </Button>
-                  )}
+                    ) : (
+                      <span className="flex items-center">
+                        <Github className="w-4 h-4 mr-2" />
+                        View Source Code
+                      </span>
+                    )}
+                  </Button>
                   
                   {project.liveUrl && (
                     <Button 
