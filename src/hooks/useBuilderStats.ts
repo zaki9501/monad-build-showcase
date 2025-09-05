@@ -18,30 +18,36 @@ export const useBuilderStats = (builderDiscord: string) => {
   const fetchBuilderStats = async () => {
     try {
       setLoading(true);
-      console.log('Fetching builder stats for:', builderDiscord);
       
       // Get total projects count for this builder - match by discord or name if discord is empty
-      const { data: projects, error: projectsError } = await supabase
-        .from('projects')
-        .select('id, description, builder_name, builder_discord, twitter_bio, twitter_verified')
-        .or(`builder_discord.eq.${builderDiscord},builder_name.eq.${builderDiscord}`);
-
-      if (projectsError) {
-        console.error('Supabase error:', projectsError);
-        throw projectsError;
+      let projects = [];
+      let projectsError = null;
+      
+      // Try to query projects table
+      try {
+        const result = await supabase
+          .from('projects')
+          .select('id, description, builder_name, builder_discord, twitter_bio, twitter_verified')
+          .or(`builder_discord.eq."${builderDiscord}",builder_name.eq."${builderDiscord}"`);
+        
+        projects = result.data || [];
+        projectsError = result.error;
+      } catch (err) {
+        projectsError = err;
       }
 
-      console.log('Raw projects from database:', projects);
+      if (projectsError) {
+        // Don't throw error, just return empty stats
+        setStats({ totalProjects: 0 });
+        return;
+      }
 
       // Filter projects that actually match this builder
       const matchedProjects = projects?.filter(p => {
         const discordMatch = p.builder_discord === builderDiscord;
         const nameMatch = p.builder_name === builderDiscord;
-        console.log(`Project ${p.id}: discord="${p.builder_discord}" name="${p.builder_name}" - discord match: ${discordMatch}, name match: ${nameMatch}`);
         return discordMatch || nameMatch;
       }) || [];
-
-      console.log('Matched projects:', matchedProjects);
 
       // Get Twitter bio from the most recent project with Twitter data
       const twitterProject = matchedProjects.find(p => p.twitter_bio);
@@ -53,8 +59,6 @@ export const useBuilderStats = (builderDiscord: string) => {
         .map(p => p.description)
         .filter(Boolean)
         .filter(desc => desc && desc.trim().length > 0);
-      
-      console.log('Available descriptions:', descriptions);
       
       const projectBio = descriptions
         .sort((a, b) => (b?.length || 0) - (a?.length || 0))[0] || undefined;
@@ -69,13 +73,6 @@ export const useBuilderStats = (builderDiscord: string) => {
         verified: verified
       });
 
-      console.log(`Final builder stats for "${builderDiscord}":`, {
-        totalProjects: matchedProjects.length,
-        matchedProjects: matchedProjects.map(p => ({ name: p.builder_name, discord: p.builder_discord })),
-        bio: finalBio?.substring(0, 100) + (finalBio && finalBio.length > 100 ? '...' : ''),
-        twitterBio: twitterBio?.substring(0, 100) + (twitterBio && twitterBio.length > 100 ? '...' : ''),
-        verified: verified
-      });
     } catch (error) {
       console.error('Error fetching builder stats:', error);
       toast({
@@ -90,10 +87,8 @@ export const useBuilderStats = (builderDiscord: string) => {
 
   useEffect(() => {
     if (builderDiscord && builderDiscord.trim()) {
-      console.log('Builder identifier changed to:', builderDiscord);
       fetchBuilderStats();
     } else {
-      console.log('No valid builder identifier provided');
       setLoading(false);
     }
   }, [builderDiscord]);

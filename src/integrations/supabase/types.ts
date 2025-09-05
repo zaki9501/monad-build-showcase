@@ -194,6 +194,158 @@ export type Database = {
         }
         Relationships: []
       }
+      achievements: {
+        Row: {
+          id: number
+          name: string
+          description: string
+          icon: string
+          tier: number
+          requirements: Json
+          badge_color: string | null
+          is_active: boolean | null
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          description: string
+          icon: string
+          tier: number
+          requirements: Json
+          badge_color?: string | null
+          is_active?: boolean | null
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          name?: string
+          description?: string
+          icon?: string
+          tier?: number
+          requirements?: Json
+          badge_color?: string | null
+          is_active?: boolean | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          id: string
+          user_identifier: string
+          user_type: string | null
+          achievement_id: number
+          earned_at: string
+          progress: Json | null
+          metadata: Json | null
+        }
+        Insert: {
+          id?: string
+          user_identifier: string
+          user_type?: string | null
+          achievement_id: number
+          earned_at?: string
+          progress?: Json | null
+          metadata?: Json | null
+        }
+        Update: {
+          id?: string
+          user_identifier?: string
+          user_type?: string | null
+          achievement_id?: number
+          earned_at?: string
+          progress?: Json | null
+          metadata?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      builder_stats: {
+        Row: {
+          id: string
+          builder_name: string
+          builder_discord: string | null
+          builder_twitter: string | null
+          user_identifier: string
+          total_projects: number | null
+          projects_with_github: number | null
+          projects_with_live_url: number | null
+          projects_with_both: number | null
+          total_likes: number | null
+          total_views: number | null
+          total_ratings: number | null
+          average_rating: number | null
+          missions_participated: string[] | null
+          unique_mission_count: number | null
+          high_rated_projects: number | null
+          trending_projects: number | null
+          winner_badges: number | null
+          first_project_at: string | null
+          last_project_at: string | null
+          stats_updated_at: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          builder_name: string
+          builder_discord?: string | null
+          builder_twitter?: string | null
+          user_identifier: string
+          total_projects?: number | null
+          projects_with_github?: number | null
+          projects_with_live_url?: number | null
+          projects_with_both?: number | null
+          total_likes?: number | null
+          total_views?: number | null
+          total_ratings?: number | null
+          average_rating?: number | null
+          missions_participated?: string[] | null
+          unique_mission_count?: number | null
+          high_rated_projects?: number | null
+          trending_projects?: number | null
+          winner_badges?: number | null
+          first_project_at?: string | null
+          last_project_at?: string | null
+          stats_updated_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          builder_name?: string
+          builder_discord?: string | null
+          builder_twitter?: string | null
+          user_identifier?: string
+          total_projects?: number | null
+          projects_with_github?: number | null
+          projects_with_live_url?: number | null
+          projects_with_both?: number | null
+          total_likes?: number | null
+          total_views?: number | null
+          total_ratings?: number | null
+          average_rating?: number | null
+          missions_participated?: string[] | null
+          unique_mission_count?: number | null
+          high_rated_projects?: number | null
+          trending_projects?: number | null
+          winner_badges?: number | null
+          first_project_at?: string | null
+          last_project_at?: string | null
+          stats_updated_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -226,6 +378,31 @@ export type Database = {
       }
       toggle_project_like: {
         Args: { project_uuid: string; user_ip_address: string }
+        Returns: boolean
+      }
+      get_builder_achievements: {
+        Args: { builder_identifier: string }
+        Returns: {
+          achievement_id: number
+          name: string
+          description: string
+          icon: string
+          tier: number
+          badge_color: string
+          earned_at: string
+        }[]
+      }
+      has_achievement: {
+        Args: { builder_identifier: string; achievement_name: string }
+        Returns: boolean
+      }
+      award_achievement: {
+        Args: {
+          builder_identifier: string
+          achievement_name: string
+          user_type_param?: string
+          metadata_param?: Json
+        }
         Returns: boolean
       }
     }

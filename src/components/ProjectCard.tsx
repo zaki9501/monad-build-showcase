@@ -11,6 +11,8 @@ import AvatarWithFallback from "@/components/AvatarWithFallback";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useTwitterProfile } from "@/hooks/useTwitterProfile";
+import BuilderBadges from "@/components/achievements/BuilderBadges";
+import { useAchievements } from "@/hooks/useAchievements";
 
 interface ProjectCardProps {
   project: {
@@ -43,6 +45,10 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
 
   // Get the actual Twitter profile data to ensure we use the correct username
   const { profile } = useTwitterProfile(project.builder.twitter, project.id);
+
+  // Get achievements for this builder
+  const builderIdentifier = project.builder.discord || project.builder.name;
+  const { achievements } = useAchievements(builderIdentifier);
 
   // Extract the actual username that was successfully fetched
   const extractUsernameFromTwitterUrl = (url?: string) => {
@@ -128,6 +134,14 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
                       <span className="text-xs font-medium text-foreground">
                         {project.builder.name}
                       </span>
+                      {/* Achievement badges for list view */}
+                      <BuilderBadges 
+                        achievements={achievements}
+                        builderName={project.builder.name}
+                        maxDisplay={2}
+                        size="sm"
+                        showEarnedOnly={true}
+                      />
                       {shouldShowTwitterLink && (
                         <a
                           href={`https://x.com/${originalUsername}`}
@@ -219,7 +233,7 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
   }
 
   return (
-    <Card className="group overflow-hidden bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer">
+    <Card className="group bg-gradient-to-br from-card via-card to-card/80 border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 backdrop-blur-sm cursor-pointer overflow-visible">
       {/* Make the entire card clickable */}
       <Link to={`/project/${project.id}`} className="block">
         {/* Thumbnail with overlay effects */}
@@ -337,6 +351,15 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
               <span className="text-xs text-muted-foreground">
                 @{project.builder.discord}
               </span>
+              {/* Achievement badges for grid view */}
+              <BuilderBadges 
+                achievements={achievements}
+                builderName={project.builder.name}
+                maxDisplay={3}
+                size="sm"
+                showEarnedOnly={true}
+                className="mt-1"
+              />
             </div>
           </div>
           
