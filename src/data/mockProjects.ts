@@ -2,20 +2,7 @@
 import projectDefi from "@/assets/project-defi.jpg";
 import projectNft from "@/assets/project-nft.jpg";
 import projectGaming from "@/assets/project-gaming.jpg";
-import P1x3lzImg from "@/assets/projects/P1x3lz.png";
-import FlappyTrumpImg from "@/assets/projects/Flapy -trump.png";
-import ChogVsCatgirlImg from "@/assets/projects/Chog-vs-catgirl.png";
-import MontipImg from "@/assets/projects/Montip.png";
-import RetroBlockExpImg from "@/assets/projects/Retro Block Exp..png";
-import MonairImg from "@/assets/projects/Monair.png";
-import TestnetExpImg from "@/assets/projects/Testnet Exp.png";
 import TestnetMetricsHubImg from "@/assets/projects/Testnet Metrics Hub.png";
-import NfThingImg from "@/assets/projects/NfThing.png";
-import MoNftImg from "@/assets/projects/MoNft.png";
-import NadtoolsImg from "@/assets/projects/Nadtools.png";
-import NADMONImg from "@/assets/projects/NADMON.png";
-import BlonksImg from "@/assets/projects/Blonks.png";
-import MoodArtImg from "@/assets/projects/MoodArt.png";
 
 function normalizeTwitter(twitter) {
   if (!twitter) return "";
@@ -34,7 +21,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("Shirumo_lab")
     },
-    thumbnail: P1x3lzImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://farcaster.xyz/miniapps/L1SuwsoofH7Q/p1x3lz",
     tags: ["Miniapp", "Pixel Art", "Winner"],
@@ -49,7 +36,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("KshitijGajapure")
     },
-    thumbnail: FlappyTrumpImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://farcaster.xyz/miniapps/v21qItMnSK7y/flappy-trump",
     tags: ["Game", "Miniapp", "Runner-up"],
@@ -64,7 +51,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("zekeosborn")
     },
-    thumbnail: ChogVsCatgirlImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://farcaster.xyz/miniapps/8izMbIunWy2Y/chog-vs-cat-girls",
     tags: ["Game", "Miniapp", "Third Place"],
@@ -79,7 +66,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("manisai001")
     },
-    thumbnail: MontipImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://farcaster.xyz/miniapps/nlTxSg9aEUXH/montip",
     tags: ["Tipping", "Miniapp", "Finalist"],
@@ -109,7 +96,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("GurhanKutsal")
     },
-    thumbnail: RetroBlockExpImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://retro-plane-vis.onrender.com/",
     tags: ["Visualizer", "Runner-up", "Mission 4"],
@@ -124,7 +111,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("prematrkurtcuk")
     },
-    thumbnail: MonairImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://monair.vercel.app/",
     tags: ["Visualizer", "Third Place", "Mission 4"],
@@ -139,7 +126,7 @@ export const mockProjects = [
       discord: "",
       twitter: normalizeTwitter("solodanETH")
     },
-    thumbnail: TestnetExpImg,
+    thumbnail: projectGaming,
     githubUrl: "",
     liveUrl: "https://flipsidecrypto.xyz/solodan_/monad-testnet-explorer-xDbcKc",
     tags: ["Dashboard", "Winner", "Mission 4"],

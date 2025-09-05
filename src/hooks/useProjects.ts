@@ -5,22 +5,7 @@ import { getGithubPreviewImage } from '@/utils/githubPreview';
 import { getOpenGraphImage } from '@/utils/ogPreview';
 
 // Import actual project images that exist
-import chogVsCatgirlImg from '@/assets/projects/Chog-vs-catgirl.png';
-import flappyTrumpImg from '@/assets/projects/Flapy -trump.png';
-import monairImg from '@/assets/projects/Monair.png';
-import montipImg from '@/assets/projects/Montip.png';
-import p1x3lzImg from '@/assets/projects/P1x3lz.png';
-import retroBlockExpImg from '@/assets/projects/Retro Block Exp..png';
-import testnetExpImg from '@/assets/projects/Testnet Exp.png';
 import testnetMetricsImg from '@/assets/projects/Testnet Metrics Hub.png';
-
-// Import Mission 5 project images that actually exist
-import nfThingImg from '@/assets/projects/NfThing.png';
-import moNftImg from '@/assets/projects/MoNft.png';
-import nadtoolsImg from '@/assets/projects/Nadtools.png';
-import nadmonImg from '@/assets/projects/NADMON.png';
-import blonksImg from '@/assets/projects/Blonks.png';
-import moodArtImg from '@/assets/projects/MoodArt.png';
 
 // Import gaming image for game projects
 import projectGaming from '@/assets/project-gaming.jpg';
@@ -44,32 +29,32 @@ export interface Project {
 
 // Map project names to local images (using actual existing files and matching database names)
 const projectImageMap: Record<string, string> = {
-  // Farcaster Edition projects - matching exact database names
-  'Chog vs catgirl': chogVsCatgirlImg,
-  'Chog vs CatGirls': chogVsCatgirlImg,
-  'Flappy Trump': flappyTrumpImg,
-  'Montip': montipImg,
-  'MonTip': montipImg,
-  'P1x3lz': p1x3lzImg,
+  // Farcaster Edition projects - using fallback images
+  'Chog vs catgirl': projectGaming,
+  'Chog vs CatGirls': projectGaming,
+  'Flappy Trump': projectGaming,
+  'Montip': projectGaming,
+  'MonTip': projectGaming,
+  'P1x3lz': projectGaming,
   
-  // Mission 4 projects - matching exact database names
-  'Retro Block Explorer': retroBlockExpImg,
-  'Retro Block Exp.': retroBlockExpImg,
-  'Monair': monairImg,
-  'Testnet Explorer': testnetExpImg,
-  'Testnet Exp': testnetExpImg,
+  // Mission 4 projects - using fallback images
+  'Retro Block Explorer': projectGaming,
+  'Retro Block Exp.': projectGaming,
+  'Monair': projectGaming,
+  'Testnet Explorer': projectGaming,
+  'Testnet Exp': projectGaming,
   'Testnet Metrics Hub': testnetMetricsImg,
   'DevHub': testnetMetricsImg, // Using metrics hub image as fallback for DevHub
   'Monad Nebula': '/lovable-uploads/4b2be09e-ce9a-4305-97cb-e645ff465c6c.png', // Using uploaded Monad Nebula image
   'Monad Genki Dama': 'https://monad-genki-dama.vercel.app/img/monad-genki-dama.png',
 
-  // Mission 5 projects using actual existing images - matching exact database names
-  'NFThing': nfThingImg,
-  'MoNFT': moNftImg,
-  'NadTools': nadtoolsImg,
-  'Nadmon': nadmonImg,
-  'Blonks': blonksImg,
-  'Moodart': moodArtImg,
+  // Mission 5 projects using fallback images - matching exact database names
+  'NFThing': projectNft,
+  'MoNFT': projectNft,
+  'NadTools': projectNft,
+  'Nadmon': projectNft,
+  'Blonks': projectNft,
+  'Moodart': projectNft,
   'Bombandak': '/lovable-uploads/78ab7b38-7933-4bf2-9d20-67c859f51179.png',
   'Solodan NFT Launchpad': '/lovable-uploads/a20c6347-3a7a-446b-af56-0abdafe13824.png',
   
