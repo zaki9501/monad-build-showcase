@@ -286,7 +286,6 @@ const ProjectDetails = () => {
                       className="w-16 h-16"
                       projectId={project.id}
                     />
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
                     {/* Twitter verification badge */}
                     {builderStats.verified && (
                       <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-2 border-white flex items-center justify-center">
