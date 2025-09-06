@@ -322,10 +322,10 @@ const MonadMissions = () => {
                     </div>
                   )}
 
-                  {/* Resources & Submission - Only show for ongoing missions */}
-                  {mission.status === 'ongoing' && (
+                  {/* Resources & Submission - Show resources for all missions with resources, submission form only for ongoing missions */}
+                  {(mission.status === 'ongoing' || mission.resources) && (
                     <div className="flex flex-wrap gap-4 pt-4 border-t">
-                      {mission.submissionForm && (
+                      {mission.submissionForm && mission.status === 'ongoing' && (
                         <Button variant="outline" size="sm" asChild>
                           <a href={mission.submissionForm} target="_blank" rel="noopener noreferrer">
                             Submission Form
