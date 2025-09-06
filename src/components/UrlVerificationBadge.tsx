@@ -29,8 +29,8 @@ const UrlVerificationBadge = ({
         icon: Clock,
         label: 'Verifying...',
         variant: 'secondary' as const,
-        color: 'text-yellow-600',
-        bgColor: 'bg-yellow-50 border-yellow-200',
+        color: 'text-yellow-800 dark:text-yellow-200',
+        bgColor: 'bg-yellow-200 dark:bg-yellow-900/50 border-yellow-400 dark:border-yellow-700',
         description: 'Running enhanced security checks including Google Safe Browsing...'
       };
     }
@@ -44,8 +44,8 @@ const UrlVerificationBadge = ({
             icon: ShieldAlert,
             label: 'Verified - Caution',
             variant: 'outline' as const,
-            color: 'text-orange-600',
-            bgColor: 'bg-orange-50 border-orange-200',
+            color: 'text-orange-800 dark:text-orange-200',
+            bgColor: 'bg-orange-200 dark:bg-orange-900/50 border-orange-400 dark:border-orange-700',
             description: 'Verified but has some risk factors. Proceed with caution.'
           };
         }
@@ -53,8 +53,8 @@ const UrlVerificationBadge = ({
           icon: ShieldCheck,
           label: 'Google Verified',
           variant: 'default' as const,
-          color: 'text-green-600',
-          bgColor: 'bg-green-50 border-green-200',
+          color: 'text-green-800 dark:text-green-200',
+          bgColor: 'bg-green-200 dark:bg-green-900/50 border-green-400 dark:border-green-700',
           description: 'Passed all security checks including Google Safe Browsing. Safe to visit.'
         };
       case 'unsafe':
