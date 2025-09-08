@@ -313,7 +313,6 @@ const ProjectCard = ({ project, viewMode = "grid" }: ProjectCardProps) => {
                 className="w-10 h-10"
                 projectId={project.id}
               />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
