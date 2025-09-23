@@ -1,7 +1,7 @@
 
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBackground from "@/assets/hero-background.jpg";
+// Using public asset path for better compatibility
 import {
   Dialog,
   DialogTrigger,
@@ -58,7 +58,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: `url(${heroBackground})`,
+          backgroundImage: `url(/hero-background.jpg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
